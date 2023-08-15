@@ -5,9 +5,8 @@
   import SplitText from 'gsap/dist/SplitText';
   import { onMount } from 'svelte';
 
-  let canvasElems: NodeListOf<Element>;
+  let canvasElems: Array<HTMLElement>;
   onMount(() => {
-      console.log('Home mounted');
 
       gsap.registerPlugin( ScrollTrigger, SplitText );
       
@@ -51,7 +50,7 @@
           })
         }
       })
-      canvasElems = document.querySelectorAll('.lineChildren') as NodeListOf<Element>;
+      canvasElems = Array.from(document.querySelectorAll('.lineChildren'));
   });
 </script>
 
@@ -98,13 +97,7 @@
       </div>
     </section>
   </article>
-  {#await onMount}
-    waiting
-  {:then}
-    <HomeCanvas textsToCanvas={canvasElems}/>
-  {:catch error}
-    <p>error</p>
-  {/await}
+  <HomeCanvas textsToCanvas={canvasElems}/>
 
 <style lang="scss">
   article {
@@ -142,11 +135,11 @@
   h1 {
     letter-spacing: -0.05em;
     line-height: .9;
-    font-size: 2.5em;
+    font-size: 17vw;
     margin-top: -.5em;
     text-align: center;
     @media screen and (min-width: 768px) {
-      font-size: 2.7em;
+      font-size: 12vw;
     }
   }
   h2 {

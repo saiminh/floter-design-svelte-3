@@ -4,6 +4,7 @@ type Post = {
     date: string
     description: string
     tags: string[]
+    header_bg_image: string
   }
   default: {
     render: () => string

@@ -6,42 +6,45 @@
 
   onMount(() => {
     let navlinks = document.querySelectorAll('nav a');
+    
     navlinks.forEach((link, index) => {
       link.addEventListener('click', (e)=> {
         const checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
         checkbox ? checkbox.checked = false : null;
-        gsap.to('.content', {duration: 0.5, y: '0%', autoAlpha: 1, ease: 'power4.out'});
+        gsap.to('.content > *', {duration: 0.5, y: '0%', autoAlpha: 1, ease: 'power4.out'});
       })
     });
+    
     let checkbox = document.getElementById('menustate') as HTMLInputElement;
+    
     checkbox.addEventListener('change', (e)=> {
       if (checkbox.checked) {
-        gsap.to('.content', {duration: 0.75, y: -200, autoAlpha: 0.5, ease: 'power2.inOut'});
+        gsap.to('.content > *', {duration: 0.75, y: -200, autoAlpha: 0.5, ease: 'power2.inOut'});
         gsap.from('#nav', {duration: 0.5, autoAlpha: 0, y: '100%', ease: 'power4.out', delay: 0.1});
         gsap.from('nav a', {duration: 0.5, autoAlpha: 0, y: 20, stagger: 0.1, ease: 'power4.out' , delay: 0.2});
       } else {
-        gsap.to('.content', {duration: 0.5, y: '0%', autoAlpha: 1, ease: 'power4.out'});
+        gsap.to('.content > *', {duration: 0.5, y: '0%', autoAlpha: 1, ease: 'power4.out'});
       }
     })
   });
 
 </script>
-<a href='/' class="logo">
-  <Logo />
-</a>
-<header>
-  <input aria-hidden="true" type="checkbox" id="menustate" />
-  <label for="menustate" aria-hidden="true">
-    <span class="open">≡</span>
-    <span class="close">×</span>
-  </label>
-  <!-- <a href="#nav" class="logo"><Logo /></a> -->
-  <nav id="nav">
-    <a href="/">Home</a>
-    <a href="/work">About</a>
-    <a href="/work">Hire</a>
-  </nav>
-</header>
+  <a href='/' class="logo">
+    <Logo />
+  </a>
+  <header>
+    <input aria-hidden="true" type="checkbox" id="menustate" />
+    <label for="menustate" aria-hidden="true">
+      <span class="open">≡</span>
+      <span class="close">×</span>
+    </label>
+    <!-- <a href="#nav" class="logo"><Logo /></a> -->
+    <nav id="nav">
+      <a href="/">Home</a>
+      <a href="/work">About</a>
+      <a href="/work">Hire</a>
+    </nav>
+  </header>
 
 <div class="content">
   <slot />
@@ -52,13 +55,24 @@
     position: fixed;
     bottom: 0;  
     right: 0;
-    z-index: 1;
+    z-index: 3;
     padding: var(--spacing-outer);
     display: flex;
     gap: .75em;
     justify-content: flex-end;
     align-items: flex-end;
     box-sizing: border-box;
+    // width: 100%;
+    
+    // &:before {
+    //   content: '';
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 100%;
+    //   background: linear-gradient(0deg, #00117fFF 0%, #00117fFF 30%, #00117f00 100%);
+    // }
   }
   label {
     height: 36px;
@@ -95,7 +109,7 @@
     width: auto;
     position: fixed;
     bottom: 0;
-    z-index: 2;
+    z-index: 4;
     display: flex;
     margin: var(--spacing-outer);
   }
