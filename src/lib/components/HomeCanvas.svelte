@@ -60,12 +60,32 @@ onMount(()=>{
   let center = [0.5, 0.5];
   let bulgefilter = new BulgePinchFilter();
   bulgefilter.radius = xFrac(0.45);
-  bulgefilter.strength = 0.5;
+  bulgefilter.strength = 0;
   bulgefilter.center = center;
   bulgefilter.resolution = 2;
   app.stage.filters = [bulgefilter];
 
-  
+  gsap.to(bulgefilter, {
+    strength: 0.5,
+    duration: 2,
+    delay: 1,
+    ease: 'elastic.out',
+  });
+
+  window.addEventListener('mousedown', ()=>{
+    gsap.to(bulgefilter, {
+      strength: 0,
+      duration: 1,
+      ease: 'elastic.out',
+    });
+  })
+  window.addEventListener('mouseup', ()=>{
+    gsap.to(bulgefilter, {
+      strength: 0.5,
+      duration: 2,
+      ease: 'elastic.out',
+    });
+  })
   
   /*----------------------------------
   * Convert text to canvas using 
@@ -134,13 +154,27 @@ onMount(()=>{
   /*----------------------------------
   * Mousemove events
   *----------------------------------*/
+  let tween = {
+    x: 0.5,
+    y: 0.5,
+  };
+
   window.addEventListener('mousemove', (e) => {
     const pointerX = e.clientX / window.innerWidth;
     const pointerY = e.clientY / window.innerHeight;
     const pointerXfrac = pointerX - 0.5;
     const pointerYfrac = pointerY - 0.5;
     
-    center = [(0.5 + pointerXfrac/10),(0.5 + pointerYfrac/10)];   
+    // center = [(0.5 + pointerXfrac/10),(0.5 + pointerYfrac/10)];   
+
+    gsap.to(tween, {
+      duration: .5,
+      ease: 'power3.out',
+      overwrite: true,
+      x: 0.5 + pointerXfrac/10,
+      y: 0.5 + pointerYfrac/10,
+    })
+
   })
 
 
@@ -151,7 +185,7 @@ onMount(()=>{
 
   app.ticker.add((delta) => {
     elapsed += delta;
-    bulgefilter.center = [(center[0] + Math.sin(elapsed/200)/20 ),(center[1] + Math.cos(elapsed/200)/20 )];
+    bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/20 ),(tween.y + Math.cos(elapsed/200)/20 )];
     updateImgs();
     updateText();
   })

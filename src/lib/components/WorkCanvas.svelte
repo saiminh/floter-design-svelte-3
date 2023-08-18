@@ -61,16 +61,16 @@ onMount(()=>{
   
   let center = [0.5, 0.5];
   let bulgefilter = new BulgePinchFilter();
-  bulgefilter.radius = xFrac(0.6);
+  bulgefilter.radius = xFrac(0.5);
   bulgefilter.strength = bulgeFactor;
   bulgefilter.center = center;
   bulgefilter.resolution = 2;
   // app.stage.filters = [bulgefilter];
-  let rgbFilter = new RGBSplitFilter();
-  rgbFilter.red = [0, 0];
-  rgbFilter.green = [0, 0];
-  rgbFilter.blue = [0, 0];
-  rgbFilter.resolution = 2;
+  // let rgbFilter = new RGBSplitFilter();
+  // rgbFilter.red = [0, 0];
+  // rgbFilter.green = [0, 0];
+  // rgbFilter.blue = [0, 0];
+  // rgbFilter.resolution = 2;
   app.stage.filters = [bulgefilter];
   
   
@@ -130,7 +130,7 @@ onMount(()=>{
       image.position.set(imagePosition.x, imagePosition.y);
       image.width = imagePosition.width;
       image.height = imagePosition.height;
-      // image.alpha = imgElems[index].style.opacity as unknown as number;
+      image.zIndex = imgElems[index].style.zIndex as unknown as number;
       image.alpha = window.getComputedStyle(imgElems[index]).opacity as unknown as number;
     })
   }
@@ -146,17 +146,17 @@ onMount(()=>{
   /*----------------------------------
   * Mousemove events
   *----------------------------------*/
- let tween = {
-  x: 0,
-  y: 0,
- };
+  let tween = {
+    x: 0,
+    y: 0,
+  };
   window.addEventListener('mousemove', (e) => {
     const pointerX = e.clientX / window.innerWidth;
     const pointerY = e.clientY / window.innerHeight;
     const pointerXfrac = pointerX - 0.5;
     const pointerYfrac = pointerY - 0.5;
-    rgbFilter.red = [pointerXfrac * 10, pointerYfrac * 10];
-    rgbFilter.green = [pointerXfrac * -10, pointerYfrac * -10];
+    // rgbFilter.red = [pointerXfrac * 10, pointerYfrac * 10];
+    // rgbFilter.green = [pointerXfrac * -10, pointerYfrac * -10];
     
     gsap.to(tween, {
       duration: .5,

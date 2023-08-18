@@ -3,63 +3,65 @@
   import { gsap } from 'gsap';
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
   import SplitText from 'gsap/dist/SplitText';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
 
   let canvasElems: Array<HTMLElement>;
-  onMount(() => {
 
-      gsap.registerPlugin( ScrollTrigger, SplitText );
-      
-      const sections = document.querySelectorAll('section');
-      
-      sections.forEach( (section) => {
-        if ( section.classList.contains('splash')){
-          let split = new SplitText(section.querySelectorAll('h1'), { type: 'lines', linesClass: 'lineChildren' });
-          gsap.set(split.lines, {
-            opacity: 0,
-            y: window.innerHeight * 0.25,
-          })
-          gsap.to(split.lines, {
-            duration: 1,
-            opacity: 1,
-            y: 0,
-            stagger: 0.075,
-            ease: 'power4.out',
-          })
-        }
-        else {
-          let split = new SplitText(section.querySelectorAll('h2'), { type: 'lines', linesClass: 'lineChildren' });
-          gsap.set(split.lines, { transformOrigin: '0% 100%' });
-          gsap.set(split.lines, { yPercent: 100, opacity: 0 });
-          gsap.to(split.lines, { duration: 1, yPercent: 0, opacity: 1, stagger: 0.1, ease: 'power4.out', 
-            scrollTrigger: { trigger: split.lines, start: 'top 90%', end: 'bottom 70%', scrub: true }
+  onMount(() => {
+    
+    gsap.registerPlugin( ScrollTrigger, SplitText );
+    
+    const sections = document.querySelectorAll('section');
+    
+    sections.forEach( (section) => {
+      if ( section.classList.contains('splash')){
+        let split = new SplitText(section.querySelectorAll('h1'), { type: 'lines', linesClass: 'lineChildren' });
+        gsap.set(split.lines, {
+          opacity: 1,
+          y: window.innerHeight,
+        })
+        gsap.to(split.lines, {
+          duration: 1,
+          opacity: 1,
+          y: 0,
+          stagger: 0.075,
+          ease: 'power4.out',
+        })
+      }
+      else {
+        let split = new SplitText(section.querySelectorAll('h2'), { type: 'lines', linesClass: 'lineChildren' });
+        gsap.set(split.lines, { transformOrigin: '0% 100%' });
+        gsap.set(split.lines, { yPercent: 100, opacity: 0 });
+        gsap.to(split.lines, { duration: 1, yPercent: 0, opacity: 1, stagger: 0.1, ease: 'power4.out', 
+          scrollTrigger: { scroller: '.scroller', trigger: split.lines, start: 'top 90%', end: 'bottom 70%', scrub: true, id: 'sth2' }
+        })  
+        if (section.querySelector('p')) {
+          let splitp = new SplitText(section.querySelectorAll('p'), { type: 'lines', linesClass: 'lineChildren' });
+          gsap.set(splitp.lines, { transformOrigin: '0% 100%' });
+          gsap.set(splitp.lines, { yPercent: 100, autoAlpha: 0 });
+          gsap.to(splitp.lines, { duration: 1, yPercent: 0, autoAlpha: 1, stagger: 0.05, ease: 'power4.out', 
+            scrollTrigger: { scroller: '.scroller', trigger: splitp.lines, start: 'top 80%', end: 'bottom 40%', scrub: true }
           })  
-          if (section.querySelector('p')) {
-            let splitp = new SplitText(section.querySelectorAll('p'), { type: 'lines', linesClass: 'lineChildren' });
-            gsap.set(splitp.lines, { transformOrigin: '0% 100%' });
-            gsap.set(splitp.lines, { yPercent: 100, autoAlpha: 0 });
-            gsap.to(splitp.lines, { duration: 1, yPercent: 0, autoAlpha: 1, stagger: 0.05, ease: 'power4.out', 
-              scrollTrigger: { trigger: splitp.lines, start: 'top 80%', end: 'bottom 40%', scrub: true }
-            })  
-          }
         }
-        if (section.querySelector('.cols-2')){
-          gsap.set(section.querySelector('.cols-2'), { autoAlpha: 0 }); 
-          gsap.to(section.querySelector('.cols-2'), { duration: 1, autoAlpha: 1, ease: 'power4.out', 
-            scrollTrigger: { trigger: section.querySelector('.cols-2'), start: 'top 80%', end: 'bottom 40%', scrub: true }
-          })
-        }
-      })
-      canvasElems = Array.from(document.querySelectorAll('.lineChildren'));
+      }
+      if (section.querySelector('.cols-2')){
+        gsap.set(section.querySelector('.cols-2'), { autoAlpha: 0 }); 
+        gsap.to(section.querySelector('.cols-2'), { duration: 1, autoAlpha: 1, ease: 'power4.out', 
+          scrollTrigger: { scroller: '.scroller', trigger: section.querySelector('.cols-2'), start: 'top 80%', end: 'bottom 40%', scrub: true }
+        })
+      }
+    })
+    canvasElems = Array.from(document.querySelectorAll('.lineChildren'));
   });
+
 </script>
 
-  <article>
+  <article class="scroller">
     <section class="splash"> 
       <h1>Simon Flöter creates products that stand out.</h1>
     </section>
     <section class="intro">
-      <h2>As a Creative Frontend Developer ...</h2> 
+      <h2>As a Creative Web Developer ...</h2> 
       <div class="cols-2">
         <div>
           <p>I specialise in delivering beautifully crafted bespoke websites.</p> 
@@ -100,8 +102,14 @@
   <HomeCanvas textsToCanvas={canvasElems}/>
 
 <style lang="scss">
-  article {
+  .scroller {
     font-size: clamp(32px, 4.5vw, 4.5vw);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
   }
   section {
     scroll-snap-align: start;
@@ -129,6 +137,7 @@
     line-height: 1.1;
     letter-spacing: -0.025em;
     font-weight: 400;
+    font-style: normal;
     opacity: 0;
     margin: 0;
   }
