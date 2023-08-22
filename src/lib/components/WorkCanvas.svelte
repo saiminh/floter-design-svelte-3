@@ -1,6 +1,6 @@
 <script lang="ts">
 import * as PIXI from 'pixi.js';
-import { RGBSplitFilter, BulgePinchFilter } from 'pixi-filters';
+import { BulgePinchFilter } from 'pixi-filters';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import SplitText from 'gsap/dist/SplitText';
@@ -67,12 +67,6 @@ onMount(()=>{
   bulgefilter.strength = is_landscape ? bulgeFactor : bulgeFactor * 1.25;
   bulgefilter.center = center;
   bulgefilter.resolution = 2;
-  // app.stage.filters = [bulgefilter];
-  // let rgbFilter = new RGBSplitFilter();
-  // rgbFilter.red = [0, 0];
-  // rgbFilter.green = [0, 0];
-  // rgbFilter.blue = [0, 0];
-  // rgbFilter.resolution = 2;
   app.stage.filters = [bulgefilter];
   
   
@@ -158,8 +152,6 @@ onMount(()=>{
       const pointerY = e.clientY / window.innerHeight;
       const pointerXfrac = pointerX - 0.5;
       const pointerYfrac = pointerY - 0.5;
-      // rgbFilter.red = [pointerXfrac * 10, pointerYfrac * 10];
-      // rgbFilter.green = [pointerXfrac * -10, pointerYfrac * -10];
       
       gsap.to(tween, {
         duration: .5,
