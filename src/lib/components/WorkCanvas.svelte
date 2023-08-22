@@ -19,6 +19,9 @@ let canvas: HTMLCanvasElement;
 
 onMount(()=>{
   
+  let is_fine = window.matchMedia('(pointer:fine)').matches
+  let is_landscape = window.matchMedia('(orientation:landscape)').matches
+
   gsap.registerPlugin(PixiPlugin, ScrollTrigger, SplitText);
   
   app = new PIXI.Application({
@@ -29,7 +32,6 @@ onMount(()=>{
     backgroundAlpha: 0,
     view: canvas,
   });
-  
   
     //for debugging but Typescript has an issue with this:
   // globalThis.__PIXI_APP__ = app as any;
@@ -61,8 +63,8 @@ onMount(()=>{
   
   let center = [0.5, 0.5];
   let bulgefilter = new BulgePinchFilter();
-  bulgefilter.radius = xFrac(0.5);
-  bulgefilter.strength = bulgeFactor;
+  bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.6);
+  bulgefilter.strength = is_landscape ? bulgeFactor : bulgeFactor * 1.25;
   bulgefilter.center = center;
   bulgefilter.resolution = 2;
   // app.stage.filters = [bulgefilter];
@@ -99,13 +101,15 @@ onMount(()=>{
     canvasTexts.forEach((text, index) => {
       let headlinePosition = elems[index].getBoundingClientRect();
       text.position.set(headlinePosition.x, headlinePosition.y);
-      text.alpha = elems[index].style.opacity as unknown as number;
+      // text.position.x = headlinePosition.x; 
+      // ^ This bcs pos:fixed doesn't update fast enough when mobile browser chrome changes on scroll
+      text.alpha = elems[index].style.opacity as unknown as number || 0.3;
     })
   }
 
   /*----------------------------------
    * Convert images to canvas
-   * createCanvacImgs function
+   * createCanvasImgs function
    ----------------------------------*/
   let canvasImgs: Array<PIXI.Sprite> = [];
   let imgElems: Array<HTMLElement> = [];
@@ -113,7 +117,7 @@ onMount(()=>{
   function convertImgs(){
     imgsToCanvas.forEach((element) => {
       imgElems.push(element);
-      let canvasImg = createCanvasImg(element, app.stage);
+      let canvasImg = createCanvasImg(element as HTMLImageElement, app.stage);
       // canvasImg.tint = 0xff9494;
       canvasImgs.push(canvasImg);
     })
@@ -140,33 +144,32 @@ onMount(()=>{
     convertImgs();
     convertText();
   }, 100);
-  // convertImgs();
-  // convertText();
 
   /*----------------------------------
   * Mousemove events
   *----------------------------------*/
   let tween = {
-    x: 0,
-    y: 0,
+    x: 0.5,
+    y: is_landscape ? 0.5 : 0.4,
   };
-  window.addEventListener('mousemove', (e) => {
-    const pointerX = e.clientX / window.innerWidth;
-    const pointerY = e.clientY / window.innerHeight;
-    const pointerXfrac = pointerX - 0.5;
-    const pointerYfrac = pointerY - 0.5;
-    // rgbFilter.red = [pointerXfrac * 10, pointerYfrac * 10];
-    // rgbFilter.green = [pointerXfrac * -10, pointerYfrac * -10];
-    
-    gsap.to(tween, {
-      duration: .5,
-      ease: 'power3.out',
-      overwrite: true,
-      x: pointerX,
-      y: pointerY,
+  if (is_fine){
+    window.addEventListener('mousemove', (e) => {
+      const pointerX = e.clientX / window.innerWidth;
+      const pointerY = e.clientY / window.innerHeight;
+      const pointerXfrac = pointerX - 0.5;
+      const pointerYfrac = pointerY - 0.5;
+      // rgbFilter.red = [pointerXfrac * 10, pointerYfrac * 10];
+      // rgbFilter.green = [pointerXfrac * -10, pointerYfrac * -10];
+      
+      gsap.to(tween, {
+        duration: .5,
+        ease: 'power3.out',
+        overwrite: true,
+        x: pointerX,
+        y: pointerY,
+      })
     })
-    
-  })
+  }
 
 
   /*----------------------------------
@@ -179,17 +182,17 @@ onMount(()=>{
     // bulgefilter.center = center;
     // bulgefilter.center = [(center[0] + Math.sin(elapsed/200)/20 ),(center[1] + Math.cos(elapsed/200)/20 )];
     bulgefilter.center = [tween.x, tween.y];
-    bulgefilter.strength = bulgeFactor;
+    bulgefilter.strength = is_landscape ? bulgeFactor : bulgeFactor * 1.25;
     updateImgs();
     updateText();
   })
 }) // <- end onMount
 
 onDestroy(() => {
-  if (browser){
-    app.destroy(true, true);
-  }
-}) // <- end onDestroy
+    if (browser){
+      app.destroy(true, true);
+    }
+  }) // <- end onDestroy
 
 </script>
 

@@ -16,179 +16,195 @@ export let imgsToCanvas: Array<HTMLElement> = [];
 let app: PIXI.Application;
 let canvas: HTMLCanvasElement;
 
+
 onMount(()=>{
-  
-  gsap.registerPlugin(PixiPlugin, ScrollTrigger, SplitText);
-  
-  app = new PIXI.Application({
-    resizeTo: window,
-    antialias: true,
-    autoDensity: true, 
-    resolution: 2,
-    backgroundAlpha: 0,
-    view: canvas,
-  });
-  
-    //for debugging but Typescript has an issue with this:
-  // globalThis.__PIXI_APP__ = app as any;
-  
-  PixiPlugin.registerPIXI(PIXI);
-  
-  function xFrac(x: number){
-    return window.innerWidth * x;
-  }
-  function yFrac(y: number){
-    return window.innerHeight * y;
-  }
 
-  let group = new PIXI.Container();
-  group.pivot.set(window.innerWidth / 2, window.innerHeight / 2);
-  group.x = window.innerWidth / 2;
-  group.y = window.innerHeight / 2;
-  app.stage.addChild(group);
-  
-  let recty = new PIXI.Graphics();
-  recty.beginFill('rgb(0, 0, 0)');
-  recty.drawRect(0, 0, xFrac(1), yFrac(1));
-  recty.endFill();
-  recty.alpha = 0;
-  recty.pivot.set(xFrac(.5), yFrac(.5));
-  recty.x = xFrac(0.5);
-  recty.y = yFrac(0.5);
-  group.addChild(recty);
-  
-  let center = [0.5, 0.5];
-  let bulgefilter = new BulgePinchFilter();
-  bulgefilter.radius = xFrac(0.45);
-  bulgefilter.strength = 0;
-  bulgefilter.center = center;
-  bulgefilter.resolution = 2;
-  app.stage.filters = [bulgefilter];
-
-  gsap.to(bulgefilter, {
-    strength: 0.5,
-    duration: 2,
-    delay: 1,
-    ease: 'elastic.out',
-  });
-
-  window.addEventListener('mousedown', ()=>{
-    gsap.to(bulgefilter, {
-      strength: 0,
-      duration: 1,
-      ease: 'elastic.out',
-    });
-  })
-  window.addEventListener('mouseup', ()=>{
-    gsap.to(bulgefilter, {
-      strength: 0.5,
-      duration: 2,
-      ease: 'elastic.out',
-    });
-  })
-  
-  /*----------------------------------
-  * Convert text to canvas using 
-  * createCanvasText function
-  ----------------------------------*/    
-  let canvasTexts: Array<PIXI.Text> = [];
-  let elems: Array<HTMLElement> = [];
-  
-  async function convertText(){
-    await tick();
-    textsToCanvas.forEach((element) => {
-      elems.push(element);
-      let canvasText = createCanvasText(element, app.stage);
-      canvasTexts.push(canvasText);
-    })
-  }  
-
-
-  /*----------------------------------
-   * Function to update text on canvas
-   * runs in the Ticker
-   ----------------------------------*/
-  function updateText(){
-    canvasTexts.forEach((text, index) => {
-      let headlinePosition = elems[index].getBoundingClientRect();
-      text.position.set(headlinePosition.x, headlinePosition.y);
-      text.alpha = elems[index].style.opacity as unknown as number;
-    })
-  }
-
-  /*----------------------------------
-   * Convert images to canvas
-   * createCanvacImgs function
-   ----------------------------------*/
-  let canvasImgs: Array<PIXI.Sprite> = [];
-  let imgElems: Array<HTMLElement> = [];
-  
-  function convertImgs(){
-    imgsToCanvas.forEach((element) => {
-      imgElems.push(element);
-      let canvasImg = createCanvasImg(element, app.stage);
-      canvasImgs.push(canvasImg);
-    })
-  }
-
-  setTimeout(() => {
-    convertImgs();
-    convertText();
-  }, 100);
-  // convertImgs();
-  // convertText();
-
-  /*----------------------------------
-   * Function to update text on canvas
-   * runs in the Ticker
-   ----------------------------------*/
-   function updateImgs(){
-    canvasImgs.forEach((image, index) => {
-      let imagePosition = imgElems[index].getBoundingClientRect();
-      image.position.set(imagePosition.x, imagePosition.y);
-      image.width = imagePosition.width;
-      image.height = imagePosition.height;
-    })
-  }
-
-  /*----------------------------------
-  * Mousemove events
-  *----------------------------------*/
-  let tween = {
-    x: 0.5,
-    y: 0.5,
-  };
-
-  window.addEventListener('mousemove', (e) => {
-    const pointerX = e.clientX / window.innerWidth;
-    const pointerY = e.clientY / window.innerHeight;
-    const pointerXfrac = pointerX - 0.5;
-    const pointerYfrac = pointerY - 0.5;
+    let is_fine = window.matchMedia('(pointer:fine)').matches
+    let is_coarse = window.matchMedia('(pointer:coarse)').matches
     
-    // center = [(0.5 + pointerXfrac/10),(0.5 + pointerYfrac/10)];   
-
-    gsap.to(tween, {
-      duration: .5,
-      ease: 'power3.out',
-      overwrite: true,
-      x: 0.5 + pointerXfrac/10,
-      y: 0.5 + pointerYfrac/10,
+    gsap.registerPlugin(PixiPlugin, ScrollTrigger, SplitText);
+    
+    app = new PIXI.Application({
+      resizeTo: window,
+      antialias: true,
+      autoDensity: true, 
+      resolution: 2,
+      backgroundAlpha: 0,
+      view: canvas,
+    });
+    
+      //for debugging but Typescript has an issue with this:
+    // globalThis.__PIXI_APP__ = app as any;
+    
+    PixiPlugin.registerPIXI(PIXI);
+    
+    function xFrac(x: number){
+      return window.innerWidth * x;
+    }
+    function yFrac(y: number){
+      return window.innerHeight * y;
+    }
+  
+    let group = new PIXI.Container();
+    group.pivot.set(window.innerWidth / 2, window.innerHeight / 2);
+    group.x = window.innerWidth / 2;
+    group.y = window.innerHeight / 2;
+    app.stage.addChild(group);
+    
+    let recty = new PIXI.Graphics();
+    recty.beginFill('rgb(0, 0, 0)');
+    recty.drawRect(0, 0, xFrac(1), yFrac(1));
+    recty.endFill();
+    recty.alpha = 0;
+    recty.pivot.set(xFrac(.5), yFrac(.5));
+    recty.x = xFrac(0.5);
+    recty.y = yFrac(0.5);
+    group.addChild(recty);
+    
+    let center = [0.5, 0.5];
+    let bulgefilter = new BulgePinchFilter();
+    bulgefilter.radius = xFrac(0.45);
+    bulgefilter.strength = 0;
+    bulgefilter.center = center;
+    bulgefilter.resolution = 2;
+    app.stage.filters = [bulgefilter];
+  
+    gsap.to(bulgefilter, {
+      strength: is_fine ? 0.5 : 0.4,
+      duration: 1.5,
+      delay: 1,
+      ease: 'elastic.out(1.75, 0.3)',
+    });
+  
+    window.addEventListener( is_fine ? 'mousedown' : 'touchstart', (e)=>{
+      let target = e.target as HTMLElement;
+      if (target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'P'){
+        gsap.to(bulgefilter, {
+          strength: 0,
+          duration: 1,
+          ease: 'elastic.out',
+        });
+      }
+    })
+    window.addEventListener( is_fine ? 'mouseup' : 'touchend', (e)=>{
+      let target = e.target as HTMLElement;
+      if (target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'P'){
+        gsap.to(bulgefilter, {
+          strength: 0.5,
+          duration: 2,
+          ease: 'elastic.out',
+        });
+      }
+    })
+    
+    /*----------------------------------
+    * Convert text to canvas using 
+    * createCanvasText function
+    ----------------------------------*/    
+    let canvasTexts: Array<PIXI.Text> = [];
+    let elems: Array<HTMLElement> = [];
+    
+    async function convertText(){
+      await tick();
+      textsToCanvas.forEach((element) => {
+        elems.push(element);
+        let canvasText = createCanvasText(element, app.stage);
+        canvasTexts.push(canvasText);
+      })
+    }  
+  
+  
+    /*----------------------------------
+     * Function to update text on canvas
+     * runs in the Ticker
+     ----------------------------------*/
+    function updateText(){
+      canvasTexts.forEach((text, index) => {
+        let headlinePosition = elems[index].getBoundingClientRect();
+        text.position.set(headlinePosition.x, headlinePosition.y);
+        text.alpha = elems[index].style.opacity as unknown as number;
+      })
+    }
+  
+    /*----------------------------------
+     * Convert images to canvas
+     * createCanvacImgs function
+     ----------------------------------*/
+    let canvasImgs: Array<PIXI.Sprite> = [];
+    let imgElems: Array<HTMLElement> = [];
+    
+    function convertImgs(){
+      imgsToCanvas.forEach((element) => {
+        imgElems.push(element);
+        let canvasImg = createCanvasImg(element as HTMLImageElement, app.stage);
+        canvasImgs.push(canvasImg);
+      })
+    }
+  
+    setTimeout(() => {
+      convertImgs();
+      convertText();
+    }, 100);
+    // convertImgs();
+    // convertText();
+  
+    /*----------------------------------
+     * Function to update text on canvas
+     * runs in the Ticker
+     ----------------------------------*/
+     function updateImgs(){
+      canvasImgs.forEach((image, index) => {
+        let imagePosition = imgElems[index].getBoundingClientRect();
+        image.position.set(imagePosition.x, imagePosition.y);
+        image.width = imagePosition.width;
+        image.height = imagePosition.height;
+      })
+    }
+  
+    /*----------------------------------
+    * Mousemove events
+    *----------------------------------*/
+   let tween = {
+      x: 0.5,
+      y: is_fine ? 0.5 : 250/window.innerHeight,
+    };
+    
+    if (is_fine) {
+      window.addEventListener('mousemove', (e) => {
+        const pointerX = e.clientX / window.innerWidth;
+        const pointerY = e.clientY / window.innerHeight;
+        const pointerXfrac = pointerX - 0.5;
+        const pointerYfrac = pointerY - 0.5;
+        
+        // center = [(0.5 + pointerXfrac/10),(0.5 + pointerYfrac/10)];   
+    
+        gsap.to(tween, {
+          duration: .5,
+          ease: 'power3.out',
+          overwrite: true,
+          x: 0.5 + pointerXfrac/10,
+          y: 0.5 + pointerYfrac/10,
+        })
+    
+      })
+    }
+  
+  
+    /*----------------------------------
+    * The Ticker
+    * ----------------------------------*/  
+    let elapsed = 0.0;
+  
+    app.ticker.add((delta) => {
+      elapsed += delta;
+      bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/20 ),(tween.y + Math.cos(elapsed/200)/20 )];
+      updateImgs();
+      updateText();
     })
 
-  })
-
-
-  /*----------------------------------
-  * The Ticker
-  * ----------------------------------*/  
-  let elapsed = 0.0;
-
-  app.ticker.add((delta) => {
-    elapsed += delta;
-    bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/20 ),(tween.y + Math.cos(elapsed/200)/20 )];
-    updateImgs();
-    updateText();
-  })
+    window.addEventListener('resize', (e) => {
+      tween.y = is_fine ? 0.5 : 250/window.innerHeight;
+    })
 }) // <- end onMount
 
 onDestroy(() => {

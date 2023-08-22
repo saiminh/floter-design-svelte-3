@@ -26,7 +26,6 @@
     //Toggle menu
     let checkbox = document.getElementById('menustate') as HTMLInputElement;
     checkbox.addEventListener('change', (e)=> {
-      console.log(checkbox.checked);
       if (checkbox.checked) {
         gsap.to('.content > *', {duration: 0.75, y: -200, autoAlpha: 0.5, ease: 'power2.inOut'});
         gsap.to('#nav', {duration: 0.5, autoAlpha: 1, y: 0, ease: 'power4.out', delay: 0.1});

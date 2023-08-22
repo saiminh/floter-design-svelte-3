@@ -5,13 +5,13 @@ export default function createCanvasText( element: HTMLElement,  stage: PIXI.Con
     
   const elem = element;
   const elemStyles = window.getComputedStyle(elem);
-  const elemFontSize = elemStyles.getPropertyValue('font-size');
-  const elemFontWeight = elemStyles.getPropertyValue('font-weight');
-  const elemFontFamily = elemStyles.getPropertyValue('font-family');
-  const elemFontStyle = elemStyles.getPropertyValue('font-style');
-  const elemLetterSpacing = parseInt(elemStyles.getPropertyValue('letter-spacing'));
-  const elemColor = elemStyles.getPropertyValue('color');
-  const elemAlignment = elemStyles.getPropertyValue('text-align');
+  const elemFontSize = elemStyles.getPropertyValue('font-size') || '16px';
+  const elemFontWeight = elemStyles.getPropertyValue('font-weight') || 'normal';
+  const elemFontFamily = elemStyles.getPropertyValue('font-family') || 'Arial';
+  const elemFontStyle = elemStyles.getPropertyValue('font-style') || 'normal';
+  const elemLetterSpacing = parseInt(elemStyles.getPropertyValue('letter-spacing')) || 0;
+  const elemColor = elemStyles.getPropertyValue('color') || 'black';
+  const elemAlignment = elemStyles.getPropertyValue('text-align') || 'left';
 
   const elemPosition = elem.getBoundingClientRect();
   const canvasText = new Text(elem?.textContent as string, {

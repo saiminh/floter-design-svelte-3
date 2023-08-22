@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-export default function createCanvasText( element: HTMLElement,  stage: PIXI.Container ){
+export default function createCanvasText( element: HTMLImageElement,  stage: PIXI.Container ){
     
   const elem = element;
   // console.log(elem);
-  const elemSrc = elem.getAttribute('src') || '';
+  const elemSrc = elem.currentSrc || '';
   const elemPosition = elem.getBoundingClientRect();
 
   const canvasImg = PIXI.Sprite.from(elemSrc);

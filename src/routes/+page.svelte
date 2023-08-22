@@ -1,31 +1,34 @@
 <script lang='ts'>
   import HomeCanvas from '$lib/components/HomeCanvas.svelte';
+  import { onMount } from 'svelte';
   import { gsap } from 'gsap';
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
   import SplitText from 'gsap/dist/SplitText';
-  import { onMount, onDestroy } from 'svelte';
+  import { disableScrollHandling } from '$app/navigation';
 
   let canvasElems: Array<HTMLElement>;
 
-  onMount(() => {
-    
+  onMount( () => {
+    disableScrollHandling();
     gsap.registerPlugin( ScrollTrigger, SplitText );
     
     const sections = document.querySelectorAll('section');
     
     sections.forEach( (section) => {
       if ( section.classList.contains('splash')){
-        let split = new SplitText(section.querySelectorAll('h1'), { type: 'lines', linesClass: 'lineChildren' });
-        gsap.set(split.lines, {
-          opacity: 1,
-          y: window.innerHeight,
+        let split = new SplitText(section.querySelectorAll('h1'), { type: 'words', wordsClass: 'lineChildren' });
+        gsap.set(split.words, {
+          opacity: 0,
+          y: 60,
+          transformOrigin: '50% 100%'
         })
-        gsap.to(split.lines, {
-          duration: 1,
+        gsap.to(split.words, {
+          duration: 0.5,
           opacity: 1,
           y: 0,
-          stagger: 0.075,
-          ease: 'power4.out',
+          stagger: 0.033,
+          ease: 'back.out',
+          delay: .3
         })
       }
       else {
@@ -33,83 +36,75 @@
         gsap.set(split.lines, { transformOrigin: '0% 100%' });
         gsap.set(split.lines, { yPercent: 100, opacity: 0 });
         gsap.to(split.lines, { duration: 1, yPercent: 0, opacity: 1, stagger: 0.1, ease: 'power4.out', 
-          scrollTrigger: { scroller: '.scroller', trigger: split.lines, start: 'top 90%', end: 'bottom 70%', scrub: true, id: 'sth2' }
+          scrollTrigger: { trigger: split.lines, start: 'top 90%', end: 'bottom 70%', scrub: false }
         })  
         if (section.querySelector('p')) {
           let splitp = new SplitText(section.querySelectorAll('p'), { type: 'lines', linesClass: 'lineChildren' });
           gsap.set(splitp.lines, { transformOrigin: '0% 100%' });
-          gsap.set(splitp.lines, { yPercent: 100, autoAlpha: 0 });
-          gsap.to(splitp.lines, { duration: 1, yPercent: 0, autoAlpha: 1, stagger: 0.05, ease: 'power4.out', 
-            scrollTrigger: { scroller: '.scroller', trigger: splitp.lines, start: 'top 80%', end: 'bottom 40%', scrub: true }
+          gsap.set(splitp.lines, { yPercent: 100, opacity: 0 });
+          gsap.to(splitp.lines, { duration: 1, yPercent: 0, opacity: 1, stagger: 0.05, ease: 'power4.out', 
+            scrollTrigger: { trigger: splitp.lines, start: 'top 80%', end: 'bottom 40%', scrub: false }
           })  
         }
       }
-      if (section.querySelector('.cols-2')){
-        gsap.set(section.querySelector('.cols-2'), { autoAlpha: 0 }); 
-        gsap.to(section.querySelector('.cols-2'), { duration: 1, autoAlpha: 1, ease: 'power4.out', 
-          scrollTrigger: { scroller: '.scroller', trigger: section.querySelector('.cols-2'), start: 'top 80%', end: 'bottom 40%', scrub: true }
-        })
-      }
     })
     canvasElems = Array.from(document.querySelectorAll('.lineChildren'));
+
+    return () => {
+      gsap.killTweensOf(canvasElems);
+      ScrollTrigger.getAll().forEach( instance => instance.kill() );
+    }
   });
 
 </script>
-
-  <article class="scroller">
-    <section class="splash"> 
-      <h1>Simon Flöter creates products that stand out.</h1>
-    </section>
-    <section class="intro">
-      <h2>As a Creative Web Developer ...</h2> 
-      <div class="cols-2">
-        <div>
-          <p>I specialise in delivering beautifully crafted bespoke websites.</p> 
-          <p>Averse to blindly following the latest tech trends, I put the experience of both my client and the product's audience first.</p>
+    <article class="scroller">
+      <section class="splash"> 
+        <h1>Simon Flöter creates products that stand out.</h1>
+      </section>
+      <section class="intro">
+        <h2>As a Creative Web Developer ...</h2> 
+        <div class="cols-2">
+          <div>
+            <p>I specialise in delivering beautifully crafted bespoke websites.</p> 
+            <!-- <p>Averse to blindly following the latest tech trends, I put the experience of both my client and the product's audience first.</p>
+          </div>
+          <div>
+            <p>I consult on the best suited technology and approach for every project and execute it.</p>
+            <p>Whether it is pure HTML/CSS/Javascript, a 'monolithic' CMS like WordPress, a modern framework like React/Svelte, or a combination.</p> -->
+          </div>
         </div>
-        <div>
-          <p>I consult on the best suited technology and approach for every project and execute it.</p>
-          <p>Whether it is pure HTML/CSS/Javascript, a 'monolithic' CMS like WordPress, a modern framework like React/Svelte, or a combination.</p>
+        <div class="cta">
+          <a href="/work" class="button">Learn More</a>
+          <a href="/work" class="button button--primary">Hire Simon</a>
         </div>
-      </div>
-      <div class="cta">
-        <a href="/work" class="button">Learn More</a>
-        <a href="/work" class="button button--primary">Hire Simon</a>
-      </div>
-    </section>
-    <section class="more">
-      <h2>As a UX & Graphic Designer...</h2> 
-      <div class="cols-2">
-        <div>
-          <p>I worked for a wide range of clients, including Booking.com and Adidas, but also with startups and independent brands.</p>
+      </section>
+      <section class="more">
+        <h2>As a UX & Graphic Designer...</h2> 
+        <div class="cols-2">
+          <!-- <div>
+            <p>I worked for a wide range of clients, including Booking.com and Adidas, but also with startups and independent brands.</p>
+          </div> -->
+          <div>
+            <p>I have designed Websites, Housestyles, Typefaces, Advertising campaigns and Print publications for them.</p>
+          </div>
         </div>
-        <div>
-          <p>I have designed Websites, Housestyles, Typefaces, Advertising campaigns and Print publications for them.</p>
+        <div class="cta">
+          <a href="/work" class="button">Learn More</a>
+          <a href="/work" class="button button--primary">Hire Simon</a>
         </div>
-      </div>
-      <div class="cta">
-        <a href="/work" class="button">Learn More</a>
-        <a href="/work" class="button button--primary">Hire Simon</a>
-      </div>
-    </section>
-    <section class="more">
-      <h2>I create products that help great companies reach their audiences. Need help?</h2>
-      <div class="cta">
-        <a href="/work" class="button button--xl">Reach out!</a>
-      </div>
-    </section>
-  </article>
+      </section>
+      <section class="more">
+        <h2>I create products that help great companies reach their audiences. Need help?</h2>
+        <div class="cta">
+          <a href="/work" class="button button--xl">Reach out!</a>
+        </div>
+      </section>
+    </article>
   <HomeCanvas textsToCanvas={canvasElems}/>
 
 <style lang="scss">
   .scroller {
     font-size: clamp(32px, 4.5vw, 4.5vw);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
   }
   section {
     scroll-snap-align: start;
@@ -140,30 +135,41 @@
     font-style: normal;
     opacity: 0;
     margin: 0;
+    -webkit-touch-callout: none; /* Safari */
+    -webkit-user-select: none; /* Chrome */     
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
   }
   h1 {
     letter-spacing: -0.05em;
     line-height: .9;
     font-size: 17vw;
     margin-top: -.5em;
-    text-align: center;
+    // text-align: center;
     @media screen and (min-width: 768px) {
       font-size: 12vw;
     }
   }
   h2 {
     font-size: 1.25em;
-    margin-bottom: 1em;
+    font-weight: 800;
+    font-style: italic;
+    margin-bottom: .5em;
   }
-  .cols-2 {
-    @media screen and (min-width: 768px) {
-      margin: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .5em;
-      border-top: 2px solid var(--color-text);
-      margin-top: 0.125em;
-      padding-top: 0.125em;
-    }
+  p {
+    font-size: 0.7em;
+    -webkit-touch-callout: none; /* Safari */
+    -webkit-user-select: none; /* Chrome */     
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
+  }
+  a {
+    -webkit-touch-callout: none; /* Safari */
+    -webkit-user-select: none; /* Chrome */     
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
   }
 </style>
