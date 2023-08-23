@@ -70,7 +70,7 @@ h2 {
     flex: 0 0 calc(33% - .125em);
   }
 }
-.workhero {
+:global(.work img) {
   width: 100%;
   height: auto;
   aspect-ratio: var(--aspect-ratio-heroes);

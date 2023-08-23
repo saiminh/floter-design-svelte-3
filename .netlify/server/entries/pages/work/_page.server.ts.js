@@ -7,22 +7,10 @@ const fetchMarkdownPosts = async () => {
       const data = await resolver();
       const postData = data;
       const content = postData.default.render();
-      const srcJson = await import(
-        /* @vite-ignore */
-        "./assets" + postData.metadata.header_bg_image + "?w=336&format=webp"
-      );
-      const src = JSON.stringify(srcJson.default).replaceAll('"', "");
-      const srcsetJson = await import(
-        /* @vite-ignore */
-        "./assets" + postData.metadata.header_bg_image + "?w=1344;672;336&format=webp&as=srcset"
-      );
-      const srcset = JSON.stringify(srcsetJson.default).replaceAll('"', "");
       return {
         meta: postData.metadata,
         path: postPath,
-        Content: content.html,
-        src,
-        srcset
+        Content: content.html
       };
     })
   );
@@ -34,6 +22,7 @@ async function load() {
     console.error("No posts found");
   return {
     posts
+    // images
   };
 }
 export {

@@ -48,7 +48,7 @@ export function workClickHandler(e:Event){
   e.preventDefault();
   const target = e.target as HTMLElement;
   const originalLink = target.getAttribute('href') as string;
-  const targetImg = target.querySelector('.workhero') as HTMLElement;
+  const targetImg = target.querySelector('img') as HTMLElement;
   const targetImgRect = targetImg.getBoundingClientRect();
   const targetImgAspectRatio = targetImgRect.width / targetImgRect.height;
   target.classList.add('active');
@@ -61,7 +61,7 @@ export function workClickHandler(e:Event){
   targetImg.style.position = 'fixed';
 
 
-  gsap.to('.work:not(.active) .workhero', {
+  gsap.to('.work:not(.active) img', {
     duration: .3,
     opacity: 0,
     yPercent: 10,

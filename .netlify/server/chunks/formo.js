@@ -1,7 +1,7 @@
 import { c as create_ssr_component } from "./ssr.js";
 const metadata = {
   "title": "Formo.bio",
-  "header_bg_image": "/work/formo/formo_hero.png",
+  "header_bg_image": "formo_hero_xgb6xo",
   "video": "/work/formo/formo-rec.webm",
   "order": 12,
   "description": "Formo, as you might have heard, is an international sports and lifestyle clothing brand. I worked on several digital campaigns as a graphic designer and illustrator.",

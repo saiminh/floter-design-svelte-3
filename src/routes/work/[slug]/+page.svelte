@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+  import { CldImage } from 'svelte-cloudinary';
   export let data;
 
   gsap.registerPlugin(ScrollTrigger);
@@ -10,7 +11,7 @@
 
   function animForDesktop() {
     ScrollTrigger.getAll().forEach(t => t.kill());
-    gsap.to('.hero', { duration: .6, x: "-10%", ease: "cubic.inOut" })
+    gsap.to('.heromask img', { duration: .6, x: "-10%", ease: "cubic.inOut" })
     gsap.from('.work', {
       xPercent: 100,
       duration: .66,
@@ -45,7 +46,7 @@
   }
   function animForMobile() {
     ScrollTrigger.getAll().forEach(t => t.kill());
-    gsap.to('.hero', { duration: .6, x: 0, ease: "cubic.inOut" })
+    gsap.to('.heromask img', { duration: .6, x: 0, ease: "cubic.inOut" })
     gsap.from('.work', {
       opacity: 0,
       y: 100,
@@ -105,21 +106,25 @@
       animForSize();
     })
 
-    document.body.classList.add('work');
+    // document.body.classList.add('work');
   })
   onDestroy(() => {
-    document.body.classList.remove('work');
+    // document.body.classList.remove('work');
   })
 </script>
+
+<svelte:document class="work" ></svelte:document>
+
 <div class="heromask">
-  <img 
-    class="hero" 
-    src={data.src}
-    srcset={data.srcSet}
-    alt="{data.title}" 
-    loading="eager"
-    decoding="sync"
-  />
+    <CldImage 
+      src={data.header_bg_image}
+      alt="{data.title}" 
+      sizes="100vw"
+      width={2100}
+      height={1400}
+      loading="eager"
+      objectFit="fill"
+    />
 </div>
 <div class="subnav">
   <a href="/work" class="subnav-item">← Back</a>
@@ -162,14 +167,15 @@
       position: fixed;
     }
   }
-  .hero {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
+  :global(.heromask img) {
     z-index: 0;
     display: block;
     position: relative;
-    perspective: 400px;
+    width: 100%;
+    height: 100%;  
+    aspect-ratio: var(--aspect-ratio-heroes);
+    margin: 0;
+    object-fit: fill;
   }
   .work-content {
     padding: 0 var(--spacing-outer);
