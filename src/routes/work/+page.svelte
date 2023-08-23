@@ -35,7 +35,7 @@
             alt={work.meta.title}
             width="2100"
             height="1400"
-            loading= {i < 9 ? "eager" : "lazy"}
+            loading= {i < 10 ? "eager" : "lazy"}
           />
         <h2>{work.meta.title}</h2>
       </a>
