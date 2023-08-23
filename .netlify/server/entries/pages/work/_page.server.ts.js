@@ -22,7 +22,6 @@ async function load() {
     console.error("No posts found");
   return {
     posts
-    // images
   };
 }
 export {

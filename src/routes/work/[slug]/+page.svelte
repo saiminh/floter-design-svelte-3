@@ -10,18 +10,21 @@
   let visible = false;
 
   function animForDesktop() {
+
     ScrollTrigger.getAll().forEach(t => t.kill());
-    gsap.to('.heromask img', { duration: .6, x: "-10%", ease: "cubic.inOut" })
-    gsap.from('.work', {
-      xPercent: 100,
+    
+    // gsap.to('.heromask img', { duration: .6, x: "-10%", ease: "cubic.inOut" })
+    
+    gsap.to('.work', {
+      xPercent: -100,
       duration: .66,
       ease: "cubic.out",
+      delay: .2
     })
     
     let heroheight = document.querySelector('.heromask')?.getBoundingClientRect().height || 100;
-    gsap.fromTo('.heromask', {
-      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-    },{
+
+    gsap.to('.heromask', {
       clipPath: "polygon(0 0, 50% 0, 25% 100%, 0% 100%)",
       duration: .6,
       ease: "cubic.inOut",
@@ -47,11 +50,12 @@
   function animForMobile() {
     ScrollTrigger.getAll().forEach(t => t.kill());
     gsap.to('.heromask img', { duration: .6, x: 0, ease: "cubic.inOut" })
-    gsap.from('.work', {
+    gsap.to('.work', {
       opacity: 0,
       y: 100,
       duration: .66,
       ease: "cubic.inOut",
+      delay: .2
     })
     
     gsap.to('.heromask', {
@@ -105,15 +109,8 @@
     portrait.addEventListener("change", function(e) {
       animForSize();
     })
-
-    // document.body.classList.add('work');
-  })
-  onDestroy(() => {
-    // document.body.classList.remove('work');
   })
 </script>
-
-<svelte:document class="work" ></svelte:document>
 
 <div class="heromask">
     <CldImage 
@@ -142,12 +139,18 @@
 </article>
 
 <style lang="scss">
-  article {
+  .work {
     width: 100vw;
     min-height: 100svh;
     overflow: hidden;
     padding-bottom: 60px;
     background-color: var(--color-bg);
+    position: relative;
+    top: 100svh;
+    @media screen and (min-width: 768px) {
+      top: 0;
+      left: 100vw;
+    }
   }
   .subnav {
     position: fixed;
@@ -160,10 +163,10 @@
     position: fixed;
     top: 0;
     left:0;
-    width: 100%;
-    z-index: 2;
-    height: auto;
     aspect-ratio: var(--aspect-ratio-heroes);
+    width: 100%;
+    height: auto;
+    z-index: 2;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   }
   :global(.heromask img) {

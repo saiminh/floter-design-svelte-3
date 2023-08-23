@@ -44,7 +44,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.data(data);
   $$result.css.add(css);
   return `<h1 class="headline svelte-1wmqw8p" data-svelte-h="svelte-1us57h5"><span class="svelte-1wmqw8p">Casestudies</span></h1> <div class="works svelte-1wmqw8p">${each(data.posts, (work, i) => {
-    return `<a${add_attribute("href", work.path, 0)} class="work svelte-1wmqw8p">${validate_component(CldImage, "CldImage").$$render(
+    return `<a data-sveltekit-preload-data${add_attribute("href", work.path, 0)} class="work svelte-1wmqw8p">${validate_component(CldImage, "CldImage").$$render(
       $$result,
       {
         src: work.meta.header_bg_image,
@@ -52,7 +52,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         alt: work.meta.title,
         width: "2100",
         height: "1400",
-        loading: i < 9 ? "eager" : "lazy"
+        objectFit: "fill",
+        placeholder: "blur",
+        loading: i < 10 ? "eager" : "lazy"
       },
       {},
       {}

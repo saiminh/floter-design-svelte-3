@@ -19,8 +19,6 @@ async function load({ params }) {
       svg,
       video,
       Content
-      // src,
-      // srcSet
     };
   } catch (error) {
     console.error(error);
