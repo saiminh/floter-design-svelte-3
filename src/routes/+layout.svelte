@@ -7,13 +7,10 @@
 
 <Header />
 
-{#key data.pathname}
-  
-  <div 
-    class="content" 
-    
-  > 
-    <slot />
-  </div>
- 
-{/key}
+  {#key data.pathname}
+    <div 
+      class="content"
+    >
+      <slot />
+    </div>
+  {/key}

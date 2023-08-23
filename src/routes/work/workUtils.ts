@@ -59,7 +59,12 @@ export function workClickHandler(e:Event){
   const clone = targetImg.cloneNode(true) as HTMLElement;
   targetImg.parentElement?.insertBefore(clone, targetImg);
   targetImg.style.position = 'fixed';
-
+  const coverclone = targetImg.cloneNode(true) as HTMLElement;
+  coverclone.style.zIndex = '-1';
+  coverclone.style.visibility = 'visible';
+  coverclone.style.opacity = '0';
+  
+  document.body.appendChild(coverclone);
 
   gsap.to('.work:not(.active) img', {
     duration: .3,
@@ -70,6 +75,16 @@ export function workClickHandler(e:Event){
   gsap.set(targetImg, {
     zIndex: 100,
   })
+  gsap.to(coverclone, {
+    duration: .3,
+    top: 0,
+    left: 0,
+    opacity: 1,
+    width: window.innerWidth,
+    height: window.innerWidth / targetImgAspectRatio,
+    ease: 'circ.inOut',
+    delay: 0.3
+  })
   gsap.to(targetImg, {
     duration: .3,
     top: 0,
@@ -78,6 +93,12 @@ export function workClickHandler(e:Event){
     height: window.innerWidth / targetImgAspectRatio,
     ease: 'circ.inOut',
     delay: 0.3,
+    onComplete: () => {
+      setTimeout(() => {
+        
+        coverclone.remove();
+      }, 300);
+    }
   })
   gsap.to(bulge, {
     duration: .3,

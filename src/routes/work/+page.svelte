@@ -1,9 +1,10 @@
 <script lang="ts">
   import WorkCanvas from '$lib/components/WorkCanvas.svelte';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { workClickHandler, initWorkPage } from './workUtils.js';
   import { workbulge } from '$lib/utils/stores.js';
   import { CldImage } from 'svelte-cloudinary';
+  import { browser } from '$app/environment';
   import { fade } from 'svelte/transition';
   export let data;
 
@@ -28,13 +29,20 @@
   <div class="works">
     
     {#each data.posts as work, i}
-      <a href="{work.path}" class="work" on:click={ (e) => workClickHandler(e) }>
+      <a 
+        data-sveltekit-preload-data
+        href="{work.path}" 
+        class="work" 
+        on:click={ (e) => workClickHandler(e) } 
+      >
           <CldImage 
             src={work.meta.header_bg_image}
             sizes="(min-width: 768px) 20vw, 50vw"
             alt={work.meta.title}
             width="2100"
             height="1400"
+            objectFit="fill"
+            placeholder="blur"
             loading= {i < 10 ? "eager" : "lazy"}
           />
         <h2>{work.meta.title}</h2>

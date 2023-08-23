@@ -122,6 +122,7 @@
       sizes="100vw"
       width={2100}
       height={1400}
+      placeholder="blur"
       loading="eager"
       objectFit="fill"
     />
@@ -143,8 +144,10 @@
 <style lang="scss">
   article {
     width: 100vw;
+    min-height: 100svh;
     overflow: hidden;
     padding-bottom: 60px;
+    background-color: var(--color-bg);
   }
   .subnav {
     position: fixed;
@@ -162,10 +165,6 @@
     height: auto;
     aspect-ratio: var(--aspect-ratio-heroes);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-    
-    @media screen and (min-width: 768px) {
-      position: fixed;
-    }
   }
   :global(.heromask img) {
     z-index: 0;
