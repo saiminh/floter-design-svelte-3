@@ -13,7 +13,7 @@
 
     ScrollTrigger.getAll().forEach(t => t.kill());
     
-    // gsap.to('.heromask img', { duration: .6, x: "-10%", ease: "cubic.inOut" })
+    gsap.to('.heromask, .coverclone', { duration: .6, x: "-10%", ease: "cubic.inOut" })
     
     gsap.to('.work', {
       xPercent: -100,
@@ -25,49 +25,53 @@
     let heroheight = document.querySelector('.heromask')?.getBoundingClientRect().height || 100;
 
     gsap.to('.heromask', {
-      clipPath: "polygon(0 0, 50% 0, 25% 100%, 0% 100%)",
+      clipPath: "polygon(0 0, 60% 0, 35% 100%, 0% 100%)",
       duration: .6,
       ease: "cubic.inOut",
-      
+      onStart: () => {
+        setTimeout(() => {
+          document.querySelector('.coverclone')?.remove();
+        }, 100);
+      },
       onComplete: () => {
-        gsap.fromTo('.heromask', {
-          clipPath: "polygon(0 0, 50% 0, 25% 100%, 0% 100%)",
-        },{
-          clipPath: "polygon(0 0, 30% 0, 25% 100%, 0% 100%)",
-          duration: .6,
-          ease: "none",
+        gsap.to('.heromask', {
+          ease: "power1.inOut",
+          clipPath: "polygon(0 0, 50% 0, 50% 100%, 0% 100%)",
           scrollTrigger: {
             trigger: '.work',
-            start: '0px 0px',
-            end: `0px -${heroheight * 0.3}px`,
-            scrub: true,
-          }
+            start: '0% top',
+            end: `100px top`,
+            scrub: true
+          }          
         })
       }
     })
-    
   }
   function animForMobile() {
     ScrollTrigger.getAll().forEach(t => t.kill());
-    gsap.to('.heromask img', { duration: .6, x: 0, ease: "cubic.inOut" })
+    gsap.to('.heromask, .coverclone', { duration: .6, y: -20, ease: "cubic.inOut" })
+    
     gsap.to('.work', {
-      opacity: 0,
-      y: 100,
-      duration: .66,
-      ease: "cubic.inOut",
-      delay: .2
+      opacity: 1,
+      yPercent: -100,
+      duration: .4,
+      ease: "expo.out",
+      delay: .2,
     })
     
     gsap.to('.heromask', {
       clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
       duration: .6,
       ease: "cubic.inOut",
-
+      onStart: () => {
+        document.querySelector('.coverclone')?.remove();
+      },
       onComplete: () => {
         gsap.to('.heromask', {
           ease: "power1.out",
           scrollTrigger: {
             trigger: '.work',
+            markers: false,
             start: '0px -10px',
             end: `0px -20px`,
             scrub: false,
@@ -102,12 +106,14 @@
     
     visible = true;
     
-    animForSize();
-    
-    let portrait = window.matchMedia("(orientation: portrait)");
-
-    portrait.addEventListener("change", function(e) {
+    document.querySelector('.heromask img')?.addEventListener('load', () => {
       animForSize();
+      
+      let portrait = window.matchMedia("(orientation: portrait)");
+  
+      portrait.addEventListener("change", function(e) {
+        animForSize();
+      })
     })
   })
 </script>
@@ -143,13 +149,11 @@
     width: 100vw;
     min-height: 100svh;
     overflow: hidden;
-    padding-bottom: 60px;
-    background-color: var(--color-bg);
-    position: relative;
-    top: 100svh;
+    box-sizing: border-box;
+    // background-color: var(--color-bg);
+    transform: translateY(100%);
     @media screen and (min-width: 768px) {
-      top: 0;
-      left: 100vw;
+      transform: translateX(100%);
     }
   }
   .subnav {
@@ -158,6 +162,10 @@
     right: 0;
     z-index: 4;
     padding: var(--spacing-outer);
+
+    & a {
+      text-decoration: none;
+    }
   }
   .heromask {
     position: fixed;
@@ -181,11 +189,14 @@
   }
   .work-content {
     padding: 0 var(--spacing-outer);
-    padding-top: calc(100vw / var(--aspect-ratio-heroes) + 1.5em);
+    padding-top: calc(66.6vw + 1em);
     position: relative;
     z-index: 1;
-    margin-top: 0;
     color: var(--color-text);
+
+    & :last-child {
+      margin-bottom: 100px;
+    }
     
     @media screen and (min-width: 768px) {
       margin-left: 40vw;
@@ -193,7 +204,6 @@
       padding-top: calc( 3 * var(--spacing-outer) );
       padding-left: calc(var(--spacing-outer) * 1.5);
       padding-right: calc(var(--spacing-outer) * 2.5);
-      
     }
   }
   .work-content-text {

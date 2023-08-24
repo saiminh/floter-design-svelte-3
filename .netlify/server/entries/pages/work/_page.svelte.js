@@ -1,7 +1,7 @@
-import { c as create_ssr_component, o as onDestroy, b as add_attribute, d as each, v as validate_component, e as escape } from "../../../chunks/ssr.js";
+import { c as create_ssr_component, o as onDestroy, a as add_attribute, b as each, v as validate_component, e as escape } from "../../../chunks/ssr.js";
 import "pixi.js";
 import "pixi-filters";
-import { w as writable } from "../../../chunks/index2.js";
+import { w as workbulge } from "../../../chunks/stores2.js";
 import { C as CldImage } from "../../../chunks/CldImage.js";
 const WorkCanvas_svelte_svelte_type_style_lang = "";
 const css$1 = {
@@ -24,7 +24,6 @@ const WorkCanvas = create_ssr_component(($$result, $$props, $$bindings, slots) =
   $$result.css.add(css$1);
   return `<canvas class="svelte-1819g2x"${add_attribute("this", canvas, 0)}></canvas>`;
 });
-const workbulge = writable(0.25);
 workbulge.subscribe((value) => {
 });
 const _page_svelte_svelte_type_style_lang = "";
@@ -53,7 +52,6 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         width: "2100",
         height: "1400",
         objectFit: "fill",
-        placeholder: "blur",
         loading: i < 10 ? "eager" : "lazy"
       },
       {},

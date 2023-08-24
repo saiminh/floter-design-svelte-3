@@ -42,7 +42,6 @@
             width="2100"
             height="1400"
             objectFit="fill"
-            placeholder="blur"
             loading= {i < 10 ? "eager" : "lazy"}
           />
         <h2>{work.meta.title}</h2>

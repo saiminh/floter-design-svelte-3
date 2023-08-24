@@ -23,11 +23,15 @@ export default function createCanvasText( element: HTMLElement,  stage: PIXI.Con
     fill: elemColor,
     align: elemAlignment as PIXI.TextStyleAlign,
   });
+  canvasText.on('added', () => {
+    console.log('canvas text added');
+    elem.classList.add('canvas-text-added');
+    elem.style.opacity = '0';
+    elem.style.visibility = 'hidden';
+  });
   canvasText.position.set(elemPosition.x, elemPosition.y);
   // canvasText.zIndex = 100;
   stage.addChild(canvasText);
 
-  elem.style.opacity = '0';
-  elem.style.visibility = 'hidden';
   return canvasText;
 }

@@ -1,4 +1,4 @@
-import { c as create_ssr_component, b as add_attribute } from "../../../chunks/ssr.js";
+import { c as create_ssr_component, a as add_attribute } from "../../../chunks/ssr.js";
 const myImgSrcSetWebp = "/_app/immutable/assets/formo_hero.76612d9f.webp 1344w, /_app/immutable/assets/formo_hero.3c06dcdd.webp 672w, /_app/immutable/assets/formo_hero.bdd89961.webp 336w";
 const myImg = [
   "/_app/immutable/assets/formo_hero.10e20058.avif",

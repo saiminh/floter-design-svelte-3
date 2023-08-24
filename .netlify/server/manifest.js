@@ -10,7 +10,7 @@ return {
 	assets: new Set([".DS_Store","cursor.png","cursor.svg","favicon.png","pointer.png","pointer.svg","work/.DS_Store","work/adidas/adidas_hero.jpg","work/formo/formo-rec.mp4","work/formo/formo-rec.webm","work/formo/formo_hero.png","work/jpl/jpl_hero.jpg"]),
 	mimeTypes: {".png":"image/png",".svg":"image/svg+xml",".jpg":"image/jpeg",".mp4":"video/mp4",".webm":"video/webm"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.83bc8b41.js","app":"_app/immutable/entry/app.751e6d7c.js","imports":["_app/immutable/entry/start.83bc8b41.js","_app/immutable/chunks/scheduler.cd8ec38c.js","_app/immutable/chunks/singletons.3c20dddb.js","_app/immutable/entry/app.751e6d7c.js","_app/immutable/chunks/scheduler.cd8ec38c.js","_app/immutable/chunks/index.9e7d825d.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.0e966e92.js","app":"_app/immutable/entry/app.fea8eb32.js","imports":["_app/immutable/entry/start.0e966e92.js","_app/immutable/chunks/scheduler.8b80e243.js","_app/immutable/chunks/singletons.a1418874.js","_app/immutable/entry/app.fea8eb32.js","_app/immutable/chunks/scheduler.8b80e243.js","_app/immutable/chunks/index.b20febff.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),

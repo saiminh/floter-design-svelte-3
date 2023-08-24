@@ -60,6 +60,7 @@ export function workClickHandler(e:Event){
   targetImg.parentElement?.insertBefore(clone, targetImg);
   targetImg.style.position = 'fixed';
   const coverclone = targetImg.cloneNode(true) as HTMLElement;
+  coverclone.classList.add('coverclone');
   coverclone.style.zIndex = '-1';
   coverclone.style.visibility = 'visible';
   coverclone.style.opacity = '0';
@@ -92,13 +93,7 @@ export function workClickHandler(e:Event){
     width: window.innerWidth,
     height: window.innerWidth / targetImgAspectRatio,
     ease: 'circ.inOut',
-    delay: 0.3,
-    onComplete: () => {
-      setTimeout(() => {
-        
-        coverclone.remove();
-      }, 300);
-    }
+    delay: 0.3
   })
   gsap.to(bulge, {
     duration: .3,
