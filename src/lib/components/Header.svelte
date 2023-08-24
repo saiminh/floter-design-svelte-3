@@ -30,7 +30,7 @@
       bottom: 0;
       left: 0;
       z-index: 3;
-      border-top: 1px solid var(--color-text);
+      // border-top: 1px solid var(--color-text);
     }
   }
 </style>

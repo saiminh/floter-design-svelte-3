@@ -29,7 +29,8 @@ onMount(()=>{
     antialias: true,
     autoDensity: true, 
     resolution: 2,
-    backgroundAlpha: 0,
+    backgroundAlpha: 1,
+    backgroundColor: 0x223ad4,
     view: canvas,
   });
   
@@ -112,7 +113,6 @@ onMount(()=>{
     imgsToCanvas.forEach((element) => {
       imgElems.push(element);
       let canvasImg = createCanvasImg(element as HTMLImageElement, app.stage);
-      // canvasImg.tint = 0xff9494;
       canvasImgs.push(canvasImg);
     })
   }

@@ -25,7 +25,7 @@
   });
 </script>
 
-<h1 class="headline"><span>Casestudies</span></h1>
+<h1 class="headline"><span>Happy Clients</span></h1>
   <div class="works">
     
     {#each data.posts as work, i}

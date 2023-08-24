@@ -17,8 +17,8 @@
     
     gsap.to('.work', {
       xPercent: -100,
-      duration: .66,
-      ease: "cubic.out",
+      duration: .4,
+      ease: "expo.out",
       delay: .2
     })
     
@@ -64,7 +64,9 @@
       duration: .6,
       ease: "cubic.inOut",
       onStart: () => {
-        document.querySelector('.coverclone')?.remove();
+        setTimeout(() => {
+          document.querySelector('.coverclone')?.remove();
+        }, 100);
       },
       onComplete: () => {
         gsap.to('.heromask', {

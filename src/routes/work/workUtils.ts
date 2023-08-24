@@ -19,19 +19,19 @@ export function initWorkPage( h1: HTMLElement, canvasImgElems: Array<HTMLElement
   h1.style.overflow = 'hidden';
   h1.style.whiteSpace = 'nowrap';
   const spans = Array.from(h1.querySelectorAll('span'));
-  spans.forEach((span) => {
-    gsap.set(span, { opacity: 0, y: window.innerHeight })
-    gsap.to(span, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+  spans.forEach((span, index) => {
+    gsap.set(span, { opacity: 1, y: -window.innerHeight/1.5 })
+    gsap.to(span, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: index * 0.025 })
     gsap.to(span, { xPercent: -100, duration: 4, ease: 'none', repeat: -1 })
   });
 
   gsap.set(canvasImgElems, {
-    opacity: 0, yPercent: 100
+    opacity: 0, yPercent: 50
   })
   
   gsap.to(canvasImgElems, {
     duration: 1,
-    opacity: 1,
+    opacity: .8,
     yPercent: 0,
     stagger: 0.05,
     ease: 'elastic.out(0.75, 0.5)',

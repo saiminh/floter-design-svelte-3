@@ -79,7 +79,6 @@
   }
   .close {
     top: 0.033em;
-    color: #FFF;
   }
   #menustate, #nav, .close {
     /* Hide the checkbox, menu and close button by default */

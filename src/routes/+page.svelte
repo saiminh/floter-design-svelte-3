@@ -1,5 +1,6 @@
 <script lang='ts'>
   import HomeCanvas from '$lib/components/HomeCanvas.svelte';
+  import Loader from '$lib/components/Loader.svelte';
   import { onMount } from 'svelte';
   import { gsap } from 'gsap';
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
@@ -60,10 +61,7 @@
 
 </script>
 {#if !mounted}
-  <div class="loader">
-    <div class="lds-circle"><div></div></div>
-    <p>Loading...</p>
-  </div>
+  <Loader />
 {/if}
 <article class="scroller">
   <section class="splash"> 
@@ -71,16 +69,7 @@
   </section>
   <section class="intro">
     <h2>As a Creative Web Developer ...</h2> 
-    <div class="cols-2">
-      <div>
-        <p>I specialise in delivering beautifully crafted bespoke websites.</p> 
-        <!-- <p>Averse to blindly following the latest tech trends, I put the experience of both my client and the product's audience first.</p>
-      </div>
-      <div>
-        <p>I consult on the best suited technology and approach for every project and execute it.</p>
-        <p>Whether it is pure HTML/CSS/Javascript, a 'monolithic' CMS like WordPress, a modern framework like React/Svelte, or a combination.</p> -->
-      </div>
-    </div>
+    <p>I specialise in delivering beautifully crafted bespoke websites.</p> 
     <div class="cta">
       <a href="/work" class="button">Learn More</a>
       <a href="/work" class="button button--primary">Hire Simon</a>
@@ -88,14 +77,7 @@
   </section>
   <section class="more">
     <h2>As a UX & Graphic Designer...</h2> 
-    <div class="cols-2">
-      <!-- <div>
-        <p>I worked for a wide range of clients, including Booking.com and Adidas, but also with startups and independent brands.</p>
-      </div> -->
-      <div>
-        <p>I have designed Websites, Housestyles, Typefaces, Advertising campaigns and Print publications for them.</p>
-      </div>
-    </div>
+    <p>I have designed Websites, Housestyles, Typefaces, Advertising campaigns and Print publications for them.</p>
     <div class="cta">
       <a href="/work" class="button">Learn More</a>
       <a href="/work" class="button button--primary">Hire Simon</a>
@@ -110,45 +92,6 @@
 </article>
 <HomeCanvas textsToCanvas={canvasElems}/>
 <style lang="scss">
-  .loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-
-    & p {
-      font-size: 1.25em;
-    }
-  }
-  .lds-circle {
-    display: inline-block;
-    transform: translateZ(1px);
-  }
-  .lds-circle > div {
-    display: inline-block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border-radius: 50%;
-    background: var(--color-text);
-    animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  }
-  @keyframes lds-circle {
-    0%, 100% {
-      animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
-    }
-    0% {
-      transform: rotateY(0deg);
-    }
-    50% {
-      transform: rotateY(1800deg);
-      animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
-    }
-    100% {
-      transform: rotateY(3600deg);
-    }
-  }
   .scroller {
     font-size: clamp(32px, 4.5vw, 4.5vw);
   }
