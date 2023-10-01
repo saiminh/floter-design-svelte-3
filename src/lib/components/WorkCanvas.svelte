@@ -13,24 +13,30 @@ import { tick } from 'svelte';
 
 export let textsToCanvas: Array<HTMLElement> = [];
 export let imgsToCanvas: Array<HTMLElement> = [];
-export let bulgeFactor: number = 0.15;  
+export let bulgeFactor: number = 0.15; // comes from attribute   
 let app: PIXI.Application;
 let canvas: HTMLCanvasElement;
 
-onMount(()=>{
+onMount( () => {
   
   let is_fine = window.matchMedia('(pointer:fine)').matches
   let is_landscape = window.matchMedia('(orientation:landscape)').matches
 
   gsap.registerPlugin(PixiPlugin, ScrollTrigger, SplitText);
+
+  const root = document.querySelector(':root') as HTMLElement;
+  const bgColorFromRoot = () => { return getComputedStyle(root).getPropertyValue('--color-bg') || 'rgb(255, 255, 255)'};
+  function textColorFromRoot(){ return getComputedStyle(root).getPropertyValue('--color-text') || 'rgb(0, 0, 0)' };
+  const highlightColorFromRoot = () => { return getComputedStyle(root).getPropertyValue('--color-highlight') || 'rgb(0, 0, 0)' };
+  const thisElemBgColor  = (elem: HTMLElement) => { return getComputedStyle(elem).getPropertyValue('background-color') || 'rgb(255, 255, 255)' };
   
   app = new PIXI.Application({
     resizeTo: window,
     antialias: true,
     autoDensity: true, 
     resolution: 2,
-    backgroundAlpha: 1,
-    backgroundColor: 0x223ad4,
+    backgroundColor: bgColorFromRoot(),
+    backgroundAlpha: 0,
     view: canvas,
   });
   
@@ -52,15 +58,19 @@ onMount(()=>{
   group.y = window.innerHeight / 2;
   app.stage.addChild(group);
   
-  let recty = new PIXI.Graphics();
-  recty.beginFill('rgb(0, 0, 0)');
-  recty.drawRect(0, 0, xFrac(1), yFrac(1));
-  recty.endFill();
-  recty.alpha = 0;
-  recty.pivot.set(xFrac(.5), yFrac(.5));
-  recty.x = xFrac(0.5);
-  recty.y = yFrac(0.5);
-  group.addChild(recty);
+  let group_background = new PIXI.Graphics();
+  function draw_group_background(group_background: PIXI.Graphics) {
+    group_background.clear();
+    group_background.beginFill(bgColorFromRoot());
+    group_background.drawRect(0, 0, xFrac(1), yFrac(1));
+    group_background.endFill();
+    group_background.alpha = 0;
+    group_background.pivot.set(xFrac(.5), yFrac(.5));
+    group_background.x = xFrac(0.5);
+    group_background.y = yFrac(0.5);
+  }
+  draw_group_background(group_background);
+  group.addChild(group_background);
   
   let center = [0.5, 0.5];
   let bulgefilter = new BulgePinchFilter();
@@ -68,8 +78,9 @@ onMount(()=>{
   bulgefilter.strength = is_landscape ? bulgeFactor : bulgeFactor * 1.25;
   bulgefilter.center = center;
   bulgefilter.resolution = 2;
-  app.stage.filters = [bulgefilter];
   
+  app.stage.filters = [bulgefilter];
+
   
   /*----------------------------------
   * Convert text to canvas using 
@@ -87,7 +98,6 @@ onMount(()=>{
     })
   }  
 
-
   /*----------------------------------
    * Function to update text on canvas
    * runs in the Ticker
@@ -95,11 +105,11 @@ onMount(()=>{
   function updateText(){
     canvasTexts.forEach((text, index) => {
       let headlinePosition = elems[index].getBoundingClientRect();
-      text.position.set(headlinePosition.x, headlinePosition.y);
-      // text.position.x = headlinePosition.x; 
-      // ^ This bcs pos:fixed doesn't update fast enough when mobile browser chrome changes on scroll
-      text.alpha = elems[index].style.opacity as unknown as number || 0.3;
+      text.position.set(headlinePosition.x - ((tween.x - 0.5) * 50), headlinePosition.y - ((tween.y - 0.5) * 50));
+      text.alpha = window.getComputedStyle(elems[index]).opacity as unknown as number;
+      text.style.fill = window.getComputedStyle(elems[index]).color;
     })
+
   }
 
   /*----------------------------------
@@ -112,7 +122,7 @@ onMount(()=>{
   function convertImgs(){
     imgsToCanvas.forEach((element) => {
       imgElems.push(element);
-      let canvasImg = createCanvasImg(element as HTMLImageElement, app.stage);
+      let canvasImg = createCanvasImg(element as HTMLImageElement, group);    
       canvasImgs.push(canvasImg);
     })
   }
@@ -122,6 +132,7 @@ onMount(()=>{
   * Function to update text on canvas
   * runs in the Ticker
   ----------------------------------*/
+  
   function updateImgs(){
     canvasImgs.forEach((image, index) => {
       let imagePosition = imgElems[index].getBoundingClientRect();
@@ -133,7 +144,44 @@ onMount(()=>{
     })
   }
 
+  let workinfoBgs: Array<PIXI.Graphics> = [];
+  let workinfos = document.querySelectorAll('.work-info');
 
+
+  /*----------------------------------
+  * Create background for workinfo
+  ----------------------------------*/
+  function createWorkInfoBgs() {
+    workinfos.forEach( workinfo => {
+      const workinfoRect = workinfo.getBoundingClientRect();
+      let workinfoGraphic = new PIXI.Graphics();
+      workinfoGraphic.beginFill(textColorFromRoot());
+      workinfoGraphic.drawRect(workinfoRect.x, workinfoRect.y, workinfoRect.width, workinfoRect.height);
+      workinfoGraphic.endFill();
+      workinfoGraphic.pivot.set(workinfoRect.x, workinfoRect.y);
+      workinfoBgs.push(workinfoGraphic);
+      app.stage.addChild(workinfoGraphic);
+    })
+  }
+
+  /*----------------------------------
+  * Update background for workinfo
+  ----------------------------------*/
+  function updateWorkInfoBgs() {
+    workinfos.forEach((workinfo, index) => {
+      const workinfoRect = workinfo.getBoundingClientRect();
+      workinfoBgs[index].clear();
+      workinfoBgs[index].beginFill(thisElemBgColor(workinfo as HTMLElement));
+      workinfoBgs[index].drawRect(workinfoRect.x, workinfoRect.y, workinfoRect.width, workinfoRect.height);
+      workinfoBgs[index].endFill();
+      workinfoBgs[index].pivot.set(workinfoRect.x, workinfoRect.y);
+      workinfoBgs[index].position.set(workinfoRect.x - ((tween.x - 0.5) * 50), workinfoRect.y - ((tween.y - 0.5) * 50));
+      workinfoBgs[index].alpha = window.getComputedStyle(workinfo).opacity as unknown as number;
+    })
+  }
+
+
+  createWorkInfoBgs();
   setTimeout(() => {
     convertImgs();
     convertText();
@@ -177,6 +225,7 @@ onMount(()=>{
     bulgefilter.strength = is_landscape ? bulgeFactor : bulgeFactor * 1.25;
     updateImgs();
     updateText();
+    updateWorkInfoBgs();
   })
 }) // <- end onMount
 

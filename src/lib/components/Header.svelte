@@ -20,17 +20,6 @@
     display: block;
     margin: var(--spacing-nav);
     cursor: url('/pointer.svg'), auto;
-  }
-  .header-nav {
-    @media screen and (max-width: 767px) {
-      background-color: var(--color-bg);
-      width: 100%;
-      height: calc(36px + 2 * var(--spacing-nav));
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      z-index: 3;
-      // border-top: 1px solid var(--color-text);
-    }
+    text-decoration: none;
   }
 </style>

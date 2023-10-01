@@ -1,6 +1,7 @@
 <script lang='ts'>
   import { onMount } from "svelte";
   import { gsap } from "gsap";
+  import { page } from "$app/stores";
   
   onMount(() => {
 
@@ -15,6 +16,9 @@
     let navlinks = document.querySelectorAll('nav a');
     navlinks.forEach((link, index) => {
       link.addEventListener('click', (e)=> {
+        if (e.target?.toString() === $page.url.toString()) {
+          return;
+        } 
         const checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
         checkbox ? checkbox.checked = false : null;
         gsap.to('.content > *', {duration: 0.5, y: '100%', autoAlpha: 1, ease: 'power4.out'});
@@ -48,9 +52,9 @@
     <span class="close">×</span>
   </label>
   <nav id="nav">
-    <a href="/">Home</a>
-    <a href="/work">About</a>
-    <a href="/work">Hire</a>
+    <a href="/" class="navlink {$page.route.id === '/' ? 'current' : ''}">Home</a>
+    <a href="/about" class="navlink {$page.route.id === '/about' ? 'current' : ''}">About</a>
+    <a href="/work" class="navlink {$page.route.id === '/work' ? 'current' : ''}">Work</a>
   </nav>
 </header>
 
@@ -121,6 +125,10 @@
 
     &:first-child {
       margin-top: 1em;
+    }
+
+    &.current {
+      text-decoration: underline;
     }
   }
 </style>

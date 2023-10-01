@@ -7,6 +7,7 @@ type Post = {
     header_bg_image: string
     svg: string
     video: string
+    order: number
   }
   default: {
     render: () => string

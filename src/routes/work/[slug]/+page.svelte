@@ -17,7 +17,7 @@
     
     gsap.to('.work', {
       xPercent: -100,
-      duration: .4,
+      duration: .6,
       ease: "expo.out",
       delay: .2
     })
@@ -26,8 +26,8 @@
 
     gsap.to('.heromask', {
       clipPath: "polygon(0 0, 60% 0, 35% 100%, 0% 100%)",
-      duration: .6,
-      ease: "cubic.inOut",
+      duration: 1,
+      ease: "power4.out",
       onStart: () => {
         setTimeout(() => {
           document.querySelector('.coverclone')?.remove();
@@ -35,12 +35,12 @@
       },
       onComplete: () => {
         gsap.to('.heromask', {
-          ease: "power1.inOut",
+          ease: "none",
           clipPath: "polygon(0 0, 50% 0, 50% 100%, 0% 100%)",
           scrollTrigger: {
             trigger: '.work',
-            start: '0% top',
-            end: `100px top`,
+            start: 'top top',
+            end: `200px top`,
             scrub: true
           }          
         })
@@ -138,6 +138,13 @@
 <article class="work">
   {#if visible}
   <div class="work-content">
+    {#if data.tags != undefined && data.tags.length > 0 }
+      <div class="tags">
+        {#each data.tags as tag }
+          <div class="tag">{tag}</div>
+        { /each }
+      </div>
+    {/if}
     <h1><span class="svg-logo">{@html data.svg}</span><span class="name">{data.title}</span></h1>
     <div class="work-content-text">
       {@html data.Content.html}
@@ -152,8 +159,8 @@
     min-height: 100svh;
     overflow: hidden;
     box-sizing: border-box;
-    // background-color: var(--color-bg);
     transform: translateY(100%);
+
     @media screen and (min-width: 768px) {
       transform: translateX(100%);
     }
@@ -167,6 +174,7 @@
 
     & a {
       text-decoration: none;
+      color: var(--color-highlight);
     }
   }
   .heromask {
@@ -196,10 +204,9 @@
     z-index: 1;
     color: var(--color-text);
 
-    & :last-child {
+    & > :last-child {
       margin-bottom: 100px;
     }
-    
     @media screen and (min-width: 768px) {
       margin-left: 40vw;
       max-width: 60vw;
@@ -208,19 +215,14 @@
       padding-right: calc(var(--spacing-outer) * 2.5);
     }
   }
-  .work-content-text {
-    @media screen and (min-width: 768px) {
-      border-top: 1px solid var(--color-text);
-    }
-  }
   h1 {
     position: relative;
     z-index: 1;
     margin: 0;
+
     @media screen and (min-width: 768px) {
       padding: 0 0 1em 0;
     }
-    
     & .name {
       display: none;
     }
@@ -237,6 +239,37 @@
       }
     }
   }
+  .tags {
+    padding-bottom: .25em;
+    font-size: 1em;
+    margin-bottom: 2em;
+    line-height: 1.1;
+
+    &:after {
+      content: '';
+      display: block;
+      width: calc(100% + var(--spacing-outer) * 2.5);
+      height: 1px;
+      background-color: var(--color-text);
+      margin-top: .5em;
+    }
+  }
+  .tag {
+    display: inline-block;
+    margin-right: .5em;
+    padding: .125em 0;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: -.005em;
+
+    &:after {
+      content: ','
+    }
+    &:last-child:after {
+      content: none
+    }
+  }
+  
   :global(.header-nav){
     transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
   }

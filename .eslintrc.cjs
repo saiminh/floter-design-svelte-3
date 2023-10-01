@@ -26,5 +26,9 @@ module.exports = {
 				parser: '@typescript-eslint/parser'
 			}
 		}
-	]
+	],
+  rules: {
+    "no-await-in-loop": "error",
+    "no-promise-executor-return": "error",
+  }
 };

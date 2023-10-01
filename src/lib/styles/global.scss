@@ -1,12 +1,12 @@
 :root {
   --spacing-outer: 5vw;
   --spacing-nav: 5vw;
-  // --color-bg: #FFF;
-  // --color-text: #000;
-  // --color-bg: #00117f;
-  --color-bg: #223ad4;
-  // --color-text: #FF9494;
-  --color-text: #FFF;
+  --color-bg: #3c71c8;
+  --color-text: #ffeee6;
+  --color-highlight: #000000;
+  // --color-bg: #000000;
+  // --color-text: #FFFFFF;
+  // --color-highlight: #FF4D00;
   --aspect-ratio-heroes: 1.5;
   --font-size-p: clamp(20px, 1.6vw, 1.6vw);
 
@@ -30,17 +30,34 @@ body {
   color: var(--color-text);
   min-height: 100svh;
 }
+// body:after {
+//   content: '';
+//   display: block;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: calc(100vw - 00px);
+//   height: calc(100svh - 30px);
+//   border: 15px solid var(--color-text);
+//   z-index: 1;
+//   pointer-events: none;
+// }
 body * {
   box-sizing: border-box;
 }  
 h1, h2, h3, h4, h5 {
   font-size: 2em;
-  line-height: 1.2;
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+h1 {
+  font-size: 3.5em;
 }
 h2 {
+  font-size: 2em;
+}
+h3 {
   font-size: 1.5em;
 }
 ul, ol {
@@ -57,12 +74,14 @@ p, li {
 a {
   color: inherit;
 }
-.button {
+.cta {
   font-size: clamp(20px, 1.6vw, 1.6vw);
+}
+.button {
   font-weight: 900;
   font-style: italic;
   display: inline-block;
-  margin: 1em 0.5em 1em 0;
+  margin: 1em 0.125em;
   padding: .75em;
   text-decoration: none;
   box-sizing: border-box;
@@ -71,38 +90,37 @@ a {
   position: relative;
   z-index: 2;
   transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  letter-spacing: -0.01em;
   
   &:hover {
-    letter-spacing: 0.01em;
+    font-size: clamp(21px, 1.7vw, 1.7vw);
   }
   &:before {
     content: '';
     display: block;
     position: absolute;
     z-index: -1;
-    bottom: 0;
-    left: 0;
     width: 100%;
     height: 100%;
+    left: 0px;
+    bottom: 0;
     border: 2px solid var(--color-text);
-    border-radius: 0;
+    background-color: var(--color-bg);
     box-sizing: border-box;
     transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   &:hover:before {
-    left: -10px;
-    width: calc(100% + 20px);
-    height: calc(100% - 10px);
-    bottom: 5px;
-    border-radius: .25em;
+    width: 100%;
+    height: calc(100% + 10px);
+    left: 0;
+    bottom: -5px;
     transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   &.button--primary {
     color: var(--color-bg);
 
     &:before {
-      background-color: var(--color-text);
+      background-color: var(--color-highlight);
+      border: 2px solid var(--color-highlight);
     }
   }
   &.button--xl {
