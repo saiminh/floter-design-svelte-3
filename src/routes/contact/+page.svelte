@@ -5,7 +5,6 @@
   import SplitText from 'gsap/dist/SplitText';
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
-  export const prerender = true
   let canvasTexts: Array<HTMLElement> = [];
 
   onMount( () => {
