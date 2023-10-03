@@ -80,8 +80,9 @@ a {
 .button {
   font-weight: 900;
   font-style: italic;
+  font-family: stratos, sans-serif;
   display: inline-block;
-  margin: 1em 0.125em;
+  margin: 1em 0;
   padding: .75em;
   text-decoration: none;
   box-sizing: border-box;
@@ -91,9 +92,6 @@ a {
   z-index: 2;
   transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   
-  &:hover {
-    font-size: clamp(21px, 1.7vw, 1.7vw);
-  }
   &:before {
     content: '';
     display: block;
@@ -109,9 +107,9 @@ a {
     transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   &:hover:before {
-    width: 100%;
+    width: calc(100% + 0.25em);
     height: calc(100% + 10px);
-    left: 0;
+    left: -0.125em;
     bottom: -5px;
     transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }

@@ -36,16 +36,14 @@
       const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
 
       let rowindex = (index: number) => {
-        // based on the index of an element within an array of 5x3 grid, return the columns index, so for example 0, 5 and 10 would return 0, index 1, 6 and 11 would return 1, etc
         return index % 5;
       };
-
       gsap.to(shape, { 
         duration: 1, 
         rotationZ: "+=" + generateAngle(), 
         morphSVG: randomShape, 
         ease: 'power4.out', 
-        delay: rowindex(index) * 0.1,
+        delay: rowindex(index) * 0.05,
         onComplete: () => { setTimeout( () => randomMorph(shape),  2000 ) } 
     });
     }
@@ -79,10 +77,10 @@
   .home-illu-shapes {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: clamp(1px, 0.3vw, 5px);
   }
   :global(.home-illu-shapes > *) {
-    flex-basis: calc(20% - 5px);
+    flex-basis: calc(20% - clamp(1px, 0.3vw, 5px));
     opacity: 0;
   }
 </style>

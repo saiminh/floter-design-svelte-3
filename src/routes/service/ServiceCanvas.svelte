@@ -110,8 +110,8 @@
     let textgroupIn = gsap.to(textgroup, {
       y: is_landscape ? textRows[0][0].height * 0.4 : textRows[0][0].height * 0.15,
       alpha: 1,
-      duration: 1.5,
-      ease: 'power4.out',
+      duration: 1,
+      ease: 'power2.inOut',
       overwrite: true,
       onComplete: () => {
         introDone = true;
@@ -157,7 +157,7 @@
         scrollTrigger: {
           trigger: 'article',
           start: 'top top',
-          end: '200px top',
+          end: 'top -50%',
           scrub: true,
           // markers: true,
         }
@@ -183,7 +183,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* z-index: 2; */
+    z-index: 2;
     pointer-events: none;
   }
 </style>

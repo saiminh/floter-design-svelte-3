@@ -33,7 +33,7 @@ onMount(()=>{
     gsap.registerPlugin(PixiPlugin, ScrollTrigger, SplitText);
     
     app = new PIXI.Application({
-      resizeTo: document.querySelector('.canvasResizeToThis') as HTMLElement,
+      resizeTo: window,
       antialias: true,
       autoDensity: true, 
       resolution: 2,
@@ -54,7 +54,7 @@ onMount(()=>{
     
     let bulgebg = new PIXI.Graphics();
     bulgebg.beginFill('rgb(0, 0, 0)');
-    bulgebg.drawRect(0, 0, xFrac(1.2), yFrac(1.2));
+    bulgebg.drawRect(0, 0, xFrac(1), yFrac(1));
     bulgebg.endFill();
     bulgebg.alpha = 0;
     bulgebg.pivot.set(xFrac(.5), yFrac(.5));
@@ -66,29 +66,10 @@ onMount(()=>{
     let bulgefilter = new BulgePinchFilter();
     bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.55);
     bulgefilter.strength = 0.5;
-    bulgefilter.center = center;
+    bulgefilter.center = is_landscape ? center : [0.5, 0];
     bulgefilter.resolution = 2;
 
     bulgegroup.filters = [bulgefilter];
-
-    let opening_animation_running = false;
-  
-    let introTl = gsap.timeline();
-    introTl.to(bulgefilter, {
-      strength: -0.25,
-      duration: .5,
-      ease: 'power4.inOut',
-    }, 1.5)
-    // introTl.to(bulgefilter, {
-    //   strength: 0.75,
-    //   duration: .75,
-    //   ease: 'power4.inOut',
-    // })
-    introTl.to(bulgefilter, {
-      strength: 0.5,
-      duration: 1.25,
-      ease: 'elastic.out(1.25, .2)',
-    })
 
     /*----------------------------------
     * Convert text to canvas using 
@@ -113,8 +94,8 @@ onMount(()=>{
     function updateText(){
       canvasTexts.forEach((text, index) => {
         let headlinePosition = elems[index].getBoundingClientRect();
-        headlinePosition.x = headlinePosition.x + xFrac(0.1);
-        headlinePosition.y = headlinePosition.y + yFrac(0.1); 
+        headlinePosition.x = headlinePosition.x ;
+        headlinePosition.y = headlinePosition.y ; 
         text.position.set(headlinePosition.x, headlinePosition.y);
         text.alpha = elems[index].style.opacity as unknown as number;
         text.style.fill = window.getComputedStyle(elems[index]).color;
@@ -170,7 +151,6 @@ onMount(()=>{
     
     if (is_fine) {
       window.addEventListener('mousemove', (e) => {
-        if (opening_animation_running) return;
         const pointerX = e.clientX / window.innerWidth;
         const pointerY = e.clientY / window.innerHeight;
         const pointerXfrac = pointerX - 0.5;
@@ -203,9 +183,10 @@ onMount(()=>{
   
     app.ticker.add((delta) => {
       elapsed += delta;
-      if (is_portrait) {
-        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.45 + Math.cos(elapsed/200)/20 )];
-        // bulgefilter.center = [0.5, 0.45];
+      if (!is_landscape) {
+        // bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/20 ),(tween.y + Math.cos(elapsed/200)/20 )];
+        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.25 + Math.cos(elapsed/200)/20 )];
+        // bulgefilter.center = [0.5, 0.25];
       } else {
         bulgefilter.center = [tween.x, 0.5];
       }
@@ -236,10 +217,10 @@ onDestroy(() => {
 <style>
   canvas {
     position: fixed;
-    top: -10vh;
-    left: -10vw;
-    width: 120vw;
-    height: 120vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
   }
 </style>

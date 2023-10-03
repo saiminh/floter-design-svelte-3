@@ -63,6 +63,7 @@
     })
     canvasElems = Array.from(document.querySelectorAll('.lineChildren, .wordChildren'));
     imgElems = Array.from(document.querySelectorAll('img'));
+
     return () => {
       gsap.killTweensOf(canvasElems);
       ScrollTrigger.getAll().forEach( instance => instance.kill() );
@@ -75,14 +76,14 @@
 {/if}
 <article class="scroller">
   <section class="splash"> 
-    <h1>Hallo! I'm Simon.<br> I forge websites<br/><em>that stand out</em> with great beauty.</h1>
+    <h1 class="align-middle">Hallo! I'm Simon. I forge websites that stand out with exemplary beauty.</h1>
   </section>
   <section class="intro">
     <figure class="intro-image">
       <HomeIlluDev />
     </figure>
-    <h2><em>Creative</em> Development</h2> 
-    <p class="toCanvas">I specialise in fashioning exquisitly tailored websites and webapps for the discerning enterprise executive.</p> 
+    <h2>Creative Development</h2> 
+    <p class="toCanvas">I fashion exquisitly tailored web experiences for discerning enterprises and their audiences.</p> 
     <div class="cta">
       <a href="/service" class="button">My Services</a>
       <a href="/work" class="button button--primary">Hire Simon</a>
@@ -93,15 +94,15 @@
       <HomeIlluShapes />
     </figure>
     <h2>Visual Design</h2> 
-    <p class="toCanvas">With years in the craft, I've mastered the art of designing websites, user interfaces, illustrations, house styles, and everything betwixt.</p>
+    <p class="toCanvas">I'm also a seasoned designer, sculpting communication that's wickedly nice, full of jaw-dropping surprises, and utterly delightful.</p>
     <div class="cta">
-      <a href="/service" class="button">My Services</a><a href="/work" class="button button--primary">Hire Simon</a>
+      <a href="/service" class="button">My Services</a> <a href="/work" class="button button--primary">Hire Simon</a>
     </div>
   </section>
   <section class="more">
-    <h2>I create products that help great companies reach their audiences.</h2>
+    <h2 class="align-middle">I work as a free agent. Both companies and noble causes can enlist my services for a reasonable wage.</h2>
     <div class="cta">
-      <a href="/work" class="button button--xl">Reach out!</a>
+      <a href="/work" class="button button--xl">Enlist my services</a>
     </div>
   </section>
 </article>
@@ -165,12 +166,29 @@
   .design-illu {
     position:relative; 
     left: 0; 
-    width: 40%;
+    width: 60%;
     margin: 0 auto; 
     text-align: center; 
     display: block; 
     margin-bottom: -1em; 
     z-index: -2;
+
+    @media screen and (min-width: 768px) {
+      width: 40%;
+    }
+  }
+  .more {
+    @media screen and (min-width: 768px) {
+      max-width: 95vw;
+    }
+  }
+  .more h2 {
+    margin-top: -2em;
+    margin-bottom: 1em;
+    @media screen and (min-width: 768px) {
+      margin-bottom: 0.5em;
+      margin-top: 0;
+    }
   }
   h1, h2 {
     line-height: 1.1;
@@ -183,19 +201,14 @@
             user-select: none; 
   }
   h1 {
-    line-height: 1;
-    font-size: 11vw;
+    line-height: .9;
+    font-size: 13.25vw;
     margin-top: -.5em;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.02em;
     opacity: 0;
     
     @media screen and (min-width: 768px) {
       font-size: 9vw;
-      line-height: .9;
-    }
-    & em {
-      color: var(--color-highlight);
-      font-style: normal;
     }
   }
   h2 {
@@ -203,11 +216,6 @@
     letter-spacing: -0.033em;
     margin-bottom: 0;
     line-height: .9;
-    
-    & em {
-      color: var(--color-highlight);
-      font-style: normal;
-    }
   }
   .toCanvas {
     visibility: hidden;

@@ -39,10 +39,12 @@
         '--height': summaryHeight, duration: .4, ease: 'power4.out', overwrite: true,
         onComplete: () => {
           details.toggleAttribute('open')
+          details.classList.remove('is-open');
         }
       })
     } else {
       details.toggleAttribute('open');
+      details.classList.add('is-open');
       contentHeight = (details?.querySelector('.faq-content') as HTMLElement).offsetHeight;
       let fullHeight =  contentHeight + summaryHeight;
       gsap.to( details, {
@@ -61,7 +63,7 @@
 
 <details bind:this={details}>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <summary on:click={summaryClickHandler} on:keyup={summaryClickHandler}>{summary}</summary>
+  <summary on:click={summaryClickHandler} on:keyup={summaryClickHandler}>{@html summary}</summary>
   <div class="faq-content">
     <slot />
   </div>
@@ -82,10 +84,14 @@
     display: block;
     cursor: url('/pointer.svg'), auto;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     line-height: 1.2;
     font-size: 1em;
     padding: 0.5em 0 0.5em 1.5em;
+
+    &::-webkit-details-marker {
+      display:none;
+    }
 
     &:before, &:after {
       content: '';
@@ -95,16 +101,23 @@
       width: 17px;
       height: 2px;
       background-color: var(--color-text);
-      transform-origin: center;
-      transition: transform .2s ease-in-out;
+      transform-origin: 50% 50%;
     }
     &:before {
       transform: rotate(90deg);
+      transition: all .2s ease-in-out;
     }
-  }
-  details[open] summary {
 
-    &::before {
+  }
+  :global(summary em) {
+    font-weight: 800;
+    color: var(--color-highlight);
+  }
+  // details[open] summary,
+  :global(details.is-open summary) {
+    
+    &:before {
+      transition: all .2s ease-in-out;
       transform: rotate(0deg);
     }
   }
