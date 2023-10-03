@@ -72,7 +72,7 @@
 </script>
 
 <div class="formwrapper">
-  <form name="contact" action="/success" method="POST" data-netlify="true" >
+  <form name="contact" action="/success" method="POST" data-netlify="true" { ...{ 'netlify-honeypot': 'bot-field' } }>
     <input type="hidden" name="form-name" value="contact">
     <section class="contact">
       <h1 class="toCanvas">Don't be a stranger. Let's get acquainted.</h1>
