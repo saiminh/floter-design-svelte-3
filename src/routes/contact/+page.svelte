@@ -5,11 +5,12 @@
   import SplitText from 'gsap/dist/SplitText';
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
+  export const prerender = true
   let canvasTexts: Array<HTMLElement> = [];
 
   onMount( () => {
 
-    gsap.registerPlugin( SplitText );
+    gsap.registerPlugin( SplitText, ScrollTrigger );
 
     
     let split = new SplitText('.toCanvas', { type: 'lines', linesClass: 'lineChildren' });
@@ -71,12 +72,7 @@
 </script>
 
 <div class="formwrapper">
-  <form
-  name="contact"
-  action="/success"
-  method="POST"
-  data-netlify="true"
-  >
+  <form name="contact" action="/success" method="POST" data-netlify="true" >
     <section class="contact">
       <h1 class="toCanvas">Don't be a stranger. Let's get acquainted.</h1>
       <div class="alternatives">
