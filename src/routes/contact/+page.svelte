@@ -57,6 +57,12 @@
       })
     })
 
+    let textarea = document.querySelector('textarea') as HTMLElement
+
+    textarea?.addEventListener('focus', () => {
+      window.scrollTo(0, textarea.offsetTop - 100);
+    })
+    
     return () => {
       gsap.killTweensOf('.toCanvas, .lineChildren');
     }
