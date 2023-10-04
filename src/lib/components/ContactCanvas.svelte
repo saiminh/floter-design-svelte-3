@@ -1,6 +1,6 @@
 <script lang="ts">
 import * as PIXI from 'pixi.js';
-import { BulgePinchFilter } from 'pixi-filters';
+import { BulgePinchFilter, TwistFilter } from 'pixi-filters';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import SplitText from 'gsap/dist/SplitText';
@@ -29,6 +29,7 @@ onMount(()=>{
     let is_coarse = window.matchMedia('(pointer:coarse)').matches
     let is_landscape = window.matchMedia('(orientation:landscape)').matches
     let is_portrait = window.matchMedia('(orientation:portrait)').matches
+    let is_twisted = false;
 
     gsap.registerPlugin(PixiPlugin, ScrollTrigger, SplitText);
     
@@ -69,7 +70,24 @@ onMount(()=>{
     bulgefilter.center = is_landscape ? center : [0.5, 0];
     bulgefilter.resolution = 2;
 
-    bulgegroup.filters = [bulgefilter];
+    let twistfilter = new TwistFilter();
+    twistfilter.angle = 0;
+    twistfilter.radius = window.innerWidth/2;
+    twistfilter.offset = new PIXI.Point(window.innerWidth/2, window.innerHeight/2);
+    twistfilter.resolution = 2;
+
+    bulgegroup.filters = [bulgefilter, twistfilter];
+
+    gsap.to(twistfilter, {
+      angle: .75,
+      duration: 1,
+      ease: 'elastic.out',
+      delay: 2,
+      onComplete: () => {
+        is_twisted = true;
+      }
+    })
+
 
     /*----------------------------------
     * Convert text to canvas using 
@@ -169,9 +187,8 @@ onMount(()=>{
           ease: 'power3.out',
           overwrite: true,
           x: 0.5 + pointerXfrac/2,
-          y: 0.5 + pointerYfrac/2,
+          y: 0.5 + pointerYfrac/6,
         })
-    
       })
     }
   
@@ -185,10 +202,12 @@ onMount(()=>{
       elapsed += delta;
       if (!is_landscape) {
         // bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/20 ),(tween.y + Math.cos(elapsed/200)/20 )];
-        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.25 + Math.cos(elapsed/200)/20 )];
+        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.4 + Math.cos(elapsed/200)/20 )];
+        twistfilter.offset = new PIXI.Point( twistfilter.offset.x + Math.sin(elapsed/100) - Math.sin(elapsed/100) * 2, twistfilter.offset.y );
         // bulgefilter.center = [0.5, 0.25];
       } else {
-        bulgefilter.center = [tween.x, 0.5];
+        bulgefilter.center = [tween.x, tween.y];
+        twistfilter.offset = new PIXI.Point(mouse.x, mouse.y);
       }
       updateImgs();
       updateText();

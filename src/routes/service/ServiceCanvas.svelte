@@ -10,6 +10,8 @@
 
   onMount( () => {
 
+    let highLightColor = window.getComputedStyle(document.body).getPropertyValue('--color-highlight');
+
     let is_fine = window.matchMedia('(pointer:fine)').matches
     let is_landscape = window.matchMedia('(orientation:landscape)').matches
   
@@ -44,7 +46,7 @@
           // fontWeight: '800',
           lineHeight: 0,
           letterSpacing: -20,
-          fill: `#000`, 
+          fill: highLightColor, 
           padding: 0          
         }
       );

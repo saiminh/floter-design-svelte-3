@@ -76,7 +76,7 @@
 {/if}
 <article class="scroller">
   <section class="splash"> 
-    <h1 class="align-middle">Hallo! I'm Simon. I forge websites that stand out with exemplary beauty.</h1>
+    <h1 class="align-middle">Hallo! I'm Simon. I forge websites that <em>stand out</em> with exemplary beauty.</h1>
   </section>
   <section class="intro">
     <figure class="intro-image">
@@ -86,7 +86,7 @@
     <p class="toCanvas">I fashion exquisitly tailored web experiences for discerning enterprises and their audiences.</p> 
     <div class="cta">
       <a href="/service" class="button">My Services</a>
-      <a href="/work" class="button button--primary">Hire Simon</a>
+      <a href="/contact" class="button button--primary">Get in touch!</a>
     </div>
   </section>
   <section class="design">
@@ -96,13 +96,13 @@
     <h2>Visual Design</h2> 
     <p class="toCanvas">I'm also a seasoned designer, sculpting communication that's wickedly nice, full of jaw-dropping surprises, and utterly delightful.</p>
     <div class="cta">
-      <a href="/service" class="button">My Services</a> <a href="/work" class="button button--primary">Hire Simon</a>
+      <a href="/service" class="button">My Services</a> <a href="/contact" class="button button--primary">Get in touch!</a>
     </div>
   </section>
   <section class="more">
-    <h2 class="align-middle">I work as a free agent. Both companies and noble causes can enlist my services for a reasonable wage.</h2>
+    <h2 class="align-middle">I work as a free agent. Both companies and noble causes can <em>enlist my services</em> for a reasonable wage.</h2>
     <div class="cta">
-      <a href="/work" class="button button--xl">Enlist my services</a>
+      <a href="/contact" class="button button--xl">Enlist my services</a>
     </div>
   </section>
 </article>
@@ -199,6 +199,11 @@
        -moz-user-select: none; /* Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; 
+    & > em {
+      font-style: normal;
+      font-weight: 400;
+      color: var(--color-highlight);
+    }
   }
   h1 {
     line-height: .9;

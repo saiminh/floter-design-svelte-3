@@ -6,12 +6,38 @@
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
   let canvasTexts: Array<HTMLElement> = [];
+  let contactFormVisible = false;
+  let contactFormClickHandler = (e: Event) => {
+    if (contactFormVisible) {
+      gsap.to('.wordChildren', { opacity: 1, yPercent: 0, duration: 1, ease: 'power4.inOut' })
+      gsap.to('.alternatives > *', { opacity: 1, scale: 1, duration: .5, stagger: 0.1, ease: 'power4.inOut' })
+      gsap.fromTo('.formwrapper', 
+      { opacity: 1, yPercent: 0 }, 
+      { opacity: 0, yPercent: 50, duration: .6, ease: 'power4.inOut', onComplete: ()=>{
+        gsap.set('.formwrapper', { zIndex: -1 })
+      } }
+      )
+    } else {
+      gsap.to('.wordChildren', { opacity: 1, yPercent: -200, duration: 1, ease: 'power4.inOut' })
+      gsap.to('.alternatives > *', { opacity: 0, scale: 0.5, duration: .5, stagger: 0.1, ease: 'power4.inOut' })
+      gsap.set('.formwrapper', { zIndex: 2 })
+      gsap.fromTo('.formwrapper', 
+      { opacity: 1, yPercent: 100 }, 
+      { opacity: 1, yPercent: 0, duration: 1, ease: 'power4.inOut' }
+      )
+      gsap.fromTo('.formwrapper label > *', 
+      { opacity: 0, yPercent: 100 }, 
+      { opacity: 1, yPercent: 0, duration: .5, stagger: 0.0125, ease: 'power4.out', delay: .25}
+      )
+    }
+    contactFormVisible = !contactFormVisible;
+  }
 
   onMount( () => {
 
     gsap.registerPlugin( SplitText, ScrollTrigger );
     
-    let split = new SplitText('.toCanvas', { type: 'lines', linesClass: 'lineChildren' });
+    let split = new SplitText('.toCanvas', { type: 'words, lines', wordsClass: 'wordChildren', linesClass: 'lineChildren' });
     
     let alignmiddles: Array<HTMLElement> = Array.from(document.querySelectorAll('.toCanvas'));
     alignmiddles.forEach( (toCanvas) => {
@@ -28,169 +54,195 @@
       toCanvas.style.left = (toCanvas.offsetWidth - longestSpan) / 2 + 'px';
     })
 
-    canvasTexts = Array.from(document.querySelectorAll('.lineChildren'));
+    canvasTexts = Array.from(document.querySelectorAll('.wordChildren'));
 
-    const introIn = document.querySelector('.contact') as HTMLElement;
-    gsap.fromTo(introIn.querySelectorAll('.lineChildren'), {
+    const introInElem = document.querySelector('.pagewrapper') as HTMLElement;
+    gsap.fromTo(introInElem.querySelectorAll('.wordChildren'), {
       opacity: 0, yPercent: -100
     }, {
-      opacity: 1, yPercent: 0, duration: 1.5, stagger: 0.05, ease: 'power4.inOut',
+      opacity: 1, yPercent: 0, duration: 1.5, stagger: 0.025, ease: 'power4.inOut',
     })
-    gsap.fromTo(introIn?.querySelectorAll('p, input, .button'), {
+    gsap.fromTo(introInElem?.querySelectorAll('.alternatives p, .alternatives .button'), {
       opacity: 0, yPercent: 100
     }, {
-      opacity: 1, yPercent: 0, duration: 1, stagger: 0.05, ease: 'power4.inOut',
+      opacity: 1, yPercent: 0, duration: 1, stagger: 0.025, ease: 'power4.inOut',
     })
 
-    const scrollIns = document.querySelectorAll('.scrollIn');
-    scrollIns.forEach( scrollIn => {
-      gsap.set(scrollIn.querySelectorAll('p, input, textarea, .button'), { opacity: 0, y: 100 });
-      gsap.to(scrollIn.querySelectorAll('p, input, textarea, .button'), { opacity: 1, y: 0, duration: 1, stagger: 0.05, ease: 'power4.inOut', 
-        scrollTrigger: { trigger: scrollIn, start: 'top 66%', end: 'bottom 50%', scrub: false }
-      })  
-      gsap.fromTo(scrollIn.querySelectorAll('.lineChildren'), {
-        opacity: 0, yPercent: 100
-      },{
-        opacity: 1, yPercent: 0, duration: 1, stagger: 0.05, ease: 'power4.inOut', 
-        scrollTrigger: { trigger: scrollIn, start: 'top 66%', end: 'bottom 50%', scrub: false }
-      })
-    })
-
-    let textarea = document.querySelector('textarea') as HTMLElement
-
-    textarea?.addEventListener('focus', () => {
-      window.scrollTo(0, textarea.offsetTop - 100);
-    })
-    
     return () => {
-      gsap.killTweensOf('.toCanvas, .lineChildren');
+      gsap.killTweensOf('.toCanvas, .wordChildren');
     }
   })
 
 </script>
 
-<div class="formwrapper">
-  <form name="contact" action="/success" method="POST" data-netlify="true">
-    <input type="hidden" name="form-name" value="contact">
-    <section class="contact">
-      <h1 class="toCanvas">Don't be a stranger. Let's get acquainted.</h1>
-      <div class="alternatives">
-        <p>You can fill in the form below or:</p>
-        <ul>
-          <li><a class="button" href="mailto:simon@floter.design">Send an Email</a></li>
-          <li><a class="button" href="https://www.linkedin.com/in/floter/">Connect on LinkedIn</a></li>
+<div class="pagewrapper">
+  <div class="intro">
+    <h1 class="toCanvas">Life is weird. <em>Let's be weird together.</em></h1>
+    <div class="alternatives">
+      <p>Choose your flavour of contact:</p>
+      <ul>
+        <li><span class="button" on:click={contactFormClickHandler} on:keydown={contactFormClickHandler} role="button" tabindex="0">Contact form</span></li>
+        <li><a class="button" href="mailto:simon@floter.design">Email</a></li>
+        <li><a class="button" href="https://www.linkedin.com/in/floter/">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="formwrapper">
+    <span class="button button-back" on:click={contactFormClickHandler} on:keydown={contactFormClickHandler} role="button" tabindex="0">← Back</span>
+    <form name="contact" action="/success" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact">
+      <div class="inputs-flex-row">
+        <label for="name">
+          <!-- <p>How would you like to be addressed?</p> -->
+          <input type="text" name="name" id="name" placeholder="Your name">
+        </label>
+        <label for="email">
+          <!-- <p>For receiving a reply, add your Email address:</p> -->
+          <input type="email" name="email" id="email" placeholder="Your Email?*" required>
+        </label>
       </div>
-      <label for="name">
-        <p>How would you like to be addressed?</p>
-        <input type="text" name="name" id="name" placeholder="Your name">
-      </label>
-      <label for="email">
-        <p>For receiving a reply, add your Email address:</p>
-        <input type="email" name="email" id="email" placeholder="Your Email?*" required>
-      </label>
-    </section>
-    <section class="message scrollIn">
-      <h3 class="toCanvas contactheadline">How can I assist in your noble cause?</h3>
       <label for="contact">
-        <p>Please describe your plight in a few words</p>
-        <textarea rows="6" name="contact" id="contact" />
+        <!-- <p>Please describe your plight in a few words</p> -->
+        <textarea rows="6" name="contact" id="contact" placeholder="Your business propositions, praise, complaints and/or threats" required />
       </label>
-      <button class="button" type="submit">Send it!</button>
-    </section>
-  </form>
+      <div class="send">
+        <button class="button button--xl button--primary" type="submit">Send it!</button>
+      </div>
+    </form>
+  </div>
 </div>
 <ContactCanvas textsToCanvas={canvasTexts} />
 
 <style lang="scss">
-  h1, h3 {
+  h1 {
     visibility: hidden;
-    font-size: 2.5em;
+    font-size: 12vw;
     line-height: .9;
     letter-spacing: -0.04em;
     margin: 1em var(--spacing-nav) 1em var(--spacing-nav);
     
     @media screen and (min-width: 768px) {
-      margin: 1em var(--spacing-outer) 0.33em var(--spacing-outer);
+      margin: 1em var(--spacing-outer) .75em var(--spacing-outer);
       font-size: 4.5em;
     }
-  }
-  h3 {
-    font-size: 2em;
-    @media screen and (min-width: 768px) {
-      font-size: 3em;
+
+    & em {
+      font-style: normal;
+      font-weight: 400;
+      color: var(--color-highlight);
     }
   }
-  .contact p, .contact input {
-    opacity: 0;
+  .intro {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 4em;
+    @media screen and (min-width: 768px) {
+      padding-bottom: 0;
+    }
   }
   .formwrapper {
-    margin: 0 auto;
-    padding: 1em 1em calc(4 * var(--spacing-outer)) 1em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-outer) var(--spacing-outer) 4em var(--spacing-outer);
+    background-color: var(--color-bg);
+    z-index: 0;
+    opacity: 0;
+    overflow-y: scroll;
+
+    --form-maxwidth: 1000px;
+  }
+  .button-back {
+    margin: 0;
   }
   form {
     box-sizing: border-box;
     max-width: inherit;
     margin: 0 auto;
     overflow: hidden;
+    padding: 1em 0;
+  }
+  .inputs-flex-row {
+    @media screen and (min-width: 768px) {
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      max-width: var(--form-maxwidth);
+      margin: auto;
+  
+      & label {
+        flex-basis: 50%;
+      }
+    }
   }
   .alternatives {
-    margin: 4em auto 1em auto; 
+    margin: 0em auto 1em auto; 
     width: 100%;
+    text-align: center;
     
     @media screen and (min-width: 768px) {
       margin: 0 auto 2em auto; 
       padding-bottom: 1em;
-      max-width: 640px;
     }
-
+    & p, & .button {
+      opacity: 0;
+    }
     & p {
-      margin: 0;
+      margin: 0 0 .5em 0;
     }
     & ul {
-      list-style-type: none;
-      display: flex;
-      gap: .5em;
+      margin: 0 var(--spacing-outer);
+      
+      // @media screen and (min-width: 768px) {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+        gap: .25em;
+      // }
+    }
+    & ul li {
+      display: block;
       margin: 0;
     }
     & .button {
-      margin-top: 0.5em;
-    }
-  }
-  section {
-    box-sizing: border-box;
-    margin: 0;
-    min-height: 70vh;
-    
-    @media screen and (min-width: 768px) {
-      // display: flex;
-      // flex-direction: column;
-      // justify-content: center;
-      max-width: 75vw;
-      margin: 0 auto;
-      gap: 0;      
+      margin: 0.25em 0;
+      display: block;
+      font-size: .9em;
     }
   }
   label {
-    font-size: 1.25em;
+    font-size: 1em;
+    @media screen and (min-width: 768px) {
+      font-size: 1.25em;
+    }
   }
   input[type='text'], input[type='email'], textarea {
     width: 100%;
-    border: 0px solid var(--color-text);
-    background-color: rgba(255, 205, 205, 0.2);
-    color: var(--color-text);
+    border: 3px solid var(--color-text);
+    background-color: var(--color-text);
+    color: var(--color-bg);
     border-radius: 4px;
     font-family: 'Stratos', sans-serif;
     font-size: 1em;
+    line-height: 1.2;
     padding: .75em;
     transition: all 0.3s ease-out;
     margin: 0 auto 1em auto;
     display: block;
-    max-width: 640px;
+    max-width: var(--form-maxwidth);
     
     &:focus {
       outline: none;
       color: var(--color-bg);
       background-color: var(--color-text);
+    }
+    &:placeholder-shown {
+      background-color: rgba(255, 205, 205, 0);
     }
     &::placeholder {
       color: var(--color-text);
@@ -198,18 +250,14 @@
     }
   }
   label p {
-    max-width: 640px;
+    max-width: var(--form-maxwidth);
     margin: 0 auto 1em auto;
     display: block;
     font-size: .75em;
     margin-bottom: .5em;
   }
-  button {
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    font-size: 1.25em;
-    max-width: 640px;
-    opacity: 0;
+  .send {
+    max-width: var(--form-maxwidth);
+    margin: auto;
   }
 </style>

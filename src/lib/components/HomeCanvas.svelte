@@ -207,7 +207,7 @@ onMount(()=>{
         bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.45 + Math.cos(elapsed/200)/20 )];
         // bulgefilter.center = [0.5, 0.45];
       } else {
-        bulgefilter.center = [tween.x, 0.5];
+        bulgefilter.center = [tween.x, tween.y];
       }
       updateImgs();
       updateText();

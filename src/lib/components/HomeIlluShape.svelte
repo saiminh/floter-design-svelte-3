@@ -14,6 +14,7 @@
   }
   .shape > * {
     transform-origin: 50% 50%;
+    fill: var(--color-highlight, #000);
   }
   .sphere, .quartercirc, .triangle, .rectangle {
     fill: none;
