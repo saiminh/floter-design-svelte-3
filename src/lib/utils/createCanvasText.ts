@@ -14,6 +14,7 @@ export default function createCanvasText( element: HTMLElement,  stage: PIXI.Con
   const elemAlignment = elemStyles.getPropertyValue('text-align') || 'left';
   const elemPosition = elem.getBoundingClientRect();
   const elemTextTransform = elemStyles.getPropertyValue('text-transform') || 'none';
+
   if (elemTextTransform === 'uppercase') {
     elem.textContent = elem.textContent?.toUpperCase() as string;
   }

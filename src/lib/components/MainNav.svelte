@@ -23,8 +23,8 @@
         checkbox ? checkbox.checked = false : null;
         gsap.to('.content > *', {duration: 0.5, y: '100%', autoAlpha: 1, ease: 'power4.out'});
         gsap.to('#nav', {duration: 0.5, autoAlpha: 1, y: '100%', ease: 'power4.out', delay: 0.1});
-        gsap.to('nav a', {duration: 0.5, autoAlpha: 1, y: 200, stagger: 0.05, ease: 'power4.out' , delay: 0.2});
-      })
+        gsap.to('nav a', {duration: 0.5, autoAlpha: 1, y: 200, stagger: 0.025, ease: 'power4.out' , delay: 0.1});
+      }, { passive: true })
     });
     
     //Toggle menu
@@ -33,11 +33,11 @@
       if (checkbox.checked) {
         gsap.to('.content > *', {duration: 0.75, y: -200, autoAlpha: 0.5, ease: 'power2.inOut'});
         gsap.to('#nav', {duration: 0.5, autoAlpha: 1, y: 0, ease: 'power4.out', delay: 0.1});
-        gsap.to('nav a', {duration: 0.5, autoAlpha: 1, y: 0, stagger: 0.1, ease: 'power4.out' , delay: 0.2});
+        gsap.to('nav a', {duration: 0.5, autoAlpha: 1, y: 0, stagger: 0.1, ease: 'power4.out' , delay: 0.1});
       } else {
         gsap.to('.content > *', {duration: 0.5, y: 0, autoAlpha: 1, ease: 'power4.out'});
         gsap.to('#nav', {duration: 0.5, autoAlpha: 1, y: '100%', ease: 'power4.out', delay: 0.1});
-        gsap.to('nav a', {duration: 0.75, autoAlpha: 1, y: 200, stagger: 0.05, ease: 'power4.out' , delay: 0.2});
+        gsap.to('nav a', {duration: 0.75, autoAlpha: 1, y: 200, stagger: 0.025, ease: 'power4.out' , delay: 0.1});
       }
     })
 
@@ -53,8 +53,11 @@
   </label>
   <nav id="nav">
     <a href="/" class="navlink {$page.route.id === '/' ? 'current' : ''}">Home</a>
-    <a href="/about" class="navlink {$page.route.id === '/about' ? 'current' : ''}">About</a>
-    <a href="/work" class="navlink {$page.route.id === '/work' ? 'current' : ''}">Work</a>
+    <a href="/work" class="navlink {$page.route.id?.includes('/work') ? 'current' : ''}">Work</a>
+    <a href="/service" class="navlink {$page.route.id === '/service' ? 'current' : ''}">Services</a>
+    <!-- <a href="/about" class="navlink {$page.route.id === '/about' ? 'current' : ''}">About</a> -->
+    <a href="/contact" class="navlink {$page.route.id === '/contact' ? 'current' : ''}">Contact</a>
+    
   </nav>
 </header>
 
@@ -111,8 +114,8 @@
   }
   #nav a {
     display: block;
-    line-height: 1.3;
-    font-size: 3em;
+    line-height: 1;
+    font-size: 2.5em;
     font-weight: 800;
     font-style: italic;
     text-transform: lowercase;
@@ -120,7 +123,7 @@
     color: var(--color-text);
     
     @media screen and (min-width: 768px) {
-      font-size: 5.5em;
+      font-size: 4.5em;
     }
 
     &:first-child {
@@ -128,7 +131,8 @@
     }
 
     &.current {
-      text-decoration: underline;
+      // text-decoration: underline;
+      color: var(--color-highlight);
     }
   }
 </style>

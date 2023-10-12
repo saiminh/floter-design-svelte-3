@@ -1,6 +1,6 @@
 <script lang="ts">
 import * as PIXI from 'pixi.js';
-import { BulgePinchFilter } from 'pixi-filters';
+import { BulgePinchFilter, TwistFilter } from 'pixi-filters';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import SplitText from 'gsap/dist/SplitText';
@@ -41,6 +41,8 @@ onMount(()=>{
       view: canvas,
     });
     
+    PIXI.Filter.defaultResolution = 2;
+    
       //for debugging but Typescript has an issue with this:
     (globalThis as any).__PIXI_APP__ = app;
     
@@ -64,10 +66,9 @@ onMount(()=>{
     
     let center = [0.5, 0.5];
     let bulgefilter = new BulgePinchFilter();
-    bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.55);
-    bulgefilter.strength = 0.5;
+    bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.5);
+    bulgefilter.strength = 0;
     bulgefilter.center = center;
-    bulgefilter.resolution = 2;
 
     bulgegroup.filters = [bulgefilter];
 
@@ -79,11 +80,6 @@ onMount(()=>{
       duration: .5,
       ease: 'power4.inOut',
     }, 1.5)
-    // introTl.to(bulgefilter, {
-    //   strength: 0.75,
-    //   duration: .75,
-    //   ease: 'power4.inOut',
-    // })
     introTl.to(bulgefilter, {
       strength: 0.5,
       duration: 1.25,
@@ -192,7 +188,7 @@ onMount(()=>{
           y: 0.5 + pointerYfrac/2,
         })
     
-      })
+      }, { passive: true })
     }
   
   
@@ -204,10 +200,11 @@ onMount(()=>{
     app.ticker.add((delta) => {
       elapsed += delta;
       if (is_portrait) {
-        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.45 + Math.cos(elapsed/200)/20 )];
-        // bulgefilter.center = [0.5, 0.45];
+        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/40 ),(0.45 + Math.cos(elapsed/200)/20 )];
+        // bulgefilter.center = [0.5, 0.5];
       } else {
-        bulgefilter.center = [tween.x, tween.y];
+        bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/40 ),(tween.y + Math.cos(elapsed/200)/20 )];
+        // bulgefilter.center = [tween.x, tween.y];
       }
       updateImgs();
       updateText();

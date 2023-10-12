@@ -11,6 +11,19 @@
 </header>
 
 <style lang="scss">
+  @media screen and (max-width: 767px) {
+    .header-nav:before {
+      content: '';
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 100px;
+      pointer-events: none;
+      background: linear-gradient(0deg, var(--color-bg) 10%, rgba(255, 255, 255, 0) 100%);
+      z-index: 3;
+    }
+  }
   .logo {
     height: 36px;
     width: auto;

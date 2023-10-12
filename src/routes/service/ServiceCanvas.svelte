@@ -43,9 +43,10 @@
       let text = new PIXI.Text(string, 
         { fontFamily: 'Stratos', 
           fontSize: fontSize, 
-          // fontWeight: '800',
+          fontWeight: '800',
+          fontStyle: 'italic',
           lineHeight: 0,
-          letterSpacing: -20,
+          letterSpacing: -10,
           fill: highLightColor, 
           padding: 0          
         }
@@ -131,7 +132,7 @@
         overwrite: true
       })
       mouse.y = e.clientY / window.innerHeight;
-    })
+    }, { passive: true })
 
     let elapsed = 0;
     app.ticker.add((delta) => {

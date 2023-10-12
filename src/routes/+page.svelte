@@ -4,6 +4,8 @@
   import { onMount } from 'svelte';
   import { gsap } from 'gsap';
   import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+  import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
+  import { goto } from '$app/navigation';
   import SplitText from 'gsap/dist/SplitText';
   import HomeIlluDev from '$lib/components/HomeIlluDev.svelte';
   import HomeIlluShapes from '$lib/components/HomeIlluShapes.svelte';
@@ -16,7 +18,7 @@
 
     mounted = true;
 
-    gsap.registerPlugin( ScrollTrigger, SplitText );
+    gsap.registerPlugin( ScrollTrigger, ScrollToPlugin, SplitText );
     
     const sections = document.querySelectorAll('section');
 
@@ -50,8 +52,8 @@
         gsap.to(split.words, { duration: 1, yPercent: 0, opacity: 1, stagger: 0.05, ease: 'power4.out', 
           scrollTrigger: { trigger: split.words, start: 'top 90%', end: 'bottom 70%', scrub: false }
         })  
-        if (section.querySelector('.toCanvas')) {
-          let splitp = new SplitText(section.querySelectorAll('.toCanvas'), { type: 'lines', linesClass: 'lineChildren' });
+        if (section.querySelector('p')) {
+          let splitp = new SplitText(section.querySelectorAll('p'), { type: 'lines', linesClass: 'lineChildren' });
           gsap.set(splitp.lines, { transformOrigin: '0% 100%' });
           gsap.set(splitp.lines, { yPercent: 100, opacity: 0 });
           gsap.to(splitp.lines, { duration: 1, yPercent: 0, opacity: 1, stagger: 0.05, ease: 'power4.out', 
@@ -61,8 +63,26 @@
       }
 
     })
-    canvasElems = Array.from(document.querySelectorAll('.lineChildren, .wordChildren'));
+    canvasElems = Array.from(document.querySelectorAll('.canvasized .lineChildren, .canvasized .wordChildren'));
     imgElems = Array.from(document.querySelectorAll('img'));
+
+    sections.forEach(section => {
+      //create a click eventlistener, that will scroll to the next section
+      section.addEventListener('click', (e) => {
+        e.preventDefault();
+        //if the cursor is over a link, don't scroll and open the link's href location
+        let target = e.target as HTMLElement;
+        if (target?.closest('a')) {
+          goto(target.closest('a')?.getAttribute('href') || '');
+          return;
+        }
+        
+        let nextSection = section.nextElementSibling as HTMLElement;
+        if (nextSection) {
+          gsap.to(window, { duration: 1, scrollTo: nextSection, ease: 'power4.inOut' })
+        }
+      }) 
+    })
 
     return () => {
       gsap.killTweensOf(canvasElems);
@@ -75,18 +95,21 @@
   <Loader />
 {/if}
 <article class="scroller">
-  <section class="splash"> 
-    <h1 class="align-middle">Hallo! I'm Simon. I forge websites that <em>stand out</em> with exemplary beauty.</h1>
+  <section class="canvasized splash"> 
+    <h1 class="align-middle">I create digital experiences that <em>stand out</em> from the rest.</h1>
   </section>
-  <section class="intro">
-    <figure class="intro-image">
+  <section class="canvasized introduction"> 
+    <h2 class="align-middle">My name is Simon, I help my clients reach their audiences using <em>my skills:</em></h2>
+  </section>
+  <section class="dev">
+    <figure class="dev-image">
       <HomeIlluDev />
     </figure>
     <h2>Creative Development</h2> 
-    <p class="toCanvas">I fashion exquisitly tailored web experiences for discerning enterprises and their audiences.</p> 
+    <p>I create exquisitly tailored web experiences for discerning enterprises and their audiences.</p> 
     <div class="cta">
-      <a href="/service" class="button">My Services</a>
-      <a href="/contact" class="button button--primary">Get in touch!</a>
+      <a href="/service" class="button">Services <span class="hide-on-mobile"> I provide</span></a>
+      <a href="/contact" class="button button--primary">Contact me</a>
     </div>
   </section>
   <section class="design">
@@ -94,15 +117,16 @@
       <HomeIlluShapes />
     </figure>
     <h2>Visual Design</h2> 
-    <p class="toCanvas">I'm also a seasoned designer, sculpting communication that's wickedly nice, full of jaw-dropping surprises, and utterly delightful.</p>
+    <p>I'm a seasoned designer, with a long list of succesfull projects and happy clients.</p>
     <div class="cta">
-      <a href="/service" class="button">My Services</a> <a href="/contact" class="button button--primary">Get in touch!</a>
+      <a href="/work" class="button">Work <span class="hide-on-mobile"> I've done</span></a>
+      <a href="/contact" class="button button--primary">Contact me</a>
     </div>
   </section>
-  <section class="more">
-    <h2 class="align-middle">I work as a free agent. Both companies and noble causes can <em>enlist my services</em> for a reasonable wage.</h2>
-    <div class="cta">
-      <a href="/contact" class="button button--xl">Enlist my services</a>
+  <section class="canvasized hireme">
+    <h2 class="align-middle">I work as a free agent. You can <em>hire me</em> for your noble enterprise.</h2>
+    <div class="cta" style="text-align: center">
+      <a href="/contact" class="button button--xl button--primary">Contact me</a>
     </div>
   </section>
 </article>
@@ -125,7 +149,7 @@
   section {
     scroll-snap-align: start;
     box-sizing: border-box;
-    padding: var(--spacing-outer);
+    padding: 0 var(--spacing-outer);
     min-height: 100svh;
     display: flex;
     flex-direction: column;
@@ -152,13 +176,24 @@
       padding: var(--spacing-outer) calc(var(--spacing-outer) * 2);
     }
   }
-  .intro-image {
+  .introduction {
+    h2 {
+      font-size: 1.53em;
+      letter-spacing: -0.033em;
+      margin-bottom: 0;
+      line-height: .9;
+    }
+  }
+  .dev-image {
     position:relative; 
     left: 0; 
     text-align: center; 
     display: block; 
-    margin: 0 0 -.5em 0; 
     z-index: -2;
+    margin: -2em 0 -.5em 0; 
+    @media screen and (min-width: 768px) {
+      margin: -1.5em 0 -.5em 0; 
+    }
   }
   .design {
     overflow: hidden;
@@ -170,29 +205,28 @@
     margin: 0 auto; 
     text-align: center; 
     display: block; 
-    margin-bottom: -1em; 
+    margin: 0 auto; 
     z-index: -2;
-
+    
     @media screen and (min-width: 768px) {
-      width: 40%;
+      margin: 0 auto .5em auto; 
+      width: 45%;
     }
   }
-  .more {
+  .hireme {
     @media screen and (min-width: 768px) {
       max-width: 95vw;
     }
   }
-  .more h2 {
-    margin-top: -2em;
-    margin-bottom: 1em;
+  .hireme h2 {
+    font-size: 1.53em;
     @media screen and (min-width: 768px) {
       margin-bottom: 0.5em;
       margin-top: 0;
     }
   }
   h1, h2 {
-    line-height: 1.1;
-    visibility: hidden;
+    line-height: .9;
     margin: 0;
     -webkit-touch-callout: none; /* Safari */
     -webkit-user-select: none; /* Chrome */     
@@ -206,33 +240,30 @@
     }
   }
   h1 {
-    line-height: .9;
-    font-size: 13.25vw;
+    line-height: .85;
+    font-size: 14.75vw;
+    letter-spacing: -0.05em;
     margin-top: -.5em;
-    letter-spacing: -0.02em;
-    opacity: 0;
+    color: var(--color-highlight);
     
     @media screen and (min-width: 768px) {
-      font-size: 9vw;
+      font-size: 11vw;
+    }
+
+    & > em {
+      color: var(--color-text);
     }
   }
-  h2 {
-    font-size: 1.5em;
-    letter-spacing: -0.033em;
-    margin-bottom: 0;
-    line-height: .9;
-  }
-  .toCanvas {
+  .canvasized h1, .canvasized h2 {
+    opacity: 0;
     visibility: hidden;
+  }
+  p {
     font-size: .66em;
-    margin: 1.25em 0 0.25em 0;
-    -webkit-touch-callout: none; /* Safari */
-    -webkit-user-select: none; /* Chrome */     
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; 
+    margin: 0 0 0.25em 0;
     @media screen and (min-width: 768px) {
-      font-size: 0.5em;
+      margin: 1em 0 0.25em 0;
+      font-size: 0.66em;
     }
   }
   a {
@@ -243,14 +274,13 @@
             user-select: none; 
   }
   .cta {
-    margin-top: 0em;
+    margin-top: -.5em;
     padding-top: 0em;
-    text-align: center;
     @media screen and (min-width: 768px) {
       // background-color: var(--color-bg);
       // border-top: 1px solid var(--color-text);
       padding-top: 1em;
-      margin-top: 2em;
+      margin-top: 0em;
     }
   }
 </style>

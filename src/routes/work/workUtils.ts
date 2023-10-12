@@ -54,7 +54,7 @@ export function initWorkPage( canvasTextElems: Array<HTMLElement>, canvasImgElem
         ease: 'power2.inOut',
         overwrite: true
       })
-    })
+    }, { passive: true })
     workinfo.parentElement?.addEventListener('mouseleave', () => {
       gsap.to(workinfo, {
         duration: .25,
@@ -63,7 +63,7 @@ export function initWorkPage( canvasTextElems: Array<HTMLElement>, canvasImgElem
         ease: 'power2.inOut',
         overwrite: true
       })
-    })
+    }, { passive: true })
   })
     
   gsap.registerPlugin( SplitText );
@@ -76,12 +76,12 @@ export function initWorkPage( canvasTextElems: Array<HTMLElement>, canvasImgElem
       const target = e.target as HTMLElement;
       gsap.to(target?.querySelectorAll('.tag'), {duration: 0.5, opacity: 1, yPercent: 0, ease: 'back.out(1.7)', stagger: 0.025, overwrite: true});
       gsap.to(target?.querySelector('h2'), {duration: 0.5, opacity: 1, ease: 'back.out(1.7)', overwrite: true});
-    });
+    }, { passive: true });
     el.addEventListener('mouseleave', (e) => {
       const target = e.target as HTMLElement;
       gsap.to(target?.querySelectorAll('.tag'), {duration: 0.3, opacity: 0, yPercent: 200, ease: 'power2.out', overwrite: true});
       gsap.to(target?.querySelector('h2'), {duration: 0.5, opacity: 1, ease: 'back.out(1.7)', overwrite: true});
-    });
+    }, { passive: true });
   });
 
   gsap.set('.work', {

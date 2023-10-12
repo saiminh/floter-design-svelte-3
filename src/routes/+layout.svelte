@@ -2,7 +2,6 @@
   import '$lib/styles/global.scss';
   import Header from '$lib/components/Header.svelte';
   import Loader from '$lib/components/Loader.svelte';
-	import { fade } from 'svelte/transition';
   import { navigating } from '$app/stores';
   export let data;
   

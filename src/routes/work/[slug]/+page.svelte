@@ -2,278 +2,319 @@
   import { onMount, onDestroy } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-  import { CldImage } from 'svelte-cloudinary';
+  import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
+  import { CldImage, CldVideoPlayer } from 'svelte-cloudinary';
   export let data;
 
   gsap.registerPlugin(ScrollTrigger);
 
   let visible = false;
 
-  function animForDesktop() {
-
-    ScrollTrigger.getAll().forEach(t => t.kill());
-    
-    gsap.to('.heromask, .coverclone', { duration: .6, x: "-10%", ease: "cubic.inOut" })
-    
-    gsap.to('.work', {
-      xPercent: -100,
-      duration: .6,
-      ease: "expo.out",
-      delay: .2
-    })
-    
-    let heroheight = document.querySelector('.heromask')?.getBoundingClientRect().height || 100;
-
-    gsap.to('.heromask', {
-      clipPath: "polygon(0 0, 60% 0, 35% 100%, 0% 100%)",
-      duration: 1,
-      ease: "power4.out",
-      onStart: () => {
-        setTimeout(() => {
-          document.querySelector('.coverclone')?.remove();
-        }, 100);
-      },
-      onComplete: () => {
-        gsap.to('.heromask', {
-          ease: "none",
-          clipPath: "polygon(0 0, 50% 0, 50% 100%, 0% 100%)",
-          scrollTrigger: {
-            trigger: '.work',
-            start: 'top top',
-            end: `200px top`,
-            scrub: true
-          }          
-        })
-      }
-    })
-  }
-  function animForMobile() {
-    ScrollTrigger.getAll().forEach(t => t.kill());
-    gsap.to('.heromask, .coverclone', { duration: .6, y: -20, ease: "cubic.inOut" })
-    
-    gsap.to('.work', {
-      opacity: 1,
-      yPercent: -100,
-      duration: .4,
-      ease: "expo.out",
-      delay: .2,
-    })
-    
-    gsap.to('.heromask', {
-      clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
-      duration: .6,
-      ease: "cubic.inOut",
-      onStart: () => {
-        setTimeout(() => {
-          document.querySelector('.coverclone')?.remove();
-        }, 100);
-      },
-      onComplete: () => {
-        gsap.to('.heromask', {
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: '.work',
-            markers: false,
-            start: '0px -10px',
-            end: `0px -20px`,
-            scrub: false,
-            onEnterBack: () => {
-              gsap.to('.heromask', {
-                clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
-                duration: .6,
-                ease: "expo.out",
-              })
-            },
-            onEnter: () => {
-              gsap.to('.heromask', {
-                clipPath: "polygon(0 0, 100% 0, 100% 0%, 0% 0%)",
-                duration: .6,
-                ease: "expo.out",
-              })
-            }
-          }
-        })
-      }
-    })
-  }
-  function animForSize(){
-    if ( window.matchMedia("(min-width: 768px) and (orientation: landscape)").matches ) {
-      animForDesktop();
-    } else {
-      animForMobile();
-    }
-  }
-
   onMount(() => {
-    
     visible = true;
-    
-    document.querySelector('.heromask img')?.addEventListener('load', () => {
-      animForSize();
-      
-      let portrait = window.matchMedia("(orientation: portrait)");
-  
-      portrait.addEventListener("change", function(e) {
-        animForSize();
-      })
+    if (document.querySelector('.workclone')) {
+      document.querySelector('.workclone')?.remove();
+    }
+    gsap.to('.logo-wrapper', {
+      opacity: 0,
+      zIndex: -1,
+      duration: 1,
+      ease: 'power2.out',
     })
+    gsap.from('.work', {
+      y: '100vh',
+      duration: 1,
+      ease: 'power4.out',
+    })
+    gsap.from('.gallery-wrapper', {
+      y: '-100vh',
+      duration: 1,
+      ease: 'power4.out',
+    })
+
+    const gallery = document.querySelector('.gallery') as HTMLElement;
+    let startX: number;
+    let scrollLeft: number;
+    let isDown = false;
+    if (gallery) {
+      gallery.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - gallery.offsetLeft;
+        scrollLeft = gallery.scrollLeft;
+      });
+      gallery.addEventListener('mouseleave', () => {
+        isDown = false;
+      });
+      gallery.addEventListener('mouseup', () => {
+        isDown = false;
+      });
+      gallery.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - gallery.offsetLeft;
+        const walk = (x - startX) * 4; //scroll-fast
+        gallery.scrollLeft = scrollLeft - walk;
+      });
+    }
+
+    
+    return () => {
+      gsap.killTweensOf('.logo-wrapper, .work, .gallery-wrapper');
+    }
   })
+  
 </script>
 
-<div class="heromask">
-    <CldImage 
-      src={data.header_bg_image}
-      alt="{data.title}" 
-      sizes="100vw"
-      width={2100}
-      height={1400}
-      placeholder="blur"
-      loading="eager"
-      objectFit="fill"
-    />
+<div class="logo-wrapper">
+  <div class="svg-logo">{@html data.svg}</div>
 </div>
 <div class="subnav">
-  <a href="/work" class="subnav-item">← Back</a>
+  <a href="/work" class="subnav-item button">← Back</a>
+</div>
+<div class="gallery-wrapper">
+  <div class="gallery">
+    {#if visible}
+    {#each data.images as image}
+      <figure>
+        {#if image.includes('/video/')}
+          <video src={image} width="1400" height="840" autoplay muted loop></video>  
+        {:else}
+        <CldImage 
+          src={image}
+          alt="{data.title}" 
+          sizes="(min-width: 768px) 67vw, 90vw"
+          width={1400}
+          height={840}
+          placeholder="blur"
+          loading="eager"
+          objectFit="cover"
+        />
+        {/if}
+      </figure>  
+    {/each}
+    {/if}
+  </div>
 </div>
 <article class="work">
-  {#if visible}
+{#if visible}
+  <h1>{data.title}</h1>
+  <div class="description">
+    {data.description}
+  </div>
   <div class="work-content">
-    {#if data.tags != undefined && data.tags.length > 0 }
-      <div class="tags">
-        {#each data.tags as tag }
-          <div class="tag">{tag}</div>
-        { /each }
+    <div class="infobox">
+      <div class="tasks">
+        <div class="tasks-title">What I did:</div>
+        <ul>
+          {#each data.tags as tag }
+            <li>{tag}</li>
+          { /each }
+        </ul>
       </div>
-    {/if}
-    <h1><span class="svg-logo">{@html data.svg}</span><span class="name">{data.title}</span></h1>
+      <div class="reference">
+        <div class="reference-title">Reference:</div>
+        <div><a href={data.reference}>{data.referenceName}</a></div>
+      </div>
+      {#if data.agency}
+      <div class="agency">
+        <div class="agency-title">Agency:</div>
+        <div><a href={data.agency}>{data.agencyName}</a></div>
+      </div>
+      {/if}
+    </div>
     <div class="work-content-text">
       {@html data.Content.html}
     </div>
   </div>
-  {/if}
+{/if}
 </article>
 
 <style lang="scss">
-  .work {
-    width: 100vw;
-    min-height: 100svh;
-    overflow: hidden;
-    box-sizing: border-box;
-    transform: translateY(100%);
-
-    @media screen and (min-width: 768px) {
-      transform: translateX(100%);
-    }
-  }
   .subnav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 4;
-    padding: var(--spacing-outer);
-
-    & a {
-      text-decoration: none;
-      color: var(--color-highlight);
-    }
-  }
-  .heromask {
-    position: fixed;
-    top: 0;
-    left:0;
-    aspect-ratio: var(--aspect-ratio-heroes);
-    width: 100%;
-    height: auto;
-    z-index: 2;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-  }
-  :global(.heromask img) {
-    z-index: 0;
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;  
-    aspect-ratio: var(--aspect-ratio-heroes);
-    margin: 0;
-    object-fit: fill;
-  }
-  .work-content {
-    padding: 0 var(--spacing-outer);
-    padding-top: calc(66.6vw + 1em);
-    position: relative;
-    z-index: 1;
-    color: var(--color-text);
-
-    & > :last-child {
-      margin-bottom: 100px;
-    }
     @media screen and (min-width: 768px) {
-      margin-left: 40vw;
-      max-width: 60vw;
-      padding-top: calc( 3 * var(--spacing-outer) );
-      padding-left: calc(var(--spacing-outer) * 1.5);
-      padding-right: calc(var(--spacing-outer) * 2.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      z-index: 22;
+    }
+  }
+  .subnav-item {
+    margin: var(--spacing-nav);
+  }
+  .logo-wrapper {
+    position: fixed;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  }
+  .svg-logo {
+    color: var(--color-highlight);
+    padding: 3em;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @media screen and (min-width: 768px) {
+      width: 60%;
+    }
+  }
+  :global(.svg-logo svg) {
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+  }
+  .work {
+    overflow: hidden;
+    padding: 0 var(--spacing-outer) 100px var(--spacing-outer);
+    @media screen and (min-width: 768px) {
+      margin: 0 var(--spacing-outer) 0 150px;
+      padding: 0 var(--spacing-outer) 100px var(--spacing-outer);
+      width: calc(100% - 150px - var(--spacing-outer));
     }
   }
   h1 {
-    position: relative;
-    z-index: 1;
-    margin: 0;
-
+    margin: .5em 0 0.25em 0;
+    font-size: 2.5rem;
     @media screen and (min-width: 768px) {
-      padding: 0 0 1em 0;
+      font-size: 5rem;
     }
-    & .name {
+  }
+  .description {
+    margin-bottom: 1.5em;
+    line-height: 1.3;
+    letter-spacing: -0.0075em;
+    font-size: 1.25rem;
+    @media screen and (min-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+  .infobox {
+    font-size: 1.25rem;
+    padding: 0 0 2em 0;
+    
+    @media screen and (min-width: 768px) {
+      flex: 0 0 25%;
+    }
+  }
+  .reference-title, .agency-title, .tasks-title {
+    font-weight: bold;
+    font-style: italic;
+    margin: 0 0 .125em 0;
+  }
+  .reference-title, .agency-title {
+    margin-top: 1em;
+    margin-bottom: 0;
+  }
+  .tasks ul {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .125em;
+  }
+  .tasks li {
+    font-size: 1rem;
+    list-style: none;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin: 0;
+    padding: 0.25em 0.33em;
+    background-color: var(--color-highlight);
+    color: var(--color-bg);
+  }
+  .work-content {
+    position: relative;
+    z-index: 2;
+    @media screen and (min-width: 768px) {
+      display: flex;
+      gap: 2em;
+    }
+  }
+  .work-content-text :global(h2) {
+    font-size: 2rem;
+    @media screen and (min-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+  .work-content-text > :global(:first-child) {
+    margin-top: 0;
+  }
+  .work-content-text :global(p) {
+    font-size: 1rem;
+    @media screen and (min-width: 768px) {
+      font-size: 1em;
+    }
+  }
+  .work-content-text > :global(h1):first-child {
+    margin-top: 0;
+  }
+  .gallery-wrapper {
+    position: relative;
+    width: 100vw;
+    overflow: hidden;
+    margin-bottom: -80px;
+    top: -80px;
+    padding: 0 0 1em 0;
+    z-index: 1;
+    opacity: 0.75;
+    perspective: 250px;
+    perspective-origin: center bottom;
+    @media screen and (min-width: 768px) {
+      padding: 2em 0 4em 0;
+      margin-bottom: -120px;
+      perspective: 500px;
+    }
+  }
+  .gallery {
+    transform-origin: 50% 50%;
+    position: relative;
+    display: flex;
+    scroll-behavior: smooth;
+    gap: 1px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    width: 115vw;
+    left: -4vw;
+    cursor: grab;
+    transform: rotate3d(-2, 0, 1, -10deg);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
       display: none;
     }
-    & .svg-logo :global(svg) {
-      width: auto;
-      height: auto;
-      max-width: 250px;
-      max-height: 80px;
-      margin-bottom: 1em;
-
-      @media screen and (min-width: 768px) {
-        max-width: 400px;
-        max-height: 200px;
-      }
+    @media screen and (min-width: 768px) {
+      width: 110vw;
+      left: -3vw;
+      transform: rotate3d(-2, 0, 1, -10deg);
     }
   }
-  .tags {
-    padding-bottom: .25em;
-    font-size: 1em;
-    margin-bottom: 2em;
-    line-height: 1.1;
-
-    &:after {
-      content: '';
-      display: block;
-      width: calc(100% + var(--spacing-outer) * 2.5);
-      height: 1px;
-      background-color: var(--color-text);
-      margin-top: .5em;
+  figure {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+    scroll-snap-align: start;
+    flex: 1 0 85%;
+    background-color: var(--color-highlight);
+    height: 100%;
+    aspect-ratio: 140/84;
+    width: auto;
+    margin: 0;
+    @media screen and (min-width: 768px) {
+      flex: 1 0 66.666%;
     }
-  }
-  .tag {
-    display: inline-block;
-    margin-right: .5em;
-    padding: .125em 0;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: -.005em;
-
-    &:after {
-      content: ','
+    
+    & :global(img), video {
+      width: 100%;
+      height: 100%;
+      object-position: left top;
     }
-    &:last-child:after {
-      content: none
+    video {
+      object-fit: cover;
     }
-  }
-  
-  :global(.header-nav){
-    transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
-  :global(.work .header-nav){
-    transform: translateY(100%);
   }
 </style>

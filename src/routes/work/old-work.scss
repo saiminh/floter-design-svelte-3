@@ -1,0 +1,113 @@
+.works-wrapper {
+  max-width: 1200px;
+  margin: auto;
+}
+h1 {
+  font-size: 16vw;
+  margin: var(--spacing-nav) var(--spacing-nav) .25em var(--spacing-nav);
+  padding: 0 0 calc(var(--spacing-nav) / 3) 0;
+  position: relative;
+  z-index: -1;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-bottom: 1px solid;
+
+  @media screen and (min-width: 768px) {
+    font-size: 7vw;
+  } 
+}
+.works {
+  padding: 0.5em;
+  display: flex;      
+  gap: 0.25em;
+  flex-wrap: wrap;
+
+  @media screen and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    padding: 0 var(--spacing-nav);
+    margin: 0 auto;
+    padding-bottom: 20svh;
+  }
+}
+.work-info, 
+.work:visited .work-info {
+  position: absolute;
+  left: 0.25em;
+  top: 0.25em;
+  padding: 0.5em .75em;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: var(--color-text);
+  visibility: hidden;
+
+  & h2 {
+    text-transform: none;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    visibility: hidden;
+    color: var(--color-bg);
+  }
+  & .tags {
+    visibility: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0 ;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15em;
+    transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  & .tag {
+    font-size: .6em;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 3px;
+    text-transform: uppercase;
+    // font-weight: 800;
+    // font-style: italic;
+    color: var(--color-text);
+  }
+}
+.work:hover .work-info {
+  background-color: var(--color-bg);
+  & h2 {
+    color: var(--color-text);
+  }
+}
+.work {
+  flex: 0 0 calc(50% - 0.125em );
+  display: block;
+  position: relative;
+  padding: 0;
+  // transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  overflow: hidden;
+  
+  @media screen and (min-width: 768px) {
+    grid-column-end: span 1;
+
+    &:first-child {
+      grid-column-end: span 2;
+      grid-row-end: span 2;
+    }
+  }
+}
+.work .tag {
+  opacity: 0;
+}
+:global(.work img) {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--aspect-ratio-heroes);
+  object-fit: fill;
+  visibility: hidden;
+  display: block;
+}

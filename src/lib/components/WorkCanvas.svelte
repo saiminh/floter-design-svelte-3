@@ -77,7 +77,9 @@ onMount( () => {
   bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.6);
   bulgefilter.strength = is_landscape ? bulgeFactor : bulgeFactor * 1.25;
   bulgefilter.center = center;
-  bulgefilter.resolution = 2;
+  // bulgefilter.resolution = 2;
+
+  PIXI.Filter.defaultResolution = 2;
   
   app.stage.filters = [bulgefilter];
 
@@ -208,7 +210,7 @@ onMount( () => {
         x: pointerX,
         y: pointerY,
       })
-    })
+    }, { passive: true })
   }
 
 

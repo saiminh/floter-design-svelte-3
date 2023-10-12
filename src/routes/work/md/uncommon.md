@@ -1,10 +1,20 @@
 ---
-title: Uncommonbio.co
+title: uncommonbio.co
 header_bg_image: uncommon_hero_jf1in9
+images: ['work/uncommon/uncommon_hero_jf1in9', 'work/uncommon/scrnli_Oct_10_2023_sspigq', 'work/uncommon/scrnli_screenshot_4_._dctvo7', 'work/uncommon/scrnli_Oct_10_2023_1_._ybvayx']
 order: 12
-tags: ['tech consultancy', 'web development', 'UX Design', 'Knoterputer', 'Henkenstein']
-description: Peak Capital description
+tags: ['Tech consultancy', 'Frontend development',]
+description: A brand-new website for the home of animal-free bacon
+reference: https://www.linkedin.com/in/patrick-niall-38560b1b/
+referenceName: Patrick Niall
+agency: https://forpeople.com
+agencyName: forpeople
 svg: '<svg id="uncommonLogo" x="0" y="0" viewBox="0 0 932 110.7" style="enable-background:new 0 0 932 110.7; fill: currentColor;"><path id="n7" class="uncommonLogo-letter" d="M828.9 3.5h30.5v9.6C865.6 4.9 878.2 0 889.3 0c10.2 0 21.6 3.1 28.1 9.1 8.4 7.5 14.7 19.9 14.7 32v66.4h-30.3V48.8c0-5-1.8-12.9-4.6-15.7-2.7-2.8-6.7-6.8-16.2-6.8s-14.8 4.9-17.5 8.9c-2.3 3.3-4.1 7.4-4.1 13.6v58.8h-30.5V3.5z"></path><path id="o6" class="uncommonLogo-letter" d="M801.2 17.2c-10.8-10.7-24.1-16-39.6-16s-28.7 5.3-39.5 16C711.4 27.7 706 40.6 706 56c0 15.3 5.4 28.3 16.1 39 10.7 10.5 23.9 15.8 39.5 15.8s28.8-5.3 39.6-16C812 84.3 817.5 71.3 817.5 56c0-15.4-5.4-28.3-16.3-38.8zm-21.7 57.1c-4.9 5-10.8 7.5-17.9 7.5s-13-2.5-17.7-7.5c-4.9-5-7.3-11.1-7.3-18.4 0-7.2 2.4-13.4 7.1-18.4 4.9-5 10.8-7.5 17.9-7.5s13 2.5 17.9 7.5c4.9 5 7.3 11.1 7.3 18.4 0 7.3-2.5 13.4-7.3 18.4z"></path><path id="mm5" class="uncommonLogo-letter" d="M446.9 3.5h30.5v9.6C483.6 4.9 496.2 0 507.3 0c10.2 0 21.6 3.1 28.1 9.1 3.3 2.9 6.3 6.7 8.7 10.8 3.7-4.2 6.3-6.8 6.3-6.8C557.1 6.2 569.1 0 580.2 0c10.2 0 21.6 3.1 28.1 9.1 3.3 3 6.3 6.7 8.7 10.9 3.7-4.2 6.4-6.9 6.4-6.9C630.1 6.2 642.1 0 653.2 0c10.2 0 21.6 3.1 28.1 9.1 8.4 7.5 14.7 19.9 14.7 32v66.4h-30.3V48.7c0-5-1.8-12.9-4.6-15.7-2.7-2.8-6.7-6.8-16.2-6.8s-14.8 4.9-17.5 8.9c-2.3 3.3-4.1 7.4-4.1 13.6v58.8h-30.7V48.7c0-5-1.8-12.9-4.6-15.7-2.7-2.8-6.7-6.8-16.2-6.8s-14.8 4.9-17.5 8.9c-2.3 3.3-4.1 7.4-4.1 13.6v58.8h-30.6V48.7c0-5-1.8-12.9-4.6-15.7-2.7-2.8-6.7-6.8-16.2-6.8s-14.8 4.9-17.5 8.9c-2.3 3.3-4.1 7.4-4.1 13.6v58.8h-30.5V3.5z"></path><path id="o4" class="uncommonLogo-letter" d="M420 17.2c-10.8-10.7-24.1-16-39.6-16s-28.7 5.3-39.5 16c-10.7 10.5-16.1 23.5-16.1 38.8 0 15.3 5.4 28.3 16.1 39 10.7 10.5 23.9 15.8 39.5 15.8s28.8-5.3 39.6-16c10.8-10.5 16.3-23.5 16.3-38.8 0-15.4-5.4-28.3-16.3-38.8zm-21.7 57.1c-4.9 5-10.8 7.5-17.9 7.5s-13-2.5-17.7-7.5c-4.9-5-7.3-11.1-7.3-18.4 0-7.2 2.4-13.4 7.1-18.4 4.9-5 10.8-7.5 17.9-7.5s13 2.5 17.9 7.5c4.9 5 7.3 11.1 7.3 18.4 0 7.3-2.4 13.4-7.3 18.4z"></path><path id="c3" class="uncommonLogo-letter" d="M247.1 16.8c10.4-10.4 23.4-15.6 39.1-15.6 13.6 0 25.5 4.5 35.6 13.4l-11.3 26.5c-6.8-7.3-14.6-11-23.2-11-7.2 0-13.2 2.5-18.1 7.5-4.9 4.9-7.3 11.2-7.3 18.9 0 7.6 2.4 13.7 7.1 18.4 4.9 4.7 10.8 7 17.9 7 8.9 0 16.7-3.7 23.6-11l11.3 26.5c-10.1 8.9-22 13.4-35.6 13.4-15.7 0-28.8-5.2-39.3-15.6-10.4-10.4-15.5-23.5-15.5-39.1s5.2-28.9 15.7-39.3z"></path><path id="n2" class="uncommonLogo-letter" d="M117.8 3.5h30.5v9.6C154.5 4.9 167.1 0 178.2 0c10.2 0 21.6 3.1 28.1 9.1 8.4 7.5 14.7 19.9 14.7 32v66.4h-30.3V48.7c0-5-1.8-12.9-4.6-15.7-2.7-2.8-6.7-6.8-16.2-6.8s-14.8 4.9-17.5 8.9c-2.3 3.3-4.1 7.4-4.1 13.6v58.8h-30.5V3.5z"></path><path id="u1" class="uncommonLogo-letter" d="M103.1 107.2H72.6v-9.6c-6.2 8.2-18.8 13.1-29.9 13.1-10.2 0-21.6-3.1-28.1-9.1C6.3 94.1 0 81.7 0 69.6V3.2h30.3V62c0 5 1.8 12.9 4.6 15.7 2.7 2.8 6.7 6.8 16.2 6.8s14.8-4.9 17.5-8.9c2.3-3.3 4.1-7.4 4.1-13.6V3.2h30.5v104z"></path></svg>'
 ---
-Uncommon's mission is to sell rashers and rashers of cultivated pork at price parity.
-For happy pigs and piggy banks.
+Uncommon's mission is to sell rashers and rashers of cultivated pork at price parity. For happy pigs and piggy banks.
+
+Another project in collaboration with the ever-inspiring creative agency [forpeople](https://forpeople.com). Their client Uncommon needed a website to go along with their new brand name and identity. 
+
+Unique features include an option to have your website browsing pleasure be accompanied by the sound of bacon sizzling in a pan and a page that explains the science of the product that adapts to your knowledge level.
+
+<a href="https://uncommonbio.co" class="button" target="_blank">Check it out live</a>

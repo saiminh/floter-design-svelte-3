@@ -1,9 +1,18 @@
 ---
 title: peak.capital
 header_bg_image: peak_hero_ewp1wb
+images: ['/work/peak/peak-mobile-mockup_wtp3ea', '/work/peak/peak_hero_ewp1wb']
 order: 12
-description: Peak Capital description
-tags: ['early-stage investment fund', 'venture capital', 'fund', 'investor']
-svg: '<svg class="peak-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 102 102"><style>.peak-logo-svg-circle{fill: currentColor}.peak-logo-svg-letters{fill:var(--color-bg)}</style><circle class="peak-logo-svg-circle" cx="50" cy="50" r="50"></circle><polygon class="peak-logo-svg-letters" points="70.45 39.19 70.45 61.48 75.19 61.48 75.19 53.82 78.47 50.48 84.61 61.48 90.66 61.48 82.14 46.79 89.65 39.19 83.69 39.19 75.19 47.68 75.19 39.19 70.45 39.19"></polygon><polygon class="peak-logo-svg-letters" points="43.83 43.41 43.83 39.22 28.98 39.22 28.98 61.48 43.83 61.48 43.83 57.29 33.71 57.29 33.71 52.23 43.2 52.23 43.2 48.03 33.71 48.03 33.71 43.41 43.83 43.41"></polygon><path class="peak-logo-svg-letters" d="M45.77,61.48h5.12L51.48,60a3,3,0,0,1,.16-.36,6,6,0,0,1,11-.21,2.92,2.92,0,0,1,.14.31l.7,1.78h5.15l-8.9-22.26h-5Zm13.95-9.63a10.56,10.56,0,0,0-2.53-.31,9.85,9.85,0,0,0-2.55.33l2.56-6.52Z"></path><path class="peak-logo-svg-letters" d="M9.34,39.22V61.48h4.73V53.57h3.4c5.56,0,9-2.71,9-7.18s-3.46-7.17-9-7.17Zm12.29,7.17c0,1.91-1.48,3-4.16,3h-3.4v-6h3.4C20.15,43.41,21.63,44.49,21.63,46.39Z"></path></svg>'
+description: A new website for the european investment fund
+tags: ['Webdesign', 'Frontend Development']
+svg: '<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 97 97"><path style="fill:currentColor" fill-rule="evenodd" d="M.1 48.5C.1 21.7 21.8 0 48.6 0 75.3.1 97 21.8 97 48.5 97 75.3 75.3 97 48.5 97S.1 75.3.1 48.5zm14.5 3.2H18c5.4 0 8.8-2.6 8.8-7s-3.4-7-8.8-7h-8v21.7h4.6v-7.7zm19.2-9.9h9.9v-4.1H29.2v21.7h14.5v-4.1h-9.9v-4.9h9.3v-4.1h-9.3v-4.5zm28.4 15.9.7 1.7h5l-8.7-21.7h-4.9l-8.7 21.7h5l.6-1.5c0-.1.1-.2.2-.4 1.1-2.2 3.2-3.6 5.4-3.6s4.2 1.3 5.3 3.4c0 .1 0 .3.1.4zm12.1-5.8 3.2-3.3 6 10.7h5.9L81.1 45l7.3-7.4h-5.8l-8.3 8.3v-8.3h-4.6v21.8h4.6v-7.5zM18 41.8h-3.3v5.8H18c2.6 0 4.1-1 4.1-2.9-.1-1.9-1.5-2.9-4.1-2.9zM54.2 50c.8-.2 1.6-.3 2.5-.3.8 0 1.7.1 2.5.3l-2.5-6.3-2.5 6.3z" clip-rule="evenodd"/></svg>'
+referenceName: Madeline Lawrence
+reference: https://www.linkedin.com/in/madelinelawren/
 ---
 Peak is an early-stage investment fund backed by entrepreneurs in Europe.
+
+In 2021 the creative agency [forpeople](https://forpeople.com) helped Peak with a full rebranding. They brought me on board to help translate the new branding to the company's exist ing WordPress website. 
+
+Over the past years I have worked with the team at peak to develop the site further.
+
+<a class="button" href="https://peak.capital">Live site</a>

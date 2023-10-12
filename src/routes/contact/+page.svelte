@@ -9,25 +9,25 @@
   let contactFormVisible = false;
   let contactFormClickHandler = (e: Event) => {
     if (contactFormVisible) {
-      gsap.to('.wordChildren', { opacity: 1, yPercent: 0, duration: 1, ease: 'power4.inOut' })
-      gsap.to('.alternatives > *', { opacity: 1, scale: 1, duration: .5, stagger: 0.1, ease: 'power4.inOut' })
+      gsap.to('.wordChildren', { autoAlpha: 1, yPercent: 0, duration: 1, ease: 'power4.inOut' })
+      gsap.to('.alternatives > *', { autoAlpha: 1, scale: 1, duration: .5, stagger: 0.1, ease: 'power4.inOut' })
       gsap.fromTo('.formwrapper', 
-      { opacity: 1, yPercent: 0 }, 
-      { opacity: 0, yPercent: 50, duration: .6, ease: 'power4.inOut', onComplete: ()=>{
+      { autoAlpha: 1, yPercent: 0 }, 
+      { autoAlpha: 0, yPercent: 50, duration: .6, ease: 'power4.inOut', onComplete: () => {
         gsap.set('.formwrapper', { zIndex: -1 })
       } }
       )
     } else {
-      gsap.to('.wordChildren', { opacity: 1, yPercent: -200, duration: 1, ease: 'power4.inOut' })
-      gsap.to('.alternatives > *', { opacity: 0, scale: 0.5, duration: .5, stagger: 0.1, ease: 'power4.inOut' })
+      gsap.to('.wordChildren', { autoAlpha: 1, yPercent: -100, duration: 1, ease: 'power4.inOut' })
+      gsap.to('.alternatives > *', { autoAlpha: 0, scale: 0.5, duration: .5, stagger: 0.1, ease: 'power4.inOut' })
       gsap.set('.formwrapper', { zIndex: 2 })
       gsap.fromTo('.formwrapper', 
-      { opacity: 1, yPercent: 100 }, 
-      { opacity: 1, yPercent: 0, duration: 1, ease: 'power4.inOut' }
+      { autoAlpha: 1, yPercent: 100 }, 
+      { autoAlpha: 1, yPercent: 0, duration: 1, ease: 'power4.inOut' }
       )
       gsap.fromTo('.formwrapper label > *', 
-      { opacity: 0, yPercent: 100 }, 
-      { opacity: 1, yPercent: 0, duration: .5, stagger: 0.0125, ease: 'power4.out', delay: .25}
+      { autoAlpha: 0, yPercent: 100 }, 
+      { autoAlpha: 1, yPercent: 0, duration: .5, stagger: 0.0125, ease: 'power4.out', delay: .25}
       )
     }
     contactFormVisible = !contactFormVisible;
@@ -58,30 +58,29 @@
 
     const introInElem = document.querySelector('.pagewrapper') as HTMLElement;
     gsap.fromTo(introInElem.querySelectorAll('.wordChildren'), {
-      opacity: 0, yPercent: -100
+      autoAlpha: 0, yPercent: -100
     }, {
-      opacity: 1, yPercent: 0, duration: 1.5, stagger: 0.025, ease: 'power4.inOut',
+      autoAlpha: 1, yPercent: 0, duration: 1.5, stagger: 0.025, ease: 'power4.inOut',
     })
     gsap.fromTo(introInElem?.querySelectorAll('.alternatives p, .alternatives .button'), {
-      opacity: 0, yPercent: 100
+      autoAlpha: 0, yPercent: 100
     }, {
-      opacity: 1, yPercent: 0, duration: 1, stagger: 0.025, ease: 'power4.inOut',
+      autoAlpha: 1, yPercent: 0, duration: 1, stagger: 0.025, ease: 'power4.inOut',
     })
 
     return () => {
       gsap.killTweensOf('.toCanvas, .wordChildren');
     }
   })
-
 </script>
 
 <div class="pagewrapper">
   <div class="intro">
-    <h1 class="toCanvas">Life is weird. <em>Let's be weird together.</em></h1>
+    <h1 class="toCanvas">Let's be strange,<br>not strangers.</h1>
     <div class="alternatives">
       <p>Choose your flavour of contact:</p>
       <ul>
-        <li><span class="button" on:click={contactFormClickHandler} on:keydown={contactFormClickHandler} role="button" tabindex="0">Contact form</span></li>
+        <li><span class="button button--primary" on:click={contactFormClickHandler} on:keydown={contactFormClickHandler} role="button" tabindex="0">Contact form</span></li>
         <li><a class="button" href="mailto:simon@floter.design">Email</a></li>
         <li><a class="button" href="https://www.linkedin.com/in/floter/">LinkedIn</a></li>
       </ul>
@@ -103,7 +102,7 @@
       </div>
       <label for="contact">
         <!-- <p>Please describe your plight in a few words</p> -->
-        <textarea rows="6" name="contact" id="contact" placeholder="Your business propositions, praise, complaints and/or threats" required />
+        <textarea rows="8" name="contact" id="contact" placeholder="Your business propositions, praise, complaints and/or threats" required />
       </label>
       <div class="send">
         <button class="button button--xl button--primary" type="submit">Send it!</button>
@@ -153,6 +152,7 @@
     background-color: var(--color-bg);
     z-index: 0;
     opacity: 0;
+    visibility: hidden;
     overflow-y: scroll;
 
     --form-maxwidth: 1000px;
@@ -193,17 +193,15 @@
       opacity: 0;
     }
     & p {
+      font-size: 1.4em;
       margin: 0 0 .5em 0;
     }
     & ul {
       margin: 0 var(--spacing-outer);
-      
-      // @media screen and (min-width: 768px) {
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-        gap: .25em;
-      // }
+      list-style-type: none;
+      display: flex;
+      justify-content: center;
+      gap: .25em;
     }
     & ul li {
       display: block;
@@ -213,6 +211,10 @@
       margin: 0.25em 0;
       display: block;
       font-size: .9em;
+
+      @media screen and (min-width: 768px) {
+        font-size: 1.2em;
+      }
     }
   }
   label {
@@ -223,8 +225,8 @@
   }
   input[type='text'], input[type='email'], textarea {
     width: 100%;
-    border: 3px solid var(--color-text);
-    background-color: var(--color-text);
+    border: 0 solid var(--color-text);
+    background-color: var(--color-text);//Overruled by placeholder-shown if no value
     color: var(--color-bg);
     border-radius: 4px;
     font-family: 'Stratos', sans-serif;
@@ -242,20 +244,23 @@
       background-color: var(--color-text);
     }
     &:placeholder-shown {
-      background-color: rgba(255, 205, 205, 0);
+      background-color: rgba(255, 255, 225, 0.2);
+    }
+    &:focus:placeholder-shown {
+      background-color: var(--color-text);
     }
     &::placeholder {
       color: var(--color-text);
-      opacity: .7;
+      opacity: .8;
     }
   }
-  label p {
-    max-width: var(--form-maxwidth);
-    margin: 0 auto 1em auto;
-    display: block;
-    font-size: .75em;
-    margin-bottom: .5em;
-  }
+  // label p {
+  //   max-width: var(--form-maxwidth);
+  //   margin: 0 auto 1em auto;
+  //   display: block;
+  //   font-size: .75em;
+  //   margin-bottom: .5em;
+  // }
   .send {
     max-width: var(--form-maxwidth);
     margin: auto;

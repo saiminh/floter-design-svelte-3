@@ -1,0 +1,12 @@
+---
+title: Letshost.ie
+description: Design and development for the irish hosting provider
+images: ['work/letshost/letshost_hero_ibd4sx', 'work/letshost/letshost_sharedhosting_desktop_sriv5t', 'work/letshost/letshost_testimonials_desktop_ijwxmy', 'work/letshost/letshost_wordpress_desktop_qaknlm']
+tags: ['Graphc Design', 'Web Design', 'Frontend Development']
+reference: https://www.linkedin.com/in/daraghmacloughlin/
+referenceName: Daragh Mac Loughlin
+svg: '<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 115.2 16.4"><path fill="currentColor" d="M54.4.5H58v6.2h5.9V.5h3.6v15.6h-3.6v-6H58v6h-3.6V.5zM12.6 16.1V.5h11.1v3.3h-7.4v2.9H23v3.2h-6.7v2.9h7.8v3.4l-11.5-.1zM51.3 2.3l-1.7 2.4c-1.4-.5-2.6-.9-3.8-1.3-.4-.1-.9-.1-1.3.1s-.8.7-.8 1.1c.1.5.4.9.8 1.2.8.3 1.6.6 2.4.8.8.2 1.5.5 2.3.8 3.2 1.4 3.2 6 .6 7.8-3.2 2.2-8.2.9-10.6-1.8l2.1-2.6c.2.2.4.3.7.5 1.1.6 2.2 1.2 3.4 1.6.5.2 1 .1 1.5-.1.4-.2.7-.6.9-1 .2-.5-.1-1.1-.6-1.3h-.1c-.8-.3-1.5-.5-2.3-.8s-1.7-.5-2.5-.9c-1.4-.6-2.3-1.9-2.4-3.4-.3-1.7.5-3.5 1.9-4.4 3.1-2 7.1-.9 9.3.9.1.2.2.3.2.4zM88.9 13.6l2.2-2.7c.3.2.5.4.8.6 1 .6 2 1.1 3.1 1.5.5.2 1.1.1 1.6-.1s.8-.6.9-1.1c0-.5-.3-1-.7-1.2-.7-.3-1.4-.6-2.1-.7-.9-.3-1.8-.6-2.6-.9-1.6-.6-2.7-2.3-2.5-4-.1-1.7.9-3.3 2.4-4.1 2.7-1.4 7.2-.7 9.1 1.5l-1.7 2.4c-1.2-.5-2.4-.9-3.6-1.3-.5-.1-1-.1-1.5.1s-.8.6-.9 1.1c0 .5.3 1 .8 1.2.8.3 1.6.6 2.4.8.8.2 1.5.5 2.3.8 1.7.7 2.7 2.3 2.6 4.1 0 1.8-1 3.4-2.7 4.1-2.3 1.1-4.9 1-7.1-.3-1-.6-1.9-1.2-2.8-1.8zM38.1.5v3.1h-4.3v12.5h-3.7V3.6h-4.3V.5h12.3zM110.8 16.1h-3.6V3.7h-4.3V.6h12.3v3h-4.4v12.5zM3.7 12.8h6.6v3.3H0V.5h3.7v12.3zM86.2 5.9C85.4 3.7 83.7 2 81.6 1c-.1.1-3.1 1.3-4.7 3.6 2.2-.5 4-.1 5.4.6 1.8 1.1 3.2 2.8 4 4.8.3-1.2.3-2.7-.1-4.1z"/><path fill="currentColor" d="M81 15.8c2.2-.8 3.9-2.5 4.9-4.6-.1-.1-1.3-3.1-3.6-4.7.5 2.2.1 4-.6 5.4-1.1 1.8-2.8 3.2-4.8 4 1.3.3 2.8.3 4.1-.1z"/><path fill="currentColor" d="M71.1 10.7c.8 2.2 2.5 3.9 4.6 4.9.1-.1 3.1-1.3 4.7-3.6-2.2.5-4 .1-5.4-.6-1.8-1.1-3.2-2.8-4-4.8-.3 1.2-.3 2.7.1 4.1z"/><path fill="currentColor" d="M76.3.8c-2.2.8-3.9 2.5-4.9 4.6.1.1 1.3 3.1 3.6 4.7-.5-2.2-.1-4 .6-5.4 1.1-1.8 2.8-3.2 4.8-4-1.3-.3-2.8-.3-4.1.1z"/></svg>'
+---
+LetsHost.ie is the leading irish webhosting provider. I worked with the marketing team to redesign their website and improve their user journeys.
+
+Their best selling product are WordPress hosting packages. So in order to really practice what they preach and showcase what is possible in terms of performance and design, their own website also runs on the same stack.

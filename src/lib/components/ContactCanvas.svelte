@@ -41,6 +41,8 @@ onMount(()=>{
       backgroundAlpha: 0,
       view: canvas,
     });
+
+    PIXI.Filter.defaultResolution = 2;
     
       //for debugging but Typescript has an issue with this:
     (globalThis as any).__PIXI_APP__ = app;
@@ -64,24 +66,26 @@ onMount(()=>{
     bulgegroup.addChild(bulgebg);
     
     let center = [0.5, 0.5];
+    
     let bulgefilter = new BulgePinchFilter();
     bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.55);
     bulgefilter.strength = 0.5;
     bulgefilter.center = is_landscape ? center : [0.5, 0];
-    bulgefilter.resolution = 2;
+    // bulgefilter.resolution = 2;
 
     let twistfilter = new TwistFilter();
     twistfilter.angle = 0;
-    twistfilter.radius = window.innerWidth/2;
-    twistfilter.offset = new PIXI.Point(window.innerWidth/2, window.innerHeight/2);
-    twistfilter.resolution = 2;
+    twistfilter.radius = is_landscape ? window.innerWidth/4 : window.innerWidth/2;
+    twistfilter.offset = new PIXI.Point(window.innerWidth/2, window.innerHeight/3);
+    // twistfilter.resolution = 2;
+
 
     bulgegroup.filters = [bulgefilter, twistfilter];
 
     gsap.to(twistfilter, {
-      angle: .75,
+      angle: -1.33,
       duration: 1,
-      ease: 'elastic.out',
+      ease: 'elastic.out(2, 0.4)',
       delay: 2,
       onComplete: () => {
         is_twisted = true;
@@ -174,13 +178,15 @@ onMount(()=>{
         const pointerXfrac = pointerX - 0.5;
         const pointerYfrac = pointerY - 0.5;
         
-        gsap.to(mouse, {
-          duration: 0.5,
-          ease: 'power3.out',
-          overwrite: true,
-          x: e.clientX,
-          y: e.clientY,
-        })
+        if (is_twisted){
+          gsap.to(mouse, {
+            duration: 0.5,
+            ease: 'power3.out',
+            overwrite: true,
+            x: e.clientX,
+            y: e.clientY,
+          })
+        }
 
         gsap.to(tween, {
           duration: .5,
@@ -189,7 +195,7 @@ onMount(()=>{
           x: 0.5 + pointerXfrac/2,
           y: 0.5 + pointerYfrac/6,
         })
-      })
+      }, { passive: true })
     }
   
   
@@ -202,12 +208,16 @@ onMount(()=>{
       elapsed += delta;
       if (!is_landscape) {
         // bulgefilter.center = [(tween.x + Math.sin(elapsed/200)/20 ),(tween.y + Math.cos(elapsed/200)/20 )];
-        bulgefilter.center = [(0.5 + Math.sin(elapsed/200)/20 ),(0.4 + Math.cos(elapsed/200)/20 )];
-        twistfilter.offset = new PIXI.Point( twistfilter.offset.x + Math.sin(elapsed/100) - Math.sin(elapsed/100) * 2, twistfilter.offset.y );
+        let movingCenter = [(0.5 + Math.sin(elapsed/200)/20 ),(0.33 + Math.cos(elapsed/200)/20 )];
+        bulgefilter.center = movingCenter;
+        twistfilter.offset = new PIXI.Point( 
+          window.innerWidth * movingCenter[0] , 
+          window.innerHeight * movingCenter[1]
+        );
         // bulgefilter.center = [0.5, 0.25];
       } else {
         bulgefilter.center = [tween.x, tween.y];
-        twistfilter.offset = new PIXI.Point(mouse.x, mouse.y);
+        is_twisted ? twistfilter.offset = new PIXI.Point(mouse.x, window.innerHeight/3) : null;
       }
       updateImgs();
       updateText();
