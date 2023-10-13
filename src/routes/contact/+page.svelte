@@ -187,8 +187,11 @@
       opacity: 0;
     }
     & p {
-      font-size: 1.4em;
-      margin: 0 0 .5em 0;
+      font-size: 1em;
+      margin: .5em 0;
+      @media screen and (min-width: 768px) {
+        font-size: 1.33em;
+      }
     }
     & ul {
       margin: 0 var(--spacing-outer);

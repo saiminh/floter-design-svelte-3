@@ -21,9 +21,9 @@
         } 
         const checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
         checkbox ? checkbox.checked = false : null;
-        gsap.to('.content > *', {duration: 0.5, y: '100%', autoAlpha: 1, ease: 'power4.out'});
-        gsap.to('#nav', {duration: 0.5, autoAlpha: 1, y: '100%', ease: 'power4.out', delay: 0.1});
-        gsap.to('nav a', {duration: 0.5, autoAlpha: 1, y: 200, stagger: 0.025, ease: 'power4.out' , delay: 0.1});
+        gsap.to('.content > *', {duration: 0.5, autoAlpha: 1, y: '100%', ease: 'power4.out'});
+        gsap.to('#nav', {duration: 0.75, autoAlpha: 0, y: '100%', ease: 'power4.inOut', delay: 0.1});
+        gsap.to('nav a', {duration: 0.75, autoAlpha: 1, y: 200, stagger: 0.025, ease: 'power4.inOut' , delay: 0.1});
       }, { passive: true })
     });
     
@@ -114,13 +114,18 @@
   }
   #nav a {
     display: block;
-    line-height: 1;
+    line-height: 1.1;
     font-size: 2.5em;
     font-weight: 800;
     font-style: italic;
-    text-transform: lowercase;
+    // text-transform: lowercase;
     text-decoration: none;
     color: var(--color-text);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-backface-visibility:  hidden;
+    backface-visibility:  hidden;
+    transition: color .1s ease-out;
     
     @media screen and (min-width: 768px) {
       font-size: 4.5em;
@@ -129,10 +134,15 @@
     &:first-child {
       margin-top: 1em;
     }
-
-    &.current {
-      // text-decoration: underline;
+    &:hover {
       color: var(--color-highlight);
+    }
+    &:active {
+      color: var(--color-highlight);
+    }
+    &.current {
+      color: var(--color-highlight);
+      transition: none;
     }
   }
 </style>

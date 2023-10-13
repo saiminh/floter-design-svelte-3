@@ -80,7 +80,7 @@
         
         let nextSection = section.nextElementSibling as HTMLElement;
         if (nextSection) {
-          gsap.to(window, { duration: 1, scrollTo: nextSection, ease: 'power4.inOut' })
+          gsap.to(window, { duration: .9, scrollTo: nextSection, ease: 'power4.inOut' })
         }
       }) 
     })
@@ -291,7 +291,7 @@
             user-select: none; 
   }
   .cta {
-    margin-top: -.5em;
+    margin-top: .5em;
     padding-top: 0em;
     @media screen and (orientation: landscape) {
       // background-color: var(--color-bg);
