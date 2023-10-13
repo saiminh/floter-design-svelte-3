@@ -13,9 +13,10 @@
   let canvasElems: Array<HTMLElement>;
   let imgElems: Array<HTMLElement>;
   let mounted = false;
+  let currentMonth: string;
 
   onMount( () => {
-
+    currentMonth = new Date().toLocaleString('en-UK', { month: 'long', year: 'numeric' });
     mounted = true;
 
     gsap.registerPlugin( ScrollTrigger, ScrollToPlugin, SplitText );
@@ -84,6 +85,7 @@
       }) 
     })
 
+
     return () => {
       gsap.killTweensOf(canvasElems);
       ScrollTrigger.getAll().forEach( instance => instance.kill() );
@@ -91,15 +93,13 @@
   });
 
 </script>
+
 {#if !mounted}
   <Loader />
 {/if}
 <article class="scroller">
   <section class="canvasized splash"> 
     <h1 class="align-middle">I create digital experiences that <em>stand out</em> from the rest.</h1>
-  </section>
-  <section class="canvasized introduction"> 
-    <h2 class="align-middle">My name is Simon, I help my clients reach their audiences using <em>my skills:</em></h2>
   </section>
   <section class="dev">
     <figure class="dev-image">
@@ -124,9 +124,12 @@
     </div>
   </section>
   <section class="canvasized hireme">
-    <h2 class="align-middle">I work as a free agent. You can <em>hire me</em> for your noble enterprise.</h2>
+    <h2 class="align-middle">I am currently available <em>for freelance work.</em></h2>
+    {#if mounted}
+    <div class="hireme-date">(as of { currentMonth })</div>
+    {/if}
     <div class="cta" style="text-align: center">
-      <a href="/contact" class="button button--xl button--primary">Contact me</a>
+      <a href="/contact" class="button button--xl button--primary">Get in touch</a>
     </div>
   </section>
 </article>
@@ -167,20 +170,15 @@
     justify-content: start;
     min-height: 100svh;
     justify-content: center;
-    margin-bottom: -1em;
     max-width: 100%;
     padding: var(--spacing-outer);
     
     @media screen and (orientation: landscape) {
-      padding: var(--spacing-outer) calc(var(--spacing-outer) * 2);
-    }
-  }
-  .introduction {
-    h2 {
-      font-size: 1.53em;
-      letter-spacing: -0.033em;
-      margin-bottom: 0;
-      line-height: .9;
+      padding: 0 calc(var(--spacing-outer) * 2);
+
+      & h1 {
+        margin: -.5em 0 0 0;
+      }
     }
   }
   .dev-image {
@@ -224,11 +222,18 @@
       font-size: 8vw;
       margin-bottom: 0.5em;
       margin-top: 0;
+      padding: 0 .25em;
     }
+  }
+  .hireme-date {
+    font-size: .66em;
+    text-align: center;
+    letter-spacing: -0.02em;
   }
   h2 {
     font-size: 12vw;
     line-height: .9;
+    letter-spacing: -0.033em;
     margin: 0 0 0.5em 0;
     -webkit-touch-callout: none; /* Safari */
     -webkit-user-select: none; /* Chrome */     
@@ -236,7 +241,7 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; 
     @media screen and (orientation: landscape) {
-      font-size: 8vw;
+      font-size: 6.66vw;
       margin: 0;
     }
     & > em {
@@ -249,7 +254,6 @@
     line-height: .85;
     font-size: 14.75vw;
     letter-spacing: -0.05em;
-    margin-top: -.5em;
     color: var(--color-highlight);
     -webkit-touch-callout: none; /* Safari */
     -webkit-user-select: none; /* Chrome */     
@@ -258,7 +262,8 @@
     user-select: none; 
     
     @media screen and (orientation: landscape) {
-      font-size: 11vw;
+      font-size: 10vw;
+      padding: 0 1em;
     }
     & > em {
       font-style: normal;

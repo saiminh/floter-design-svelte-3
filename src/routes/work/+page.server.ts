@@ -5,6 +5,8 @@ export async function load() {
   if (!posts) console.error('No posts found')
 
   return {
-    posts
+    posts,
+    title: 'Work References',
+    description: 'A few of the projects I have worked on'
   }
 }

@@ -124,12 +124,6 @@
       margin: 1em var(--spacing-outer) .75em var(--spacing-outer);
       font-size: 4.5em;
     }
-
-    & em {
-      font-style: normal;
-      font-weight: 400;
-      color: var(--color-highlight);
-    }
   }
   .intro {
     width: 100%;
