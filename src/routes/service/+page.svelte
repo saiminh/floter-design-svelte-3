@@ -6,8 +6,6 @@
   import Faq from '$lib/components/Faq.svelte';
   import ServiceCanvas from './ServiceCanvas.svelte';
 
-  export let data;
-
   onMount( () => {  
     gsap.registerPlugin( ScrollTrigger, SplitText );
     
