@@ -153,13 +153,12 @@
     min-height: 100svh;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-outer);
+    gap: 0;
     justify-content: center;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       max-width: 75vw;
       margin: 0 auto;
-      gap: 0;
     }
   }
   .splash {
@@ -172,7 +171,7 @@
     max-width: 100%;
     padding: var(--spacing-outer);
     
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       padding: var(--spacing-outer) calc(var(--spacing-outer) * 2);
     }
   }
@@ -191,7 +190,7 @@
     display: block; 
     z-index: -2;
     margin: -2em 0 -.5em 0; 
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       margin: -1.5em 0 -.5em 0; 
     }
   }
@@ -205,34 +204,41 @@
     margin: 0 auto; 
     text-align: center; 
     display: block; 
-    margin: 0 auto; 
+    margin: 0 auto 1em auto; 
     z-index: -2;
     
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       margin: 0 auto .5em auto; 
       width: 45%;
     }
   }
   .hireme {
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       max-width: 95vw;
     }
   }
   .hireme h2 {
-    font-size: 1.53em;
-    @media screen and (min-width: 768px) {
+    font-size: 12.5vw;
+    margin-bottom: 1.5em;
+    @media screen and (orientation: landscape) {
+      font-size: 8vw;
       margin-bottom: 0.5em;
       margin-top: 0;
     }
   }
-  h1, h2 {
+  h2 {
+    font-size: 12vw;
     line-height: .9;
-    margin: 0;
+    margin: 0 0 0.5em 0;
     -webkit-touch-callout: none; /* Safari */
     -webkit-user-select: none; /* Chrome */     
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; 
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; 
+    @media screen and (orientation: landscape) {
+      font-size: 8vw;
+      margin: 0;
+    }
     & > em {
       font-style: normal;
       font-weight: 400;
@@ -245,12 +251,18 @@
     letter-spacing: -0.05em;
     margin-top: -.5em;
     color: var(--color-highlight);
+    -webkit-touch-callout: none; /* Safari */
+    -webkit-user-select: none; /* Chrome */     
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; 
     
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       font-size: 11vw;
     }
-
     & > em {
+      font-style: normal;
+      font-weight: 400;
       color: var(--color-text);
     }
   }
@@ -260,8 +272,8 @@
   }
   p {
     font-size: .66em;
-    margin: 0 0 0.25em 0;
-    @media screen and (min-width: 768px) {
+    margin: 0 0 1em 0;
+    @media screen and (orientation: landscape) {
       margin: 1em 0 0.25em 0;
       font-size: 0.66em;
     }
@@ -276,7 +288,7 @@
   .cta {
     margin-top: -.5em;
     padding-top: 0em;
-    @media screen and (min-width: 768px) {
+    @media screen and (orientation: landscape) {
       // background-color: var(--color-bg);
       // border-top: 1px solid var(--color-text);
       padding-top: 1em;

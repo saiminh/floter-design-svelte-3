@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { CldImage } from 'svelte-cloudinary';
   import gsap from 'gsap';
   import SplitText from 'gsap/dist/SplitText';
   export let data;
@@ -53,13 +52,12 @@
             }
           })
           gsap.fromTo(split.chars, {
-            y: 0,
-            opacity: 1
+            scaleY: 1,
+            opacity: 1,
           }, {
-            y: -window.innerHeight/2,
-            opacity: 0,
-            duration: .6,
-            stagger: -0.0075,
+            scaleY: 0,
+            opacity: 1,
+            duration: .3,
             ease: 'power3.out',
           })
         } else {
@@ -158,7 +156,7 @@
       })
     })
     window.addEventListener('mousemove', mouseMoveHandler);
-
+    
     // Move the works the same way on touch drag
     let touchMoveHandler = (e: TouchEvent) => {
       let x = e.touches[0].clientX;
@@ -175,8 +173,13 @@
       })
     }
     window.addEventListener('touchmove', touchMoveHandler, { passive: true });
+
+    document.querySelector('html')?.style.setProperty('overflow', 'hidden');
+    document.querySelector('html')?.style.setProperty('overscroll-behavior', 'none');
     
     return () => {
+      document.querySelector('html')?.style.setProperty('overflow', 'visible');
+      document.querySelector('html')?.style.setProperty('overscroll-behavior', 'auto');
       window.removeEventListener('mousemove', mouseMoveHandler);
       window.removeEventListener('touchmove', touchMoveHandler);
       gsap.killTweensOf('.works, .work');

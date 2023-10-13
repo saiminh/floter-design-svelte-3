@@ -5,6 +5,10 @@
   let app: PIXI.Application;
   let canvas: HTMLCanvasElement;
 
+  const isLandscape = () => {
+    return window.innerWidth > window.innerHeight;
+  }
+  
   onMount(() => {
     app = new PIXI.Application({
       view: canvas,
@@ -20,10 +24,12 @@
     app.stage.addChild(container);
 
     const envelope = PIXI.Sprite.from("/success/envelope.png");
+    const envelopeAspectRatio = 1420 / 830;
     envelope.anchor.set(0.5);
-    envelope.scale.set(0.15);
+    envelope.width = isLandscape() ? window.innerWidth / 4.5 : window.innerWidth / 2 ;
+    envelope.height = envelope.width / envelopeAspectRatio;
     envelope.x = app.screen.width / 2;
-    envelope.y = envelope.height / 2 + 130;
+    envelope.y = envelope.height / 2 + 30;
     
     container.addChild(envelope);
 
@@ -36,11 +42,12 @@
     });
     text.anchor.set(0.5);
     text.x = app.screen.width / 2;
-    text.y = envelope.y + envelope.height / 2 + 90;
+    text.y = envelope.y + envelope.height / 2 + 20;
     container.addChild(text);
     text.resolution = window.devicePixelRatio;
     
     const displacementSprite = PIXI.Sprite.from('/success/displacementMap.jpg');
+    displacementSprite.scale.set(.75);
     displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
     const displacementFilter = new PIXI.DisplacementFilter(displacementSprite);
     displacementFilter.scale.x = 0;
