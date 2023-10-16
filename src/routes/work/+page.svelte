@@ -9,7 +9,9 @@
   });
 
   onMount(() => {
-
+    document.querySelectorAll('.workclone')?.forEach(clone => {
+      clone.remove();
+    })
     gsap.registerPlugin(SplitText);
 
     let isZoomed = false;
