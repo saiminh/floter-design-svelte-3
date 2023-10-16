@@ -1,6 +1,6 @@
 ---
 title: etosis
-images: ['work/etosis/etosis_og_ogqfae', 'https://res.cloudinary.com/dkvjosg5p/video/upload/v1696948648/work/etosis/etosis_mail_wawrua.webm', 'work/etosis/scrnli_Oct_10_2023_3_._xkz9er', 'work/etosis/scrnli_Oct_10_2023_2_._lxh0xh' ]
+images: ['work/etosis/etosis_og_ogqfae', 'https://res.cloudinary.com/dkvjosg5p/video/upload/v1696948648/work/etosis/etosis_mail_wawrua.mp4', 'work/etosis/scrnli_Oct_10_2023_3_._xkz9er', 'work/etosis/scrnli_Oct_10_2023_2_._lxh0xh' ]
 description: Simple housestyle and website for a software company specialised in complexity
 referenceName: Patrick Simpson
 reference: https://www.linkedin.com/in/patricksimpson/
