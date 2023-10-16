@@ -25,14 +25,6 @@
 
     introTl.play();
 
-    // let trigger = ScrollTrigger.create({
-    //   trigger: 'article',
-    //   start: 'top top',
-    //   end: '200px top',
-    //   scrub: true,
-    //   // markers: true,
-    // })
-
     gsap.to('.services', {
       autoAlpha: 1,
       scrollTrigger: {
