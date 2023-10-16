@@ -38,8 +38,11 @@
     let isDown = false;
     if (gallery) {
       gallery.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        gallery.style.scrollSnapType = 'none';
+        gallery.style.scrollBehavior = 'auto';
         isDown = true;
-        startX = e.pageX - gallery.offsetLeft;
+        startX = e.pageX;
         scrollLeft = gallery.scrollLeft;
       });
       gallery.addEventListener('mouseleave', () => {
@@ -51,7 +54,7 @@
       gallery.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
-        const x = e.pageX - gallery.offsetLeft;
+        const x = e.pageX;
         const walk = (x - startX) * 4; //scroll-fast
         gallery.scrollLeft = scrollLeft - walk;
       });
@@ -131,12 +134,12 @@
 
 <style lang="scss">
   .subnav {
+    position: fixed;
+    z-index: 22;
     @media screen and (min-width: 768px) {
-      position: fixed;
       top: 0;
       left: 0;
       display: inline-block;
-      z-index: 22;
     }
   }
   .subnav-item {
@@ -256,14 +259,14 @@
     position: relative;
     width: 100vw;
     overflow: hidden;
-    margin-bottom: -80px;
-    top: -80px;
     padding: 0 0 1em 0;
     z-index: 1;
     opacity: 0.75;
     perspective: 250px;
     perspective-origin: center bottom;
     @media screen and (min-width: 768px) {
+      margin-bottom: -80px;
+      top: -80px;
       padding: 2em 0 4em 0;
       margin-bottom: -120px;
       perspective: 500px;
