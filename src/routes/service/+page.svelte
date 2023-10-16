@@ -30,7 +30,7 @@
       scrollTrigger: {
         trigger: 'article',
         start: 'top top',
-        end: '200px top',
+        end: 'top -200px',
         scrub: true,
       }
     })
@@ -40,7 +40,7 @@
       scrollTrigger: {
         trigger: 'article',
         start: 'top top',
-        end: '200px top',
+        end: 'top -200px',
         scrub: true,
       }
     })
@@ -189,6 +189,7 @@
   }
   .services {
     opacity: 0; //changed in ServiceCanvas
+    visibility: hidden;
     padding-bottom: calc( 2 * var(--spacing-outer));
   }
   .service-content {

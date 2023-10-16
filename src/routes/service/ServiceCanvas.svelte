@@ -148,7 +148,7 @@
         scrollTrigger: {
           trigger: 'article',
           start: 'top top',
-          end: '200px top',
+          end: is_landscape ? 'top -40%' : 'top -50%',
           scrub: true,
           // markers: true,
         }
