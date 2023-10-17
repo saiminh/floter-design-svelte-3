@@ -33,17 +33,27 @@
     }
 
     const randomMorph = (shape: HTMLElement, index: number = 0) => {
-      const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+      // const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+      let randomShape;
 
-      let rowindex = (index: number) => {
-        return index % 5;
-      };
+      //do a Math.random() to determine which of the 4 shapes to morph to, but give the sphere a lower chance
+      let rand = Math.floor(Math.random() * 10);
+      if (rand === 0) {
+        randomShape = shapes[0];
+      } else {
+        randomShape = shapes[Math.floor(Math.random() * 3) + 1];
+      }
+
+      // let rowindex = (index: number) => {
+      //   return index % 5;
+      // };
       gsap.to(shape, { 
         duration: 1, 
         rotationZ: "+=" + generateAngle(), 
         morphSVG: randomShape, 
         ease: 'power4.out', 
-        delay: rowindex(index) * 0.05,
+        // delay: rowindex(index),
+        delay: Math.random()*5,
         onComplete: () => { setTimeout( () => randomMorph(shape),  2000 ) } 
     });
     }
