@@ -104,6 +104,9 @@
         <!-- <p>Please describe your plight in a few words</p> -->
         <textarea rows="8" name="contact" id="contact" placeholder="Your business propositions, praise, complaints and/or threats" required />
       </label>
+      <div class="disclaimer">
+        <p>Disclaimer: I will only use the data you submit here (name, email, message) to respond. I will not pass it on to any third party. If I don't hear from you I will delete the data and keep no records of it.</p>
+      </div>
       <div class="send">
         <button class="button button--xl button--primary" type="submit">Send it!</button>
       </div>
@@ -258,6 +261,11 @@
   //   font-size: .75em;
   //   margin-bottom: .5em;
   // }
+  .disclaimer p{
+    max-width: var(--form-maxwidth);
+    margin: 1em auto;
+    font-size: 1rem;
+  }
   .send {
     max-width: var(--form-maxwidth);
     margin: auto;
