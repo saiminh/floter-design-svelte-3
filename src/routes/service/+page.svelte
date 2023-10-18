@@ -5,14 +5,20 @@
   import SplitText from 'gsap/dist/SplitText';
   import Faq from '$lib/components/Faq.svelte';
   import ServiceCanvas from './ServiceCanvas.svelte';
+  import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
 
   onMount( () => {  
-    gsap.registerPlugin( ScrollTrigger, SplitText );
+    gsap.registerPlugin( ScrollTrigger, SplitText, ScrollToPlugin );
     
     let split = new SplitText('h1', { type: 'words', wordsClass: 'wordChildren' });
 
     let introTl = gsap.timeline({
      paused: true,
+     onComplete: () => {
+       document.querySelector('h1')?.addEventListener('click', () => {
+         gsap.to(window, { duration: .75, scrollTo: { y: '.services', offsetY: 100 }, ease: 'power4.inOut' })
+       })
+     }
     });
     introTl.fromTo(split.words, {
       opacity: 0, scaleY: 0, yPercent: 100
@@ -83,6 +89,7 @@
               <li>Interactive online comics</li>
               <li>Browser games</li>
             </ul>
+            <a href="/work" class="button">Work examples</a> <a class="button" href="/contact">Contact</a>
           </Faq>
           <Faq summary="What kind of websites <em>do you not</em> create?">
             <p>As a <em>frontend</em> developer, I'm not your guy for the intricate machinery that powers colossal enterprise web applications. Put simply, I can't whip up an Amazon or a TikTok from the ground up...</p>
@@ -95,6 +102,8 @@
             <p>If you don't know any of the above, I can serve as your counsel, steering you toward the optimal solution for your project's specific goals.</p>
             <p>Should you have a standing website, yearning for expansion, toss me the code, and I'll let you know my recommendations.</p>
             <p>Sometimes, the most fitting framework is none at all. I crafted some elegant, straightforward websites in the raw embrace of HTML, CSS, and JS.</p>
+            <p>Any question?</p>
+            <a href="/contact" class="button">Ask me anything</a>
           </Faq>
 
           <Faq summary="Which <em>Content Management System</em> (CMS) do you recommend?">
@@ -102,16 +111,22 @@
             <p>Let's talk about/with the folks responsible for constructing and upkeeping your content. Only then can we find the optimal solution.</p>
             <p>If a website is updated only sporadically, we could save the cost and labour involved in deploying a CMS and go without.</p>
             <p>In this case we could for example agree on on-demand updates done by me, or alternatively define a simpler solution. (Some website content could be updated through Google Sheets for example, or a quick intro to editing content on github could be feasible)</p>
+            <p>Any question?</p>
+            <a href="/contact" class="button">Ask me anything</a>
           </Faq>
           <Faq summary="Are your websites <em>SEO-optimised?</em>">
             <p>Search Engine Optimisation (SEO) is a collaborative effort between the developers of a website and the content creators. I can definitely provide the technical baseline for all content and metadata (eg page descriptions and titles) to be accessible to search engines.</p>
             <p>However, the ranking of Search Results depends on many factors, and the biggest one is by far the quality of the content. If your content strategy is sound and attracts many users, resulting in other reputable pages linking to yours, that's when you'll surely climb the ladders on Google & Co's results.</p>
+            <p>Any question?</p>
+            <a href="/contact" class="button">Ask me anything</a>
           </Faq>
           <Faq summary="Are your websites compliant with <em>Data Protection & Privacy Laws</em> (a.k.a. 'Cookie laws')?">
             <p>There are loads of Data Protection and Privacy Legislation laws in place today in many different countries.</p>
             <p>I can implement the necessary technical steps to become compliant, but I will rely on you to know which law is applicable to you and what that means in terms of requirements.</p>
             <p>These will also greatly depend on your own requirements, for example whether you will need to use analytics or other 3rd party software that collects user data.</p>
             <p>In many cases, the installation of a commercial software is the easiest way to reach compliance. These can auto-detect cookies and data-collection from 3rd parties, block them and display a consent-banner before reactivating them.</p>
+            <p>Any question?</p>
+            <a href="/contact" class="button">Ask me anything</a>
           </Faq>
         </div>
       </div>
@@ -134,7 +149,13 @@
             <p>Primarily, I craft beautiful web experiences for my clients, aiming to seize their audience's imagination.</p>
             <p>I first was schooled in the art of graphic design. Over time, my focus shifted towards web projects, pulling me into the worlds of development and more UX/interaction-centric design.</p>
             <p>Beyond websites and user interfaces, I've crafted promotional posters and publications for print, as well as entire Housestyles for budding brands.</p>
-            <p>And, well, I'm also an Illustrator, but that's a tale of its own. You can follow it <a href="https://instagram.com/floter.ink">on instagram</a>.</p>
+            <p>Let me know if I can help!</p>
+            <a href="/contact" class="button">Contact</a>
+          </Faq>
+          <Faq summary="Do you do illustrations?">
+            <p>Well funny you should ask, I entered the creative world through drawing & painting and am actually still moonlighting as an Illustrator.</p>
+            <p>While in my capacity as a designer I do create useful illustrations that communicate ideas effectively and fit within style guides, this is a less serious matter though. My personal style is rather bold and at times grotesk (or so I've been told). But you can see for yourself:</p>
+            <a href="https://instagram.com/floter.ink" class="button">instagram</a> <a href="https://floter.ink" class="button">floter.ink</a>
           </Faq>
           <Faq summary="What do you NOT design?">
             <p>Despite doing animations for websites, mostly achieved through code, I am not a traditional motion designer. If you require a static video file as final product, you will want to look for someone with skills in video editing and motion design software such as After Effects.</p>
@@ -142,6 +163,7 @@
           </Faq>
           <Faq summary="What do you require to start designing?">
             <p>A good brief includes all limitations and aspirations of your project, your businesses proposition, values and intentions as well as any information you have on your target audience. References to competitors and examples of similar products you like are very helpful as well. Generally though, it all starts with a chat between you and yours truly.</p>
+            <a href="/contact" class="button">Let's chat!</a>
           </Faq>
 
         </div>
@@ -237,6 +259,9 @@
   }
   li, p {
     font-size: 1em;
+  }
+  p + .button, p + .button + .button {
+    margin-top: 0;
   }
   
 </style>
