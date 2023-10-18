@@ -261,7 +261,7 @@
     overflow: hidden;
     padding: 0 0 1em 0;
     z-index: 1;
-    opacity: 0.75;
+    // opacity: 0.75;
     perspective: 250px;
     perspective-origin: center bottom;
     @media screen and (min-width: 768px) {
@@ -305,6 +305,7 @@
     background-color: var(--color-highlight);
     height: 100%;
     aspect-ratio: 140/84;
+    background-color: var(--color-text);
     width: auto;
     margin: 0;
     @media screen and (min-width: 768px) {
@@ -312,6 +313,7 @@
     }
     
     & :global(img), video {
+      opacity: 0.85;
       width: 100%;
       height: 100%;
       object-position: left top;

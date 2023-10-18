@@ -76,18 +76,17 @@
     padding: 0;
     margin-bottom: 0;
     transition: margin-bottom .3s ease-out;
-  }
-  details[open] {
-    margin-bottom: 1em;
+    margin-bottom: .1em;
   }
   summary {
+    background-color: rgba(0,0,0,0.1);
     display: block;
     cursor: url('/pointer.svg'), auto;
     position: relative;
     z-index: 1;
     line-height: 1.2;
     font-size: 1em;
-    padding: 0.5em 0 0.5em 1.5em;
+    padding: 0.5em 0 0.5em 1.75em;
 
     &::-webkit-details-marker {
       display:none;
@@ -96,7 +95,7 @@
     &:before, &:after {
       content: '';
       position: absolute;
-      left: 0;
+      left: .5em;
       top: 1em;
       width: 17px;
       height: 2px;
@@ -111,20 +110,19 @@
   }
   :global(summary em) {
     font-weight: 800;
-    color: var(--color-highlight);
   }
   // details[open] summary,
   :global(details.is-open summary) {
-    
+    background-color: rgba(0,0,0,0.1);
     &:before {
       transition: all .2s ease-in-out;
       transform: rotate(0deg);
     }
   }
   .faq-content {
-    border-left: 1px solid;
-    margin-left: 8px;
-    padding: 1em 0 0 calc(1.5em - 8px);
+    border-top: 1px solid var(--color-bg);
+    background-color: rgba(0,0,0,0.05);
+    padding: 1em 1em 1em 1.75em;
     position: relative;
     z-index: 1;
     font-size: 1em;

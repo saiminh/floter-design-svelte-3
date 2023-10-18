@@ -17,13 +17,11 @@
   }
 }
 
-body {
-  cursor: url('/cursor.svg'), auto;
-}
 a:hover, input:hover, button:hover {
   cursor: url('/pointer.svg'), auto;
 }
 body {
+  cursor: url('/cursor.svg'), auto;
   font-family: stratos, sans-serif;
   font-size: var(--font-size-p);
   padding: 0;
@@ -31,6 +29,8 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   min-height: 100svh;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 // body:after {
 //   content: '';

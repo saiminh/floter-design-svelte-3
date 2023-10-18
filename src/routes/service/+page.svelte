@@ -74,7 +74,7 @@
         <div class="faqs">
           <h3>FAQs</h3>
           <Faq summary="What kind of websites <em>do you</em> create?">
-            <p>My primary goal is simple: bring your ideas to life. My websites are often fun, bold and full of interesting interaction.</p> 
+            <p>My primary goal is simple: bring your ideas to life. My websites are often fun, bold and full of interesting interaction, but always functional and user-friendly.</p> 
             <p>Projects I worked on include:</p>
             <ul>
               <li>Marketing websites</li>
@@ -85,24 +85,26 @@
             </ul>
           </Faq>
           <Faq summary="What kind of websites <em>do you not</em> create?">
-            <p>As a <em>frontend</em> developer, I'm not your guy for the intricate machinery that powers colossal enterprise web applications. Put simply, I can't whip up an Amazon or a TikTok from the ground up.</p>
-            <p>Moreover, my moral code is steadfast. Requests involving, but not confined to, promoting weapons manufacturers or propagating conspiracy theories won't find a home with me. I must politely decline such propositions.</p>
+            <p>As a <em>frontend</em> developer, I'm not your guy for the intricate machinery that powers colossal enterprise web applications. Put simply, I can't whip up an Amazon or a TikTok from the ground up...</p>
+            <p>Moreover, my moral code is steadfast. Requests involving, but not confined to, promoting <em>weapons manufacturers or propagating conspiracy theories</em> won't find a home with me. I must politely decline such propositions.</p>
           </Faq>
-          <Faq summary="Which technologies and frameworks do you use/support?">
+          <Faq summary="Which <em>tech stack</em> do you use/support?">
             <p>A web browser understands only <em>HTML, CSS, and Javascript.</em> Mastery of these is the bedrock for crafting top-notch web applications.</p>
-            <p>Among the popular modern Javascript frameworks, I have experience with <em>React and Svelte</em>. In terms of meta frameworks I have so far used <em>NextJS, SvelteKit, Eleventy, and Astro.</em></p>
-            <p>On the server-side, I found myself using languages such as <em>PHP, Perl, and Python.</em> </p>
+            <p>Among the popular modern Javascript frameworks, I have experience with <em>React and Svelte</em>. In terms of meta frameworks I have so far used <em>NextJS, SvelteKit, Eleventy, Jekyll and Astro.</em> I have some experience using <em>Typescript</em> as well.</p>
+            <p>On the server-side, I have used languages such as <em>PHP, Perl, and Python.</em> </p>
             <p>If you don't know any of the above, I can serve as your counsel, steering you toward the optimal solution for your project's specific goals.</p>
-            <p>Should you have a standing website, yearning for expansion, toss me the code, and we'll unravel the possibilities together.</p>
+            <p>Should you have a standing website, yearning for expansion, toss me the code, and I'll let you know my recommendations.</p>
             <p>Sometimes, the most fitting framework is none at all. I crafted some elegant, straightforward websites in the raw embrace of HTML, CSS, and JS.</p>
           </Faq>
 
           <Faq summary="Which <em>Content Management System</em> (CMS) do you recommend?">
-            <p>I've worked with various Content Management Systems — the likes of WordPress, Strapi, Builder, Magento, and Shopify. Each carries its own set of virtues and vices.</p>
-            <p>Let's talk about the folks responsible for constructing and upkeeping your content. Only then can we jointly discern the optimal solution.</p>
+            <p>I've worked with various Content Management Systems — WordPress, Strapi, Builder, Shopify (and potentially others I can't recall). Each one has pros and cons.</p>
+            <p>Let's talk about/with the folks responsible for constructing and upkeeping your content. Only then can we find the optimal solution.</p>
+            <p>If a website is updated only sporadically, we could save the cost and labour involved in deploying a CMS and go without.</p>
+            <p>In this case we could for example agree on on-demand updates done by me, or alternatively define a simpler solution. (Some website content could be updated through Google Sheets for example, or a quick intro to editing content on github could be feasible)</p>
           </Faq>
           <Faq summary="Are your websites <em>SEO-optimised?</em>">
-            <p>Search Engine Optimisation (SEO) is a collaborative effort between the developers of a website and the content creators. I can definitely provide the technical baseline for all content and metadata (eg page descriptions or manifests) to be accessible to search engines.</p>
+            <p>Search Engine Optimisation (SEO) is a collaborative effort between the developers of a website and the content creators. I can definitely provide the technical baseline for all content and metadata (eg page descriptions and titles) to be accessible to search engines.</p>
             <p>However, the ranking of Search Results depends on many factors, and the biggest one is by far the quality of the content. If your content strategy is sound and attracts many users, resulting in other reputable pages linking to yours, that's when you'll surely climb the ladders on Google & Co's results.</p>
           </Faq>
           <Faq summary="Are your websites compliant with <em>Data Protection & Privacy Laws</em> (a.k.a. 'Cookie laws')?">
@@ -145,14 +147,6 @@
         </div>
       </div>
     </section>
-    <!-- <section>
-      <h2>Full service</h2> 
-      <div class="service-content">
-        <ul class="bullets">
-          <li><em>All of the above</em></li>
-        </ul>
-      </div>
-    </section> -->
   </div>
 </article>
 
@@ -212,6 +206,7 @@
   }
   .faqs {
     margin-top: 2em;
+    width: 100%;
 
     @media screen and (min-width: 768px) {
       margin-top: 0;
@@ -235,7 +230,6 @@
   }
   em {
     font-weight: 800;
-    color: var(--color-highlight);
   }
   ul li {
     margin-bottom: .75em;
