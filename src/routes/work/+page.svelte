@@ -93,11 +93,12 @@
     gsap.set('.work, .works, .headline', {
       transformOrigin: '0 0',
     })
-    gsap.fromTo('.work',{
-      opacity: 1,
+    gsap.set('.work',{
+      opacity: 0,
       yPercent: 50,
       scaleY: 0,
-    },{
+    })
+    gsap.to('.work',{
       opacity:1,
       yPercent: 0,
       scaleY: 1,
