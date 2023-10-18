@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-  import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
-  import { CldImage, CldVideoPlayer } from 'svelte-cloudinary';
+  import { CldImage } from 'svelte-cloudinary';
   export let data;
 
   gsap.registerPlugin(ScrollTrigger);
@@ -15,6 +14,29 @@
     if (document.querySelector('.workclone')) {
       document.querySelector('.workclone')?.remove();
     }
+
+    setTimeout( () => {
+      if (document.querySelector('.gallery img')) {
+        document.querySelectorAll('.gallery img').forEach(image => {
+          let img = image as HTMLImageElement;
+          if (!img.complete) {
+            img.classList.add('imageIsLoading');
+            img.onload = () => {
+              gsap.fromTo(img, {
+                autoAlpha: 0,
+                scale: 1.2,
+              }, {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 1,
+                ease: 'power4.out',
+              })
+            }
+          }
+        })
+      }
+    }, 10)
+
     gsap.to('.logo-wrapper', {
       opacity: 0,
       zIndex: -1,
@@ -322,4 +344,9 @@
       object-fit: cover;
     }
   }
+  :global(.imageIsLoading) {
+    visibility: hidden;
+    opacity: 0;
+  }
+
 </style>
