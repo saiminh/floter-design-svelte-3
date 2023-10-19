@@ -1,40 +1,46 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+  import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
   import { CldImage } from 'svelte-cloudinary';
   export let data;
-
-  gsap.registerPlugin(ScrollTrigger);
 
   let visible = false;
 
   onMount(() => {
+
+    gsap.registerPlugin(ScrollToPlugin);
+
     visible = true;
+
+    let is_landscape = window.matchMedia('(orientation:landscape)').matches
+
+    window.addEventListener('resize', () => {
+      is_landscape = window.matchMedia('(orientation:landscape)').matches
+    })
+
     if (document.querySelector('.workclone')) {
       document.querySelector('.workclone')?.remove();
     }
 
     setTimeout( () => {
-      if (document.querySelector('.gallery img')) {
-        document.querySelectorAll('.gallery img').forEach(image => {
-          let img = image as HTMLImageElement;
-          if (!img.complete) {
-            img.classList.add('imageIsLoading');
-            img.onload = () => {
-              gsap.fromTo(img, {
-                autoAlpha: 0,
-                scale: 1.2,
-              }, {
-                autoAlpha: 1,
-                scale: 1,
-                duration: 1,
-                ease: 'power4.out',
-              })
-            }
+      document.querySelectorAll('.gallery img')?.forEach( image => {
+        const img = image as HTMLImageElement;
+        if (!img.complete) {
+          img.classList.add('imageIsLoading');
+          img.onload = () => {
+            gsap.fromTo(img, {
+              autoAlpha: 0,
+              scale: 1.2,
+            }, {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 1,
+              ease: 'power4.out',
+            })
           }
-        })
-      }
+        }
+      })
     }, 10)
 
     gsap.to('.logo-wrapper', {
@@ -55,36 +61,60 @@
     })
 
     const gallery = document.querySelector('.gallery') as HTMLElement;
-    let startX: number;
-    let scrollLeft: number;
-    let isDown = false;
+    let isAnimating = false;
+    const galleryClickHandler = (e: MouseEvent) => {
+      if (isAnimating) return;
+      const allImgs = gallery.querySelectorAll('figure');
+      const scrollX = gallery.scrollLeft;
+      const imgWidth = allImgs[0].offsetWidth || 0;
+      const imgCount = allImgs.length;
+      const galleryOuterWidth = (document.querySelector('.gallery-wrapper') as HTMLElement)?.offsetWidth || 0;
+      const galleryOverlap = imgWidth - galleryOuterWidth % imgWidth;
+      const maxScrollX = imgWidth * (imgCount - 1);
+      const imgIndex = scrollX < maxScrollX ? Math.round(scrollX / imgWidth) : imgCount - 1;
+      let newScrollPos;
+      if (imgIndex < imgCount - 2) {
+        newScrollPos = scrollX + imgWidth;
+      } 
+      else if ( imgIndex === imgCount - 2){
+        newScrollPos = is_landscape ? scrollX + galleryOverlap * .8 : scrollX + galleryOverlap * .85 ;
+      } 
+      else {
+        newScrollPos = 0;
+      }
+      gsap.to(gallery, {
+        scrollTo: { x: newScrollPos , autoKill: false },
+        duration: .75,
+        ease: 'power4.out',
+        onStart: () => { isAnimating = true },
+        onComplete: () => { isAnimating = false },
+      })
+    }
+
+    const hoverElement = document.createElement('div');
+    hoverElement.classList.add('hoverElement');
+
+    document.querySelector('.gallery-wrapper')?.appendChild(hoverElement);
+
+    const galleryHoverHandler = (e: MouseEvent) => {
+      gsap.to(hoverElement, { x: e.clientX, y: e.clientY + 25, rotateX: 10, rotateZ: -5, autoAlpha: 1, duration: 0.3, overwrite: true }) 
+    }
+    const galleryLeaveHandler = (e: MouseEvent) => {
+      gsap.to(hoverElement, { autoAlpha: 0, duration: 0.3, overwrite: true }) 
+    }
+
     if (gallery) {
-      gallery.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        gallery.style.scrollSnapType = 'none';
-        gallery.style.scrollBehavior = 'auto';
-        isDown = true;
-        startX = e.pageX;
-        scrollLeft = gallery.scrollLeft;
-      });
-      gallery.addEventListener('mouseleave', () => {
-        isDown = false;
-      });
-      gallery.addEventListener('mouseup', () => {
-        isDown = false;
-      });
-      gallery.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX;
-        const walk = (x - startX) * 4; //scroll-fast
-        gallery.scrollLeft = scrollLeft - walk;
-      });
+      gallery.addEventListener('click', galleryClickHandler )
+      gallery.addEventListener('mousemove', galleryHoverHandler )
+      gallery.addEventListener('mouseleave', galleryLeaveHandler )
     }
 
     
     return () => {
-      gsap.killTweensOf('.logo-wrapper, .work, .gallery-wrapper');
+      gsap.killTweensOf('.logo-wrapper, .work, .gallery-wrapper')
+      gallery.removeEventListener('click', galleryClickHandler )
+      gallery.removeEventListener('mousemove', galleryHoverHandler )
+      gallery.removeEventListener('mouseleave', galleryLeaveHandler )
     }
   })
   
@@ -286,6 +316,7 @@
     // opacity: 0.75;
     perspective: 250px;
     perspective-origin: center bottom;
+    
     @media screen and (min-width: 768px) {
       margin-bottom: -80px;
       top: -80px;
@@ -299,12 +330,11 @@
     position: relative;
     display: flex;
     scroll-behavior: smooth;
-    gap: 1px;
+    gap: 0;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     width: 115vw;
     left: -4vw;
-    cursor: grab;
     transform: rotate3d(-2, 0, 1, -10deg);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;
@@ -314,7 +344,6 @@
     @media screen and (min-width: 768px) {
       width: 110vw;
       left: -3vw;
-      transform: rotate3d(-2, 0, 1, -10deg);
     }
   }
   figure {
@@ -323,13 +352,13 @@
     overflow: hidden;
     justify-content: center;
     scroll-snap-align: start;
+    padding: 0 1px;
     flex: 1 0 85%;
-    background-color: var(--color-highlight);
     height: 100%;
     aspect-ratio: 140/84;
-    background-color: var(--color-text);
     width: auto;
     margin: 0;
+
     @media screen and (min-width: 768px) {
       flex: 1 0 66.666%;
     }
@@ -348,5 +377,30 @@
     visibility: hidden;
     opacity: 0;
   }
+  :global(.hoverElement) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-bg);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: -4px 4px 8px rgba(0,0,0,.2);
+    pointer-events: none;
+    @media screen and (pointer: coarse) {
+      display: none;
+    }
 
+    &:before {
+      content: url('/moveright.svg');
+      font-size: 33px;
+      line-height: 50px;
+      text-align: center;
+      display: block;
+      height: 50px;
+      width: 50px;
+    }
+  }
 </style>
