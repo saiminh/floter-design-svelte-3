@@ -62,8 +62,8 @@
           })  
         }
       }
-
     })
+    
     canvasElems = Array.from(document.querySelectorAll('.canvasized .lineChildren, .canvasized .wordChildren'));
     imgElems = Array.from(document.querySelectorAll('img'));
 
@@ -84,7 +84,6 @@
         }
       }) 
     })
-
 
     return () => {
       gsap.killTweensOf(canvasElems);
@@ -172,6 +171,7 @@
     justify-content: center;
     max-width: 100%;
     padding: var(--spacing-outer);
+    cursor: url('/pointer.svg'), auto;
     
     @media screen and (orientation: landscape) {
       padding: 0 calc(var(--spacing-outer) * 2);
@@ -240,8 +240,9 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; 
+    cursor: url('/pointer.svg'), auto;
     @media screen and (orientation: landscape) {
-      font-size: 6.66vw;
+      font-size: 6vw;
       margin: 0;
     }
     & > em {
@@ -280,7 +281,8 @@
     margin: 0 0 1em 0;
     @media screen and (orientation: landscape) {
       margin: 1em 0 0.25em 0;
-      font-size: 0.66em;
+      font-size: 0.6em;
+      letter-spacing: -0.02em;
     }
   }
   a {
