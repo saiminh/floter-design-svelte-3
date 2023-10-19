@@ -8,16 +8,21 @@
   import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
 
   onMount( () => {  
+
+    window.scrollTo(0, 0);
+
     gsap.registerPlugin( ScrollTrigger, SplitText, ScrollToPlugin );
     
     let split = new SplitText('h1', { type: 'words', wordsClass: 'wordChildren' });
 
+    const h1ClickHandler = () => {
+       gsap.to(window, { duration: .75, scrollTo: { y: '.services', offsetY: 100 }, ease: 'power4.inOut' })
+     }
+
     let introTl = gsap.timeline({
      paused: true,
      onComplete: () => {
-       document.querySelector('h1')?.addEventListener('click', () => {
-         gsap.to(window, { duration: .75, scrollTo: { y: '.services', offsetY: 100 }, ease: 'power4.inOut' })
-       })
+       document.querySelector('h1')?.addEventListener('click', h1ClickHandler)
      }
     });
     introTl.fromTo(split.words, {
@@ -59,6 +64,7 @@
       gsap.killTweensOf('h1');
       gsap.killTweensOf('section');
       gsap.killTweensOf('.services');
+      document.querySelector('h1')?.removeEventListener('click', h1ClickHandler )
     }
   })
 </script>
