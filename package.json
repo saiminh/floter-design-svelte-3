@@ -31,8 +31,7 @@
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vanilla-lazyload": "^17.8.4",
-		"vite": "^4.4.2",
-		"vite-imagetools": "^5.0.8"
+		"vite": "^4.4.2"
 	},
 	"type": "module",
 	"dependencies": {
