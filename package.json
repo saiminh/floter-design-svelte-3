@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@pixi/unsafe-eval": "^7.1.3",
 		"gsap": "npm:@gsap/shockingly@^3.12.2",
 		"mdsvex": "^0.11.0",
 		"pixi-filters": "^5.2.1",
