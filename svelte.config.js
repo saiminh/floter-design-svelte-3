@@ -36,7 +36,9 @@ const config = {
         'default-src': ['self'],
         'img-src': ['self', '*.cloudinary.com', 'data:'],
         'style-src': ['self', 'unsafe-inline', '*.typekit.net'],
-        'script-src': ['self', 'unsafe-eval', 'unsafe-inline']
+        "font-src": ['self', '*.typekit.net'],
+        'script-src': ['self', 'unsafe-eval', 'unsafe-inline'],
+        "upgrade-insecure-requests": true
       },
     },
     // prerender: {

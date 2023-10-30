@@ -3,9 +3,5 @@ command = "npm run build"
 publish = "build"
 functions = "functions/"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-    X-XSS-Protection = "0"
-    X-Content-Type-Options = "nosniff"
+[dev]
+command = "vite dev"
