@@ -33,6 +33,8 @@ const config = {
     csp: {
       mode: 'auto',
       directives: {
+        'default-src': ['self', '*.typekit.net'],
+        'img-src': ['self', '*.cloudinary.com', 'data:'],
         'script-src': ['self', 'unsafe-eval', 'unsafe-inline']
       },
     },
