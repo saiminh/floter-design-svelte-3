@@ -31,6 +31,14 @@ const config = {
       // if `edge` is true, this option cannot be used
       split: false
     }),
+    csp: {
+      directives: {
+        'script-src': ['self', '*.typekit.net', '*.cloudinary.com']
+      },
+      reportOnly: {
+        'script-src': ['self', '*.typekit.net', '*.cloudinary.com']
+      }
+    }
     // prerender: {
     //   force: true
     // }
