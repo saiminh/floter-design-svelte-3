@@ -33,7 +33,7 @@ const config = {
     csp: {
       mode: 'auto',
       directives: {
-        'script-src': ['self', 'unsafe-eval']
+        'script-src': ['self', 'unsafe-eval', 'unsafe-inline']
       },
     },
     // prerender: {
