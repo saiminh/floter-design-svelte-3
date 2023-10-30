@@ -1,6 +1,6 @@
 <script lang="ts">
 import * as PIXI from 'pixi.js';
-import { BulgePinchFilter, TwistFilter } from 'pixi-filters';
+import { BulgePinchFilter } from 'pixi-filters';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import SplitText from 'gsap/dist/SplitText';
