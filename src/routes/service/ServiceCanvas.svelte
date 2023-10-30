@@ -109,7 +109,7 @@
     bulgefilter.strength = .66;
     bulgefilter.center = new PIXI.Point(0.5, 0.5);
     bulgefilter.resolution = 2;
-    app.stage.filters = [bulgefilter];
+    app.stage.filters = [(bulgefilter as unknown as PIXI.Filter)];
 
     let textgroupIn = gsap.to(textgroup, {
       y: is_landscape ? textRows[0][0].height * 0.4 : textRows[0][0].height * 0.15,

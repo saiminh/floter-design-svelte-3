@@ -79,8 +79,7 @@ onMount(()=>{
     twistfilter.offset = new PIXI.Point(window.innerWidth/2, window.innerHeight/3);
     twistfilter.resolution = 2;
 
-
-    bulgegroup.filters = [bulgefilter, twistfilter];
+    bulgegroup.filters = [(bulgefilter as unknown as PIXI.Filter), (twistfilter as unknown as PIXI.Filter)];
 
     gsap.to(twistfilter, {
       angle: -1.33,
