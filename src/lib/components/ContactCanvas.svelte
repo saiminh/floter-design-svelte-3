@@ -71,13 +71,13 @@ onMount(()=>{
     bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.55);
     bulgefilter.strength = 0.5;
     bulgefilter.center = is_landscape ? center : [0.5, 0];
-    // bulgefilter.resolution = 2;
+    bulgefilter.resolution = 2;
 
     let twistfilter = new TwistFilter();
     twistfilter.angle = 0;
     twistfilter.radius = is_landscape ? window.innerWidth/4 : window.innerWidth/2;
     twistfilter.offset = new PIXI.Point(window.innerWidth/2, window.innerHeight/3);
-    // twistfilter.resolution = 2;
+    twistfilter.resolution = 2;
 
 
     bulgegroup.filters = [bulgefilter, twistfilter];

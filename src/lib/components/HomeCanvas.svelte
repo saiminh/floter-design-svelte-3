@@ -5,10 +5,10 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import SplitText from 'gsap/dist/SplitText';
 import { PixiPlugin } from "gsap/dist/PixiPlugin";
-import { onMount, onDestroy } from 'svelte';
 import { browser } from '$app/environment';
 import createCanvasText from '$lib/utils/createCanvasText';
 import createCanvasImg from '$lib/utils/createCanvasImg';
+import { onMount, onDestroy } from 'svelte';
 import { tick } from 'svelte';
 
 export let textsToCanvas: Array<HTMLElement> = [];
@@ -38,7 +38,7 @@ onMount(()=>{
       autoDensity: true, 
       resolution: 2,
       backgroundAlpha: 0,
-      view: canvas,
+      view: canvas
     });
     
     PIXI.Filter.defaultResolution = 2;
@@ -69,8 +69,9 @@ onMount(()=>{
     bulgefilter.radius = is_landscape ? xFrac(0.5) : xFrac(0.5);
     bulgefilter.strength = 0;
     bulgefilter.center = center;
+    bulgefilter.resolution = 2;
 
-    bulgegroup.filters = [bulgefilter];
+    bulgegroup.filters = [(bulgefilter as unknown as PIXI.Filter)];
 
     let opening_animation_running = false;
   
