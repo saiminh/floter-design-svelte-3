@@ -35,6 +35,7 @@ const config = {
       directives: {
         'default-src': ['self'],
         'img-src': ['self', '*.cloudinary.com', 'data:'],
+        'media-src': ['self', '*.cloudinary.com'],
         'style-src': ['self', 'unsafe-inline', '*.typekit.net'],
         "font-src": ['self', '*.typekit.net'],
         'script-src': ['self', 'unsafe-eval', 'unsafe-inline'],
