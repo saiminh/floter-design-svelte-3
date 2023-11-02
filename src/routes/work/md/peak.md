@@ -11,7 +11,7 @@ reference: https://www.linkedin.com/in/madelinelawren/
 ---
 Peak is an early-stage investment fund backed by entrepreneurs in Europe.
 
-In 2021 the creative agency [forpeople](https://forpeople.com) helped Peak with a full rebranding. They brought me on board to help translate the new branding to the company's exist ing WordPress website. 
+In 2021 the creative agency [forpeople](https://forpeople.com) helped Peak with a full rebranding. They brought me on board to help translate the new branding to the company's existing WordPress website. 
 
 Over the past years I have worked with the team at peak to develop the site further.
 
