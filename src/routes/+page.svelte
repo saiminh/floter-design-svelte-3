@@ -116,7 +116,7 @@
       <HomeIlluShapes />
     </figure>
     <h2>Visual Design</h2> 
-    <p>I'm a seasoned designer, with a long list of succesfull projects and happy clients.</p>
+    <p>I'm a seasoned designer, with a long list of succesful projects and happy clients.</p>
     <div class="cta">
       <a href="/work" class="button">Work <span class="hide-on-mobile"> I've done</span></a>
       <a href="/contact" class="button button--primary">Contact me</a>
